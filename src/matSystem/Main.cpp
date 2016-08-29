@@ -26,6 +26,10 @@ void abort(void);
  */
 void main(void)
 {
+	while(true)
+	{
+
+	}
 }
 
 #ifdef __cplusplus
