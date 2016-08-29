@@ -1,0 +1,597 @@
+Renesas Optimizing Linker (W2.04.00 )             22-Aug-2016 17:23:13
+
+*** Options ***
+
+-subcommand=LinkerSubCommand.tmp
+-input="./src/startup/dbsct.obj"
+-input="./src/startup/hardware_setup.obj"
+-input="./src/startup/reset_program.obj"
+-input="./src/startup/sbrk.obj"
+-input="./src/matSystem/Main.obj"
+-input="./src/UserApplication/App.obj"
+-input="./src/Modules/micon/interrupt_handlers.obj"
+-input="./src/Modules/micon/vector_table.obj"
+-start=SU,SI,B_1,R_1,B_2,R_2,B,R/04,PResetPRG,C_1,C_2,C,C$*,D*,W*,L,PIntPRG,P/0FFF80000,FIXEDVECT/0FFFFFF80
+-library=C:\Users\MATSUT~1\CREATI~1\NIT\ROBOCO~1\ROBOTC~2\HARDWA~1\RobotCore1Framework.lib
+-list=RobotCore1Framework.map
+-show
+-nooptimize
+-debug
+-output=C:\Users\Matsutomo2\Creative Cloud Files\NIT\ROBOCON2016\RobotCore1Framework\HardwareDebug\RobotCore1Framework.abs
+-rom=D=R,D_1=R_1,D_2=R_2
+-nocompress
+-nomessage
+-nologo
+
+*** Error information ***
+
+*** Mapping List ***
+
+SECTION                            START      END         SIZE   ALIGN
+
+SU
+                                  00000004  00000103       100   4
+SI
+                                  00000104  00000403       300   4
+B_1
+                                  00000404  00000404         0   1
+R_1
+                                  00000404  00000404         0   1
+B_2
+                                  00000404  00000404         0   1
+R_2
+                                  00000404  00000404         0   1
+B
+                                  00000404  00000807       404   4
+R
+                                  00000808  0000081f        18   4
+PResetPRG
+                                  fff80000  fff80038        39   1
+C_1
+                                  fff80039  fff80039         0   1
+C_2
+                                  fff80039  fff80039         0   1
+C
+                                  fff8003c  fff8006f        34   4
+C$DSEC
+                                  fff80070  fff80093        24   4
+C$BSEC
+                                  fff80094  fff800ab        18   4
+C$INIT
+                                  fff800ac  fff800ac         0   1
+C$VECT
+                                  fff800ac  fff804ab       400   4
+C$VTBL
+                                  fff804ac  fff804ac         0   1
+D
+                                  fff804ac  fff804c3        18   4
+D_1
+                                  fff804c4  fff804c4         0   1
+D_2
+                                  fff804c4  fff804c4         0   1
+W
+                                  fff804c4  fff804c4         0   1
+W_1
+                                  fff804c4  fff804c4         0   1
+W_2
+                                  fff804c4  fff804c4         0   1
+L
+                                  fff804c4  fff804c4         0   1
+PIntPRG
+                                  fff804c4  fff80623       160   1
+P
+                                  fff80624  fff8084a       227   1
+FIXEDVECT
+                                  ffffff80  ffffffff        80   4
+
+*** Symbol List ***
+
+SECTION=
+FILE=                               START        END    SIZE
+  SYMBOL                            ADDR        SIZE    INFO      COUNTS  OPT
+
+SECTION=SU
+FILE=.\src\startup\reset_program.obj
+                                  00000004  00000103       100
+
+SECTION=SI
+FILE=.\src\startup\reset_program.obj
+                                  00000104  00000403       300
+
+SECTION=B
+FILE=.\src\startup\sbrk.obj
+                                  00000404  00000803       400
+  _heap_area
+                                  00000404       400   data ,l         2
+FILE=dtor_list
+                                  00000804  00000807         4
+  _needed_destruction_head
+                                  00000804         4   data ,l         2
+
+SECTION=R
+FILE=.\src\startup\sbrk.obj
+                                  00000808  0000080b         4
+  _brk
+                                  00000808         4   data ,l         1
+FILE=static_init
+                                  0000080c  00000813         8
+  _use_patch_info
+                                  0000080c         4   data ,l         1
+  _dtors_done$1
+                                  00000810         4   data ,l         1
+FILE=munch_dtors
+                                  00000814  00000817         4
+  __dtors
+                                  00000814         4   data ,g         1
+FILE=vars
+                                  00000818  0000081f         8
+  __new_handler
+                                  00000818         4   data ,g         0
+  ___head
+                                  0000081c         4   data ,g         1
+
+SECTION=PResetPRG
+FILE=.\src\startup\reset_program.obj
+                                  fff80000  fff80038        39
+  _PowerON_Reset_PC
+                                  fff80000        39   entry,g         1
+
+SECTION=C
+FILE=.\src\startup\dbsct.obj
+                                  fff8003c  fff8006f        34
+  __CTBL
+                                  fff8003c        34   data ,g         0
+
+SECTION=C$DSEC
+FILE=.\src\startup\dbsct.obj
+                                  fff80070  fff80093        24
+  __DTBL
+                                  fff80070        24   data ,g         0
+
+SECTION=C$BSEC
+FILE=.\src\startup\dbsct.obj
+                                  fff80094  fff800ab        18
+  __BTBL
+                                  fff80094        18   data ,g         0
+
+SECTION=C$VECT
+FILE=.\src\startup\dbsct.obj
+                                  fff800ac  fff804ab       400
+
+SECTION=D
+FILE=.\src\startup\sbrk.obj
+                                  fff804ac  fff804af         4
+FILE=static_init
+                                  fff804b0  fff804b7         8
+FILE=munch_dtors
+                                  fff804b8  fff804bb         4
+FILE=vars
+                                  fff804bc  fff804c3         8
+
+SECTION=PIntPRG
+FILE=.\src\Modules\micon\interrupt_handlers.obj
+                                  fff804c4  fff80623       160
+  _Excep_SuperVisorInst
+                                  fff804c4         2   func ,g         1
+  _Excep_AccessInst
+                                  fff804c6         2   func ,g         1
+  _Excep_UndefinedInst
+                                  fff804c8         2   func ,g         1
+  _Excep_FloatingPoint
+                                  fff804ca         2   func ,g         1
+  _NonMaskableInterrupt
+                                  fff804cc         2   func ,g         1
+  _Dummy
+                                  fff804ce         2   func ,g        13
+  _Excep_BRK
+                                  fff804d0         4   func ,g         0
+  _Excep_BSC_BUSERR
+                                  fff804d4         2   func ,g         0
+  _Excep_FCU_FIFERR
+                                  fff804d6         2   func ,g         0
+  _Excep_FCU_FRDYI
+                                  fff804d8         2   func ,g         0
+  _Excep_ICU_SWINT
+                                  fff804da         2   func ,g         0
+  _Excep_CMT0_CMI0
+                                  fff804dc         2   func ,g         0
+  _Excep_CMT1_CMI1
+                                  fff804de         2   func ,g         0
+  _Excep_CMT2_CMI2
+                                  fff804e0         2   func ,g         0
+  _Excep_CMT3_CMI3
+                                  fff804e2         2   func ,g         0
+  _Excep_USB0_D0FIFO0
+                                  fff804e4         2   func ,g         0
+  _Excep_USB0_D1FIFO0
+                                  fff804e6         2   func ,g         0
+  _Excep_USB0_USBI0
+                                  fff804e8         2   func ,g         0
+  _Excep_CAC_FERRF
+                                  fff804ea         2   func ,g         0
+  _Excep_CAC_MENDF
+                                  fff804ec         2   func ,g         0
+  _Excep_CAC_OVFF
+                                  fff804ee         2   func ,g         0
+  _Excep_RSPI0_SPRI0
+                                  fff804f0         2   func ,g         0
+  _Excep_RSPI0_SPTI0
+                                  fff804f2         2   func ,g         0
+  _Excep_RSPI0_SPII0
+                                  fff804f4         2   func ,g         0
+  _Excep_RSPI1_SPRI1
+                                  fff804f6         2   func ,g         0
+  _Excep_RSPI1_SPTI1
+                                  fff804f8         2   func ,g         0
+  _Excep_RSPI1_SPII1
+                                  fff804fa         2   func ,g         0
+  _Excep_CAN1_RXF1
+                                  fff804fc         2   func ,g         0
+  _Excep_CAN1_TXF1
+                                  fff804fe         2   func ,g         0
+  _Excep_CAN1_RXM1
+                                  fff80500         2   func ,g         0
+  _Excep_CAN1_TXM1
+                                  fff80502         2   func ,g         0
+  _Excep_GPT7_GTCIA7
+                                  fff80504         2   func ,g         0
+  _Excep_GPT7_GTCIB7
+                                  fff80506         2   func ,g         0
+  _Excep_GPT7_GTCIC7
+                                  fff80508         2   func ,g         0
+  _Excep_GPT7_GTCIE7
+                                  fff8050a         2   func ,g         0
+  _Excep_GPT7_GTCIV7
+                                  fff8050c         2   func ,g         0
+  _Excep_CMP_CMP4
+                                  fff8050e         2   func ,g         0
+  _Excep_CMP_CMP5
+                                  fff80510         2   func ,g         0
+  _Excep_CMP_CMP6
+                                  fff80512         2   func ,g         0
+  _Excep_DOC_DOPCF
+                                  fff80514         2   func ,g         0
+  _Excep_DPC_RBI0
+                                  fff80516         2   func ,g         0
+  _Excep_DPC_RBI1
+                                  fff80518         2   func ,g         0
+  _Excep_DPC_RBI2
+                                  fff8051a         2   func ,g         0
+  _Excep_DPC_RBI3
+                                  fff8051c         2   func ,g         0
+  _Excep_DPC_RBI4
+                                  fff8051e         2   func ,g         0
+  _Excep_ICU_IRQ0
+                                  fff80520         2   func ,g         0
+  _Excep_ICU_IRQ1
+                                  fff80522         2   func ,g         0
+  _Excep_ICU_IRQ2
+                                  fff80524         2   func ,g         0
+  _Excep_ICU_IRQ3
+                                  fff80526         2   func ,g         0
+  _Excep_ICU_IRQ4
+                                  fff80528         2   func ,g         0
+  _Excep_ICU_IRQ5
+                                  fff8052a         2   func ,g         0
+  _Excep_ICU_IRQ6
+                                  fff8052c         2   func ,g         0
+  _Excep_ICU_IRQ7
+                                  fff8052e         2   func ,g         0
+  _Excep_USB_USBR0
+                                  fff80530         2   func ,g         0
+  _Excep_AD_ADI0
+                                  fff80532         2   func ,g         0
+  _Excep_S12AD_S12ADI
+                                  fff80534         2   func ,g         0
+  _Excep_S12AD_S12GBADI
+                                  fff80536         2   func ,g         0
+  _Excep_S12AD1_S12ADI1
+                                  fff80538         2   func ,g         0
+  _Excep_S12AD1_S12GBADI1
+                                  fff8053a         2   func ,g         0
+  _Excep_ICU_GROUP0
+                                  fff8053c         2   func ,g         0
+  _Excep_ICU_GROUP12
+                                  fff8053e         2   func ,g         0
+  _Excep_SCI12_SCIX0
+                                  fff80540         2   func ,g         0
+  _Excep_SCI12_SCIX1
+                                  fff80542         2   func ,g         0
+  _Excep_SCI12_SCIX2
+                                  fff80544         2   func ,g         0
+  _Excep_SCI12_SCIX3
+                                  fff80546         2   func ,g         0
+  _Excep_MTU0_TGIA0
+                                  fff80548         2   func ,g         0
+  _Excep_MTU0_TGIB0
+                                  fff8054a         2   func ,g         0
+  _Excep_MTU0_TGIC0
+                                  fff8054c         2   func ,g         0
+  _Excep_MTU0_TGID0
+                                  fff8054e         2   func ,g         0
+  _Excep_MTU0_TCIV0
+                                  fff80550         2   func ,g         0
+  _Excep_MTU0_TGIE0
+                                  fff80552         2   func ,g         0
+  _Excep_MTU0_TGIF0
+                                  fff80554         2   func ,g         0
+  _Excep_MTU1_TGIA1
+                                  fff80556         2   func ,g         0
+  _Excep_MTU1_TGIB1
+                                  fff80558         2   func ,g         0
+  _Excep_MTU1_TCIV1
+                                  fff8055a         2   func ,g         0
+  _Excep_MTU1_TCIU1
+                                  fff8055c         2   func ,g         0
+  _Excep_MTU2_TGIA2
+                                  fff8055e         2   func ,g         0
+  _Excep_MTU2_TGIB2
+                                  fff80560         2   func ,g         0
+  _Excep_MTU2_TCIV2
+                                  fff80562         2   func ,g         0
+  _Excep_MTU2_TCIU2
+                                  fff80564         2   func ,g         0
+  _Excep_MTU3_TGIA3
+                                  fff80566         2   func ,g         0
+  _Excep_MTU3_TGIB3
+                                  fff80568         2   func ,g         0
+  _Excep_MTU3_TGIC3
+                                  fff8056a         2   func ,g         0
+  _Excep_MTU3_TGID3
+                                  fff8056c         2   func ,g         0
+  _Excep_MTU3_TCIV3
+                                  fff8056e         2   func ,g         0
+  _Excep_MTU4_TGIA4
+                                  fff80570         2   func ,g         0
+  _Excep_MTU4_TGIB4
+                                  fff80572         2   func ,g         0
+  _Excep_MTU4_TGIC4
+                                  fff80574         2   func ,g         0
+  _Excep_MTU4_TGID4
+                                  fff80576         2   func ,g         0
+  _Excep_MTU4_TCIV4
+                                  fff80578         2   func ,g         0
+  _Excep_MTU5_TGIU5
+                                  fff8057a         2   func ,g         0
+  _Excep_MTU5_TGIV5
+                                  fff8057c         2   func ,g         0
+  _Excep_MTU5_TGIW5
+                                  fff8057e         2   func ,g         0
+  _Excep_MTU6_TGIA6
+                                  fff80580         2   func ,g         0
+  _Excep_MTU6_TGIB6
+                                  fff80582         2   func ,g         0
+  _Excep_MTU6_TGIC6
+                                  fff80584         2   func ,g         0
+  _Excep_MTU6_TGID6
+                                  fff80586         2   func ,g         0
+  _Excep_MTU6_TCIV6
+                                  fff80588         2   func ,g         0
+  _Excep_MTU7_TGIA7
+                                  fff8058a         2   func ,g         0
+  _Excep_MTU7_TGIB7
+                                  fff8058c         2   func ,g         0
+  _Excep_MTU7_TGIC7
+                                  fff8058e         2   func ,g         0
+  _Excep_MTU7_TGID7
+                                  fff80590         2   func ,g         0
+  _Excep_MTU7_TCIV7
+                                  fff80592         2   func ,g         0
+  _Excep_POE_OEI1
+                                  fff80594         2   func ,g         0
+  _Excep_POE_OEI2
+                                  fff80596         2   func ,g         0
+  _Excep_POE_OEI3
+                                  fff80598         2   func ,g         0
+  _Excep_POE_OEI4
+                                  fff8059a         2   func ,g         0
+  _Excep_POE_OEI5
+                                  fff8059c         2   func ,g         0
+  _Excep_CMP_CMP0
+                                  fff8059e         2   func ,g         0
+  _Excep_CMP_CMP1
+                                  fff805a0         2   func ,g         0
+  _Excep_CMP_CMP2
+                                  fff805a2         2   func ,g         0
+  _Excep_GPT4_GTCIA4
+                                  fff805a4         2   func ,g         0
+  _Excep_GPT4_GTCIB4
+                                  fff805a6         2   func ,g         0
+  _Excep_GPT4_GTCIC4
+                                  fff805a8         2   func ,g         0
+  _Excep_GPT4_GTCIE4
+                                  fff805aa         2   func ,g         0
+  _Excep_GPT4_GTCIV4
+                                  fff805ac         2   func ,g         0
+  _Excep_GPT4_LOCOI4
+                                  fff805ae         2   func ,g         0
+  _Excep_GPT5_GTCIA5
+                                  fff805b0         2   func ,g         0
+  _Excep_GPT5_GTCIB5
+                                  fff805b2         2   func ,g         0
+  _Excep_GPT5_GTCIC5
+                                  fff805b4         2   func ,g         0
+  _Excep_GPT5_GTCIE5
+                                  fff805b6         2   func ,g         0
+  _Excep_GPT5_GTCIV5
+                                  fff805b8         2   func ,g         0
+  _Excep_GPT6_GTCIA6
+                                  fff805ba         2   func ,g         0
+  _Excep_GPT6_GTCIB6
+                                  fff805bc         2   func ,g         0
+  _Excep_GPT6_GTCIC6
+                                  fff805be         2   func ,g         0
+  _Excep_GPT6_GTCIE6
+                                  fff805c0         2   func ,g         0
+  _Excep_GPT6_GTCIV6
+                                  fff805c2         2   func ,g         0
+  _Excep_RIIC1_EEI1
+                                  fff805c4         2   func ,g         0
+  _Excep_RIIC1_RXI1
+                                  fff805c6         2   func ,g         0
+  _Excep_RIIC1_TXI1
+                                  fff805c8         2   func ,g         0
+  _Excep_RIIC1_TEI1
+                                  fff805ca         2   func ,g         0
+  _Excep_RIIC0_EEI0
+                                  fff805cc         2   func ,g         0
+  _Excep_RIIC0_RXI0
+                                  fff805ce         2   func ,g         0
+  _Excep_RIIC0_TXI0
+                                  fff805d0         2   func ,g         0
+  _Excep_RIIC0_TEI0
+                                  fff805d2         2   func ,g         0
+  _Excep_DMAC_DMAC0I
+                                  fff805d4         2   func ,g         0
+  _Excep_DMAC_DMAC1I
+                                  fff805d6         2   func ,g         0
+  _Excep_DMAC_DMAC2I
+                                  fff805d8         2   func ,g         0
+  _Excep_DMAC_DMAC3I
+                                  fff805da         2   func ,g         0
+  _Excep_SCI0_RXI0
+                                  fff805dc         2   func ,g         0
+  _Excep_SCI0_TXI0
+                                  fff805de         2   func ,g         0
+  _Excep_SCI0_TEI0
+                                  fff805e0         2   func ,g         0
+  _Excep_SCI1_RXI1
+                                  fff805e2         2   func ,g         0
+  _Excep_SCI1_TXI1
+                                  fff805e4         2   func ,g         0
+  _Excep_SCI1_TEI1
+                                  fff805e6         2   func ,g         0
+  _Excep_SCI2_RXI2
+                                  fff805e8         2   func ,g         0
+  _Excep_SCI2_TXI2
+                                  fff805ea         2   func ,g         0
+  _Excep_SCI2_TEI2
+                                  fff805ec         2   func ,g         0
+  _Excep_SCI3_RXI3
+                                  fff805ee         2   func ,g         0
+  _Excep_SCI3_TXI3
+                                  fff805f0         2   func ,g         0
+  _Excep_SCI3_TEI3
+                                  fff805f2         2   func ,g         0
+  _Excep_GPT0_GTCIA0
+                                  fff805f4         2   func ,g         0
+  _Excep_GPT0_GTCIB0
+                                  fff805f6         2   func ,g         0
+  _Excep_GPT0_GTCIC0
+                                  fff805f8         2   func ,g         0
+  _Excep_GPT0_GTCIE0
+                                  fff805fa         2   func ,g         0
+  _Excep_GPT0_GTCIV0
+                                  fff805fc         2   func ,g         0
+  _Excep_GPT0_LOCOI0
+                                  fff805fe         2   func ,g         0
+  _Excep_GPT1_GTCIA1
+                                  fff80600         2   func ,g         0
+  _Excep_GPT1_GTCIB1
+                                  fff80602         2   func ,g         0
+  _Excep_GPT1_GTCIC1
+                                  fff80604         2   func ,g         0
+  _Excep_GPT1_GTCIE1
+                                  fff80606         2   func ,g         0
+  _Excep_GPT1_GTCIV1
+                                  fff80608         2   func ,g         0
+  _Excep_GPT2_GTCIA2
+                                  fff8060a         2   func ,g         0
+  _Excep_GPT2_GTCIB2
+                                  fff8060c         2   func ,g         0
+  _Excep_GPT2_GTCIC2
+                                  fff8060e         2   func ,g         0
+  _Excep_GPT2_GTCIE2
+                                  fff80610         2   func ,g         0
+  _Excep_GPT2_GTCIV2
+                                  fff80612         2   func ,g         0
+  _Excep_GPT3_GTCIA3
+                                  fff80614         2   func ,g         0
+  _Excep_GPT3_GTCIB3
+                                  fff80616         2   func ,g         0
+  _Excep_GPT3_GTCIC3
+                                  fff80618         2   func ,g         0
+  _Excep_GPT3_GTCIE3
+                                  fff8061a         2   func ,g         0
+  _Excep_GPT3_GTCIV3
+                                  fff8061c         2   func ,g         0
+  _Excep_SCI12_RXI12
+                                  fff8061e         2   func ,g         0
+  _Excep_SCI12_TXI12
+                                  fff80620         2   func ,g         0
+  _Excep_SCI12_TEI12
+                                  fff80622         2   func ,g         0
+
+SECTION=P
+FILE=.\src\startup\hardware_setup.obj
+                                  fff80624  fff80706        e3
+  _HardwareSetup
+                                  fff80624        6b   func ,g         1
+  _wait
+                                  fff8068f        78   func ,g         2
+FILE=.\src\startup\sbrk.obj
+                                  fff80707  fff80727        21
+  _sbrk
+                                  fff80707        21   func ,g         0
+FILE=.\src\matSystem\Main.obj
+                                  fff80728  fff80729         2
+  _main
+                                  fff80728         1   func ,g         1
+  _abort
+                                  fff80729         1   func ,g         1
+FILE=.\src\UserApplication\App.obj
+                                  fff8072a  fff8072b         2
+  _Initialize
+                                  fff8072a         1   func ,g         0
+  _MainLoop
+                                  fff8072b         1   func ,g         0
+FILE=cppinit
+                                  fff8072c  fff8074b        20
+  __CALL_INIT
+                                  fff8072c        1c   func ,g         1
+  __CALL_END
+                                  fff80748         4   func ,g         1
+FILE=__initsct
+                                  fff8074c  fff80795        4a
+  __INITSCT
+                                  fff8074c         0   none ,g         1
+  loop1
+                                  fff8075e         0   none ,l         1
+  next_loop1
+                                  fff8076c         0   none ,l         2
+  loop3
+                                  fff8077e         0   none ,l         1
+  next_loop3
+                                  fff8078f         0   none ,l         2
+FILE=static_init
+                                  fff80796  fff807fb        66
+  __call_dtors()
+                                  fff80796        66   func ,g         1
+FILE=dtor_list
+                                  fff807fc  fff80846        4b
+  __process_needed_destructions()
+                                  fff807fc        26   func ,g         2
+  ___already_marked_for_destruction
+                                  fff80822         6   func ,g         1
+  ___record_needed_destruction
+                                  fff80828        1d   func ,g         0
+  ___std__needed_destruction_list
+                                  fff80845         2   func ,g         0
+FILE=error
+                                  fff80847  fff8084a         4
+  ___abort_execution
+                                  fff80847         4   func ,g         1
+
+SECTION=FIXEDVECT
+FILE=.\src\Modules\micon\vector_table.obj
+                                  ffffff80  ffffffff        80
+  _Fixed_Vectors
+                                  ffffff80        80   data ,g         0
+
+*** Unfilled Areas ***
+
+AREA                                START    END
+
+*** Delete Symbols ***
+
+SYMBOL                                SIZE    INFO
