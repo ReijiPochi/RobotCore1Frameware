@@ -13,6 +13,9 @@
 //#include "typedefine.h"
 #include "../UserApplication/App.h"
 
+#include "..\Modules\micon\iodefine.h"
+#include "..\Modules\micon\SCIc.h"
+
 
 void main(void);
 #ifdef __cplusplus
@@ -26,9 +29,24 @@ void abort(void);
  */
 void main(void)
 {
+	uart1_init();
+
 	while(true)
 	{
+		PORT7.PDR.BIT.B4 = 1;
+		PORT7.PODR.BIT.B4 = 1;
 
+		for(int c = 0; c < 10; c++)
+		{
+			uart1_send('A');
+		}
+
+		uart1_send('\n');
+
+//		for(long c = 0; c < 100000; c++)
+//		{
+//
+//		}
 	}
 }
 

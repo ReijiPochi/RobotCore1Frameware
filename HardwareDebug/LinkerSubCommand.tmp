@@ -4,6 +4,7 @@
 -input="./src/startup/sbrk.obj"
 -input="./src/matSystem/Main.obj"
 -input="./src/UserApplication/App.obj"
+-input="./src/Modules/micon/SCIc.obj"
 -input="./src/Modules/micon/interrupt_handlers.obj"
 -input="./src/Modules/micon/vector_table.obj"
 -start=SU,SI,B_1,R_1,B_2,R_2,B,R/04,PResetPRG,C_1,C_2,C,C$*,D*,W*,L,PIntPRG,P/0FFF80000,FIXEDVECT/0FFFFFF80
