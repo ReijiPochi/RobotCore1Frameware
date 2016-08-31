@@ -16,6 +16,7 @@
 #include "..\Modules\micon\iodefine.h"
 #include "..\Modules\micon\SCIc.h"
 
+#include "..\Modules\Motor.h"
 
 void main(void);
 #ifdef __cplusplus
@@ -29,24 +30,14 @@ void abort(void);
  */
 void main(void)
 {
-	uart1_init();
+	Initialize();
+
 
 	while(true)
 	{
-		PORT7.PDR.BIT.B4 = 1;
-		PORT7.PODR.BIT.B4 = 1;
+		_Motor_Loop();
 
-		for(int c = 0; c < 10; c++)
-		{
-			uart1_send('A');
-		}
-
-		uart1_send('\n');
-
-//		for(long c = 0; c < 100000; c++)
-//		{
-//
-//		}
+		MainLoop();
 	}
 }
 

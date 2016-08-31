@@ -7,3 +7,5 @@ src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\micon\S
 ../src/matSystem/..\Modules\micon\SCIc.h:
 src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\micon\..\..\typedefine.h
 ../src/matSystem/..\Modules\micon\..\..\typedefine.h:
+src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\Motor.h
+../src/matSystem/..\Modules\Motor.h:

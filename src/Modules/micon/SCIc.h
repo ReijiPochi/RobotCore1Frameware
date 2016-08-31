@@ -16,9 +16,14 @@ extern "C" {
 
 void uart1_init(void);
 
-_SDWORD uart1_read(void);
+_SWORD uart1_read(void);
 
 void uart1_send(_UBYTE data);
+
+
+void uart0_init(void);
+
+_SWORD uart0_read(void);
 
 #ifdef __cplusplus
 }

@@ -454,10 +454,10 @@ void Excep_DMAC_DMAC2I(void){ }
 void Excep_DMAC_DMAC3I(void){ }
 
 // SCI0 RXI0
-void Excep_SCI0_RXI0(void){ }
+//void Excep_SCI0_RXI0(void){ }
 
 // SCI0 TXI0
-void Excep_SCI0_TXI0(void){ }
+//void Excep_SCI0_TXI0(void){ }
 
 // SCI0 TEI0
 void Excep_SCI0_TEI0(void){ }

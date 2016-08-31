@@ -4,7 +4,12 @@
 -input="./src/startup/sbrk.obj"
 -input="./src/matSystem/Main.obj"
 -input="./src/UserApplication/App.obj"
+-input="./src/Modules/micon/GPT012.obj"
+-input="./src/Modules/micon/IO.obj"
 -input="./src/Modules/micon/SCIc.obj"
 -input="./src/Modules/micon/interrupt_handlers.obj"
 -input="./src/Modules/micon/vector_table.obj"
+-input="./src/Modules/Bluetooth.obj"
+-input="./src/Modules/LED.obj"
+-input="./src/Modules/Motor.obj"
 -start=SU,SI,B_1,R_1,B_2,R_2,B,R/04,PResetPRG,C_1,C_2,C,C$*,D*,W*,L,PIntPRG,P/0FFF80000,FIXEDVECT/0FFFFFF80
