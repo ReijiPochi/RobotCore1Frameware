@@ -67,14 +67,14 @@ void HardwareSetup(void)
 	/********** クロック初期設定  **********/
 
 	// 内部クロックの分周比を選択
-	SYSTEM.SCKCR.LONG = 0x21011111;				// S12AD用クロック			: 2分周  = 100 MHz
+	SYSTEM.SCKCR.LONG = 0x21011112;				// S12AD用クロック			: 4分周  =  50 MHz
 												// AD用クロック				: 2分周  = 100 MHz
 												// 周辺モジュールクロックb		: 2分周  = 100 MHz
 												// タイマモジュールクロック		: 2分周  = 100 MHz
 												// 外部バスクロック			: 2分周  = 100 MHz
 												// システムクロック			: 2分周  = 100 MHz
 												// FlashIFクロック			: 4分周  =  50 MHz
-	while(SYSTEM.SCKCR.LONG != 0x21011111) { }	// レジスタの値が書き換わるまで待機
+	while(SYSTEM.SCKCR.LONG != 0x21011112) { }	// レジスタの値が書き換わるまで待機
 
 	// クロックソースを選択
 	SYSTEM.SCKCR3.WORD = 0x0400;				// PLL回路を選択

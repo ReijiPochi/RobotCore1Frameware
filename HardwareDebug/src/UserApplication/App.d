@@ -11,7 +11,13 @@ src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..
 ../src/UserApplication/..\Modules\Bluetooth.h:
 src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\..\typedefine.h
 ../src/UserApplication/..\Modules\..\typedefine.h:
-src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\micon\SCIc.h
-../src/UserApplication/..\Modules\micon\SCIc.h:
-src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\micon\..\..\typedefine.h
-../src/UserApplication/..\Modules\micon\..\..\typedefine.h:
+src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\AnalogIN.h
+../src/UserApplication/..\Modules\AnalogIN.h:
+src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\..\typedefine.h
+../src/UserApplication/..\Modules\..\typedefine.h:
+src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\AnalogOUT.h
+../src/UserApplication/..\Modules\AnalogOUT.h:
+src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\Buzzer.h
+../src/UserApplication/..\Modules\Buzzer.h:
+src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\..\typedefine.h
+../src/UserApplication/..\Modules\..\typedefine.h:

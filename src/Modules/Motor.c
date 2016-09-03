@@ -10,7 +10,8 @@
 #include "micon/IO.h"
 #include "micon/GPT012.h"
 
-#define THRESHOLD	 (0.001)
+#define THRESHOLD	 		(0.001)
+#define MAX_ACCELERATION	(0.5)
 
 static float norm(float, _UBYTE*);
 static void motor1_SetMode(MotorMode);
@@ -47,16 +48,20 @@ void Motor_LockSTBY(void)
 void _Motor_Loop(void)
 {
 	int i;
-	float d;
+	float d, a;
 
 	for(i = 0; i < 6; i++)
 	{
 		d = trgDuty[i] - actualDuty[i];
 
-		if(d > 0.001)
-			actualDuty[i] += 0.0005;
-		else if(d < -0.001)
-			actualDuty[i] -= 0.0005;
+		a = d * 0.2;
+
+		if(a > MAX_ACCELERATION)
+			a = MAX_ACCELERATION;
+		else if(a < -MAX_ACCELERATION)
+			a = -MAX_ACCELERATION;
+
+		actualDuty[i] += a;
 	}
 
 
@@ -111,12 +116,12 @@ void _Motor_Loop(void)
 		motor6_SetMode(MotorMode_CCW);
 
 
-	LED_Info_Off();
+	_LED_Info_Off();
 
 	for(i = 0; i < 6; i++)
 	{
 		if(actualDuty[i] > THRESHOLD || actualDuty[i] < -THRESHOLD)
-			LED_Info_On();
+			_LED_Info_On();
 	}
 }
 

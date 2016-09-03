@@ -4,12 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+..\src/matSystem/BatteryCheck.cpp \
 ..\src/matSystem/Main.cpp 
 
 OBJS += \
+./src/matSystem/BatteryCheck.obj \
 ./src/matSystem/Main.obj 
 
 CPP_DEPS += \
+./src/matSystem/BatteryCheck.d \
 ./src/matSystem/Main.d 
 
 

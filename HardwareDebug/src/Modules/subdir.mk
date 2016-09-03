@@ -4,19 +4,34 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+..\src/Modules/AnalogIN.c \
+..\src/Modules/AnalogOUT.c \
+..\src/Modules/Battery.c \
 ..\src/Modules/Bluetooth.c \
+..\src/Modules/Buzzer.c \
 ..\src/Modules/LED.c \
-..\src/Modules/Motor.c 
+..\src/Modules/Motor.c \
+..\src/Modules/Timer.c 
 
 C_DEPS += \
+./src/Modules/AnalogIN.d \
+./src/Modules/AnalogOUT.d \
+./src/Modules/Battery.d \
 ./src/Modules/Bluetooth.d \
+./src/Modules/Buzzer.d \
 ./src/Modules/LED.d \
-./src/Modules/Motor.d 
+./src/Modules/Motor.d \
+./src/Modules/Timer.d 
 
 OBJS += \
+./src/Modules/AnalogIN.obj \
+./src/Modules/AnalogOUT.obj \
+./src/Modules/Battery.obj \
 ./src/Modules/Bluetooth.obj \
+./src/Modules/Buzzer.obj \
 ./src/Modules/LED.obj \
-./src/Modules/Motor.obj 
+./src/Modules/Motor.obj \
+./src/Modules/Timer.obj 
 
 
 # Each subdirectory must supply rules for building sources it contributes

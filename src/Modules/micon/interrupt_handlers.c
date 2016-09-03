@@ -34,6 +34,7 @@
 
 #include <machine.h>
 #include "vect.h"
+#include "iodefine.h"
 #pragma section IntPRG
 
 // Exception(Supervisor Instruction)
@@ -55,7 +56,7 @@ void NonMaskableInterrupt(void){/* brk(); */}
 void Dummy(void){/* brk(); */}
 
 // BRK
-void Excep_BRK(void){ wait(); }
+void Excep_BRK(void){ PORT7.PODR.BIT.B2 = 1; wait(); }
 
 // BSC BUSERR
 void Excep_BSC_BUSERR(void){ }
@@ -70,7 +71,7 @@ void Excep_FCU_FRDYI(void){ }
 void Excep_ICU_SWINT(void){ }
 
 // CMT0 CMI0
-void Excep_CMT0_CMI0(void){ }
+//void Excep_CMT0_CMI0(void){ }
 
 // CMT1 CMI1
 void Excep_CMT1_CMI1(void){ }
@@ -202,13 +203,13 @@ void Excep_USB_USBR0(void){ }
 void Excep_AD_ADI0(void){ }
 
 // S12AD S12ADI
-void Excep_S12AD_S12ADI(void){ }
+//void Excep_S12AD_S12ADI(void){ }
 
 // S12AD S12GBADI
 void Excep_S12AD_S12GBADI(void){ }
 
 // S12AD1 S12ADI1
-void Excep_S12AD1_S12ADI1(void){ }
+//void Excep_S12AD1_S12ADI1(void){ }
 
 // S12AD1 S12GBADI1
 void Excep_S12AD1_S12GBADI1(void){ }

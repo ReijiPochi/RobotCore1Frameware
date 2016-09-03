@@ -13,15 +13,19 @@
 //#include "typedefine.h"
 #include "../UserApplication/App.h"
 
-#include "..\Modules\micon\iodefine.h"
-#include "..\Modules\micon\SCIc.h"
+#include "BatteryCheck.h"
 
+#include "..\Modules\Timer.h"
 #include "..\Modules\Motor.h"
+#include "..\Modules\Battery.h"
+#include "..\Modules\LED.h"
+#include "..\Modules\Buzzer.h"
 
 void main(void);
 #ifdef __cplusplus
 extern "C" {
 void abort(void);
+static void Timer1_Caooback(void);
 }
 #endif
 
@@ -30,15 +34,28 @@ void abort(void);
  */
 void main(void)
 {
+	_LED_Activate();
+
 	Initialize();
 
+	_Battery_Activate();
+
+	_Timer_Activate();
+	_Timer1_Set(TimerClock_32, 10000, Timer1_Caooback);
+	_Timer1_Start();
 
 	while(true)
 	{
-		_Motor_Loop();
-
 		MainLoop();
 	}
+}
+
+void Timer1_Caooback()
+{
+	BatteryCheck();
+	_Motor_Loop();
+	_Battery_Sample();
+	_Buzzer_Loop();
 }
 
 #ifdef __cplusplus

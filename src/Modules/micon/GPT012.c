@@ -99,7 +99,7 @@ void GPT012_init(void)
 	MPC.PWPR.BIT.B0WI = 1;			// PFSWEレジスタ書き込み禁止
 
 	// 端子を周辺機能として使用
-	PORTD.PMR.BIT.B7 = 1;			// PMRを0にしてから…
+	PORTD.PMR.BIT.B7 = 1;
 	PORTD.PMR.BIT.B6 = 1;
 	PORTD.PMR.BIT.B5 = 1;
 	PORTD.PMR.BIT.B4 = 1;
