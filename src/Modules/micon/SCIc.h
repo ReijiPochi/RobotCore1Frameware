@@ -16,9 +16,9 @@ extern "C" {
 
 void uart1_init(void);
 
-_SWORD uart1_read(void);
+_UBYTE* uart1_read(_UWORD* count);
 
-void uart1_send(_UBYTE data);
+void uart1_send(_UBYTE* data, _UWORD count);
 
 
 void uart0_init(void);

@@ -13,8 +13,12 @@
 
 _UBYTE flag_RXI0 = 0;
 _UBYTE flag_TXI0 = 0;
-_UBYTE flag_RXI1 = 0;
-_UBYTE flag_TXI1 = 0;
+
+_UBYTE uart1_bufR[2048];
+_UWORD uart1_bufR_index = 0;
+_UBYTE *uart1_bufT;
+_UWORD uart1_bufT_index = 0;
+_UWORD uart1_bufT_maxCount = 1;
 
 _UBYTE uart0_data;
 
@@ -81,58 +85,61 @@ void uart1_init(void)
 	uart1_set(1);
 }
 
-/**
- *  SCIc により受信したデータを読み込みます。
- *
- * @return 受信データがある場合はデータを返します。受信データがない場合は-1を返します。
- */
-_SWORD uart1_read(void)
+
+_UBYTE* uart1_read(_UWORD* count)
 {
-	if(	SCI1.SSR.BIT.ORER == 1 || SCI1.SSR.BIT.PER == 1 || SCI1.SSR.BIT.FER == 1 )
-	{
-		// エラー処理
-		_SWORD dumy = SCI1.RDR;
-		uart1_clear_errorFlag();
+	*count = uart1_bufR_index;
+	uart1_bufR_index = 0;
 
-		flag_RXI1 = 0;
-		return -1;
-	}
-	else
-	{
-		if(flag_RXI1 == 1)
-		{
-			flag_RXI1 = 0;
-
-			return (_SWORD)SCI1.RDR;
-		}
-		else
-		{
-			return -1;
-		}
-	}
+	return uart1_bufR;
 }
 
 
-void uart1_send(_UBYTE data)
+void uart1_send(_UBYTE* data, _UWORD count)
 {
-	while(flag_TXI1  != 1) { }
-
-	flag_TXI1 = 0;
-	SCI1.TDR = data;
+	uart1_bufT = data;
+	uart1_bufT_maxCount = count;
 }
 
 
 // SCI1 の RXI1 割り込み
 void Excep_SCI1_RXI1(void)
 {
-	flag_RXI1 = 1;
 	IR(SCI1,RXI1) = 0x0;
+
+	if(	SCI1.SSR.BIT.ORER == 1 || SCI1.SSR.BIT.PER == 1 || SCI1.SSR.BIT.FER == 1 )
+	{
+		// エラー処理
+		_UBYTE dumy;
+		dumy = SCI1.RDR;
+		uart1_clear_errorFlag();
+
+		return;
+	}
+	else
+	{
+		uart1_bufR[uart1_bufR_index] = SCI1.RDR;
+
+		uart1_bufR_index ++;
+	}
 }
 
 void Excep_SCI1_TXI1(void)
 {
-	flag_TXI1 = 1;
 	IR(SCI1,TXI1) = 0x0;
+
+	if(uart1_bufT_index != 0)
+	{
+		if(uart1_bufT_index + 1 == uart1_bufT_maxCount)
+		{
+			uart1_bufT_index = 0;
+			return;
+		}
+
+		SCI1.TDR = uart1_bufT[uart1_bufT_index];
+
+		uart1_bufT_index ++;
+	}
 }
 
 static void uart1_set(unsigned char bit)

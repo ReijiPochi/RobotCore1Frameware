@@ -7,6 +7,8 @@ src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..
 ../src/UserApplication/..\Modules\LED.h:
 src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\Motor.h
 ../src/UserApplication/..\Modules\Motor.h:
+src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\..\typedefine.h
+../src/UserApplication/..\Modules\..\typedefine.h:
 src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\Bluetooth.h
 ../src/UserApplication/..\Modules\Bluetooth.h:
 src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\..\typedefine.h

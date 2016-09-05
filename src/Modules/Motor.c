@@ -9,6 +9,7 @@
 #include "Motor.h"
 #include "micon/IO.h"
 #include "micon/GPT012.h"
+#include "..\DataConverter.h"
 
 #define THRESHOLD	 		(0.001)
 #define MAX_ACCELERATION	(0.5)
@@ -20,6 +21,8 @@ static void motor3_SetMode(MotorMode);
 static void motor4_SetMode(MotorMode);
 static void motor5_SetMode(MotorMode);
 static void motor6_SetMode(MotorMode);
+
+static void motor1_Do(_UBYTE command, _UBYTE* value);
 
 float trgDuty[6];
 float actualDuty[6];
@@ -330,4 +333,31 @@ float norm(float value, _UBYTE* isPositive)
 	}
 
 	return value;
+}
+
+
+void _Motor_Do(_UBYTE module, _UBYTE command, _UBYTE* value)
+{
+	switch(module)
+	{
+		case '1':
+			motor1_Do(command, value);
+			break;
+
+		default:
+			break;
+	}
+}
+
+void motor1_Do(_UBYTE command, _UBYTE* value)
+{
+	switch(command)
+	{
+		case 3:
+			PWM_M1_set(BitsToFloat(value));
+			break;
+
+		default:
+			break;
+	}
 }

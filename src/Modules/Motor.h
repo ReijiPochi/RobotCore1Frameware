@@ -5,6 +5,8 @@
  *      Author: Reiji
  */
 
+#include "..\typedefine.h"
+
 #ifndef MODULES_MOTOR_H_
 #define MODULES_MOTOR_H_
 
@@ -42,6 +44,7 @@ void Motor4_SetPWM(float duty);
 void Motor5_SetPWM(float duty);
 void Motor6_SetPWM(float duty);
 
+void _Motor_Do(_UBYTE module, _UBYTE command, _UBYTE* value);
 
 
 #ifdef __cplusplus

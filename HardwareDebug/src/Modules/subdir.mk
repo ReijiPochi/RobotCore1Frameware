@@ -11,7 +11,8 @@ C_SRCS += \
 ..\src/Modules/Buzzer.c \
 ..\src/Modules/LED.c \
 ..\src/Modules/Motor.c \
-..\src/Modules/Timer.c 
+..\src/Modules/Timer.c \
+..\src/Modules/UART.c 
 
 C_DEPS += \
 ./src/Modules/AnalogIN.d \
@@ -21,7 +22,8 @@ C_DEPS += \
 ./src/Modules/Buzzer.d \
 ./src/Modules/LED.d \
 ./src/Modules/Motor.d \
-./src/Modules/Timer.d 
+./src/Modules/Timer.d \
+./src/Modules/UART.d 
 
 OBJS += \
 ./src/Modules/AnalogIN.obj \
@@ -31,7 +33,8 @@ OBJS += \
 ./src/Modules/Buzzer.obj \
 ./src/Modules/LED.obj \
 ./src/Modules/Motor.obj \
-./src/Modules/Timer.obj 
+./src/Modules/Timer.obj \
+./src/Modules/UART.obj 
 
 
 # Each subdirectory must supply rules for building sources it contributes

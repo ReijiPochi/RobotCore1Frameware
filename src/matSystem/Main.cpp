@@ -14,12 +14,14 @@
 #include "../UserApplication/App.h"
 
 #include "BatteryCheck.h"
+#include "Connecter.h"
 
 #include "..\Modules\Timer.h"
 #include "..\Modules\Motor.h"
 #include "..\Modules\Battery.h"
 #include "..\Modules\LED.h"
 #include "..\Modules\Buzzer.h"
+
 
 void main(void);
 #ifdef __cplusplus
@@ -44,6 +46,8 @@ void main(void)
 	_Timer1_Set(TimerClock_32, 10000, Timer1_Caooback);
 	_Timer1_Start();
 
+	Connecter_Activate();
+
 	while(true)
 	{
 		MainLoop();
@@ -56,6 +60,8 @@ void Timer1_Caooback()
 	_Motor_Loop();
 	_Battery_Sample();
 	_Buzzer_Loop();
+
+	Connecter_Recieve();
 }
 
 #ifdef __cplusplus

@@ -1,0 +1,15 @@
+-We=--template_info_file="C:\Users\Matsutomo2\Documents\GitHub\RobotCore1Frameware\HardwareDebug\src\matSystem\tpldir\Connecter.ti"
+-We=--ii_file="C:\Users\Matsutomo2\Documents\GitHub\RobotCore1Frameware\HardwareDebug\src\matSystem\tpldir\Connecter.ii"
+-We=--tentative_info_file="C:\Users\Matsutomo2\Documents\GitHub\RobotCore1Frameware\HardwareDebug\src\matSystem\tpldir\Connecter.td"
+
+-output=obj="C:\Users\Matsutomo2\Documents\GitHub\RobotCore1Frameware\HardwareDebug\src\matSystem\Connecter.obj"
+-lang=cpp
+-include=C:\PROGRA~2\Renesas\RX\2_4_1/include
+-debug
+-isa=rxv1
+-optimize=0
+-fpu
+-alias=noansi
+-nologo
+-define=__RX
+"../src/matSystem/Connecter.cpp"

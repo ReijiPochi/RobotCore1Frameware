@@ -13,6 +13,7 @@ RM := rm -rf *.sni *.dbg *.lst *.lis *.lpp *.map *.x *.lbp src/*.src src/*.p src
 -include src/UserApplication/subdir.mk
 -include src/Modules/micon/subdir.mk
 -include src/Modules/subdir.mk
+-include src/subdir.mk
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(CC_UPPER_DEPS)),)
@@ -138,6 +139,7 @@ clean:
 	-rm -rf "src/UserApplication"/*.obj "src/UserApplication"/*.d "src/UserApplication"/*.src "src/UserApplication"/*.p "src/UserApplication"/*.pp "src/UserApplication"/*.mrc "src/UserApplication"/*.prn
 	-rm -rf "src/Modules/micon"/*.obj "src/Modules/micon"/*.d "src/Modules/micon"/*.src "src/Modules/micon"/*.p "src/Modules/micon"/*.pp "src/Modules/micon"/*.mrc "src/Modules/micon"/*.prn
 	-rm -rf "src/Modules"/*.obj "src/Modules"/*.d "src/Modules"/*.src "src/Modules"/*.p "src/Modules"/*.pp "src/Modules"/*.mrc "src/Modules"/*.prn
+	-rm -rf "src"/*.obj "src"/*.d "src"/*.src "src"/*.p "src"/*.pp "src"/*.mrc "src"/*.prn
 	@echo.
 	@echo 'Clean complete.'
 
