@@ -14,8 +14,11 @@
 _UBYTE flag_RXI0 = 0;
 _UBYTE flag_TXI0 = 0;
 
-_UBYTE uart1_bufR[2048];
-_UWORD uart1_bufR_index = 0;
+_UBYTE uart1_bufR_A[1024];
+_UWORD uart1_bufR_index_A = 0;
+_UBYTE uart1_bufR_B[1024];
+_UWORD uart1_bufR_index_B = 0;
+_UBYTE uart1_bufSelect = 0;
 _UBYTE *uart1_bufT;
 _UWORD uart1_bufT_index = 0;
 _UWORD uart1_bufT_maxCount = 1;
@@ -88,17 +91,27 @@ void uart1_init(void)
 
 _UBYTE* uart1_read(_UWORD* count)
 {
-	*count = uart1_bufR_index;
-	uart1_bufR_index = 0;
+	uart1_bufSelect = !uart1_bufSelect;
 
-	return uart1_bufR;
+	if(uart1_bufSelect)
+	{
+		*count = uart1_bufR_index_B;
+		uart1_bufR_index_B = 0;
+		return uart1_bufR_B;
+	}
+	else
+	{
+		*count = uart1_bufR_index_A;
+		uart1_bufR_index_A = 0;
+		return uart1_bufR_A;
+	}
 }
 
 
 void uart1_send(_UBYTE* data, _UWORD count)
 {
-	uart1_bufT = data;
-	uart1_bufT_maxCount = count;
+//	uart1_bufT = data;
+//	uart1_bufT_maxCount = count;
 }
 
 
@@ -118,9 +131,16 @@ void Excep_SCI1_RXI1(void)
 	}
 	else
 	{
-		uart1_bufR[uart1_bufR_index] = SCI1.RDR;
-
-		uart1_bufR_index ++;
+		if(uart1_bufSelect)
+		{
+			uart1_bufR_A[uart1_bufR_index_A] = SCI1.RDR;
+			uart1_bufR_index_A ++;
+		}
+		else
+		{
+			uart1_bufR_B[uart1_bufR_index_B] = SCI1.RDR;
+			uart1_bufR_index_B ++;
+		}
 	}
 }
 
@@ -128,18 +148,18 @@ void Excep_SCI1_TXI1(void)
 {
 	IR(SCI1,TXI1) = 0x0;
 
-	if(uart1_bufT_index != 0)
-	{
-		if(uart1_bufT_index + 1 == uart1_bufT_maxCount)
-		{
-			uart1_bufT_index = 0;
-			return;
-		}
-
-		SCI1.TDR = uart1_bufT[uart1_bufT_index];
-
-		uart1_bufT_index ++;
-	}
+//	if(uart1_bufT_index != 0)
+//	{
+//		if(uart1_bufT_index + 1 == uart1_bufT_maxCount)
+//		{
+//			uart1_bufT_index = 0;
+//			return;
+//		}
+//
+//		SCI1.TDR = uart1_bufT[uart1_bufT_index];
+//
+//		uart1_bufT_index ++;
+//	}
 }
 
 static void uart1_set(unsigned char bit)
