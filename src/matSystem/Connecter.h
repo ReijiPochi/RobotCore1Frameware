@@ -10,6 +10,13 @@
 #ifndef MATSYSTEM_CONNECTER_H_
 #define MATSYSTEM_CONNECTER_H_
 
+typedef union
+{
+	_SDWORD Int;
+	float Float;
+} DataValue;
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -23,6 +30,10 @@ void _Connecter_Transmit(void);
 void Connecter_Send(_UBYTE* data, _UBYTE count);
 
 void Connecter_SendFloat(_UBYTE* head, _UBYTE headCount, float value);
+
+void Connecter_InputToHardwarePort(_UBYTE Adress, DataValue data);
+
+void Connecter_RegistHardwarePort(_UBYTE Adress, void (*Input)(DataValue data));
 
 #ifdef __cplusplus
 }

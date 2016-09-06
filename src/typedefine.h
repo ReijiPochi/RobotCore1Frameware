@@ -30,8 +30,8 @@
 *
 *********************************************************************/
 
-#ifndef TYPEDEF_H
-#define TYPEDEF_H
+#ifndef TYPEDEFINE_H
+#define TYPEDEFINE_H
 
 typedef signed char _SBYTE;
 typedef unsigned char _UBYTE;

@@ -22,6 +22,8 @@ _UBYTE TransmitDataBufferB[1024];
 _UBYTE BufferB_Count = 0;
 _UBYTE BufferAisSelected = 1;
 
+void (*Inputs[32])(DataValue data);
+
 
 static void Decipher(void);
 static void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value);
