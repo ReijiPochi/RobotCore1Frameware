@@ -11,6 +11,7 @@ C_SRCS += \
 ..\src/Modules/Buzzer.c \
 ..\src/Modules/LED.c \
 ..\src/Modules/Motor.c \
+..\src/Modules/Servo.c \
 ..\src/Modules/Timer.c \
 ..\src/Modules/UART.c 
 
@@ -22,6 +23,7 @@ C_DEPS += \
 ./src/Modules/Buzzer.d \
 ./src/Modules/LED.d \
 ./src/Modules/Motor.d \
+./src/Modules/Servo.d \
 ./src/Modules/Timer.d \
 ./src/Modules/UART.d 
 
@@ -33,6 +35,7 @@ OBJS += \
 ./src/Modules/Buzzer.obj \
 ./src/Modules/LED.obj \
 ./src/Modules/Motor.obj \
+./src/Modules/Servo.obj \
 ./src/Modules/Timer.obj \
 ./src/Modules/UART.obj 
 
@@ -41,8 +44,8 @@ OBJS += \
 src/Modules/%.obj: ../src/Modules/%.c
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
-	ccrx  -MM -MP -output=dep="$(@:%.obj=%.d)" -MT="$(@:%.obj=%.obj)" -MT="$(@:%.obj=%.d)" -lang=c   -include="C:\PROGRA~2\Renesas\RX\2_3_0/include"  -debug -isa=rxv1 -optimize=0 -fpu -alias=noansi -nologo  -define=__RX   "$<"
-	ccrx -lang=c -output=obj="$(@:%.d=%.obj)"  -include="C:\PROGRA~2\Renesas\RX\2_3_0/include"  -debug -isa=rxv1 -optimize=0 -fpu -alias=noansi -nologo  -define=__RX   "$<"
+	ccrx  -MM -MP -output=dep="$(@:%.obj=%.d)" -MT="$(@:%.obj=%.obj)" -MT="$(@:%.obj=%.d)" -lang=c   -include="C:\PROGRA~2\Renesas\RX\2_4_1/include"  -debug -isa=rxv1 -optimize=0 -fpu -alias=noansi -nologo  -define=__RX   "$<"
+	ccrx -lang=c -output=obj="$(@:%.d=%.obj)"  -include="C:\PROGRA~2\Renesas\RX\2_4_1/include"  -debug -isa=rxv1 -optimize=0 -fpu -alias=noansi -nologo  -define=__RX   "$<"
 	@echo 'Finished scanning and building: $<'
 	@echo.
 

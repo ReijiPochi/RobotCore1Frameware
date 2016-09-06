@@ -18,6 +18,7 @@ extern "C" {
 
 _SWORD StringToWORD(_UBYTE* string, _UBYTE count);
 float BitsToFloat(_UBYTE* bits);
+_UBYTE* FloatToBits(float value);
 
 
 #ifdef __cplusplus

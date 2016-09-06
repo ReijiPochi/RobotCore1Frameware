@@ -10,12 +10,12 @@
 #include "micon\SCIc.h"
 
 
-void UART1_Activate(void)
+void _UART1_Activate(void)
 {
 	uart1_init();
 }
 
-_UBYTE* UART1_GetRecievedData(_UWORD* count)
+_UBYTE* _UART1_GetRecievedData(_UWORD* count)
 {
 	_UBYTE* p;
 
@@ -23,7 +23,7 @@ _UBYTE* UART1_GetRecievedData(_UWORD* count)
 	return p;
 }
 
-void UART1_TransmitData(_UBYTE* data, _UWORD count)
+void _UART1_TransmitData(_UBYTE* data, _UWORD count)
 {
 	uart1_send(data, count);
 }

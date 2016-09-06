@@ -10,7 +10,7 @@
 #include "GPT012.h"
 
 
-#define PWM_CYCLE_TIME (5000) //  TIMER_CLOCK / PWM_FREQUENCY : 20 kHz
+#define PWM_CYCLE_TIME (1250) //  TIMER_CLOCK / PWM_FREQUENCY : 20 kHz
 
 /**
  *  GPT0,GPT1,GPT2を初期化して、PWM出力できる状態にします。

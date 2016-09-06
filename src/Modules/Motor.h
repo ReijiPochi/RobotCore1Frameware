@@ -37,12 +37,12 @@ void Motor_LockSTBY(void);
 void _Motor_Loop(void);
 
 
-void Motor1_SetPWM(float duty);
-void Motor2_SetPWM(float duty);
-void Motor3_SetPWM(float duty);
-void Motor4_SetPWM(float duty);
-void Motor5_SetPWM(float duty);
-void Motor6_SetPWM(float duty);
+void Motor1_DutyIn(float duty, SetBy setter);
+void Motor2_DutyIn(float duty, SetBy setter);
+void Motor3_DutyIn(float duty, SetBy setter);
+void Motor4_DutyIn(float duty, SetBy setter);
+void Motor5_DutyIn(float duty, SetBy setter);
+void Motor6_DutyIn(float duty, SetBy setter);
 
 void _Motor_Do(_UBYTE module, _UBYTE command, _UBYTE* value);
 

@@ -30,6 +30,9 @@
 *
 *********************************************************************/
 
+#ifndef TYPEDEF_H
+#define TYPEDEF_H
+
 typedef signed char _SBYTE;
 typedef unsigned char _UBYTE;
 typedef signed short _SWORD;
@@ -40,3 +43,26 @@ typedef signed long _SDWORD;
 typedef unsigned long _UDWORD;
 typedef signed long long _SQWORD;
 typedef unsigned long long _UQWORD;
+
+typedef enum
+{
+	ForceByHost     		= 0x0,
+	LookByHost      		= 0x1,
+	Free            		= 0x2,
+	ConnectToHardwarePort 	= 0x3
+} ModulePortState;
+
+typedef enum
+{
+	RobotCore		= 0x0,
+	MatStudio		= 0x1
+} SetBy;
+
+typedef enum
+{
+	False			= 0x0,
+	True			= 0x1
+} BOOL;
+
+#endif
+

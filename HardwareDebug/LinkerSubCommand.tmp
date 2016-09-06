@@ -22,6 +22,7 @@
 -input="./src/Modules/Buzzer.obj"
 -input="./src/Modules/LED.obj"
 -input="./src/Modules/Motor.obj"
+-input="./src/Modules/Servo.obj"
 -input="./src/Modules/Timer.obj"
 -input="./src/Modules/UART.obj"
 -input="./src/DataConverter.obj"

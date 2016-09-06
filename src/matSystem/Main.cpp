@@ -46,7 +46,7 @@ void main(void)
 	_Timer1_Set(TimerClock_32, 10000, Timer1_Caooback);
 	_Timer1_Start();
 
-	Connecter_Activate();
+	_Connecter_Activate();
 
 	while(true)
 	{
@@ -61,7 +61,8 @@ void Timer1_Caooback()
 	_Battery_Sample();
 	_Buzzer_Loop();
 
-	Connecter_Recieve();
+	_Connecter_Recieve();
+	_Connecter_Transmit();
 }
 
 #ifdef __cplusplus

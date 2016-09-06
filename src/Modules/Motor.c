@@ -10,6 +10,7 @@
 #include "micon/IO.h"
 #include "micon/GPT012.h"
 #include "..\DataConverter.h"
+#include "..\matSystem\Connecter.h"
 
 #define THRESHOLD	 		(0.001)
 #define MAX_ACCELERATION	(0.5)
@@ -22,7 +23,33 @@ static void motor4_SetMode(MotorMode);
 static void motor5_SetMode(MotorMode);
 static void motor6_SetMode(MotorMode);
 
+static void Motor1_DutyOut(float duty);
+static void Motor2_DutyOut(float duty);
+static void Motor3_DutyOut(float duty);
+static void Motor4_DutyOut(float duty);
+static void Motor5_DutyOut(float duty);
+static void Motor6_DutyOut(float duty);
+
 static void motor1_Do(_UBYTE command, _UBYTE* value);
+static void motor2_Do(_UBYTE command, _UBYTE* value);
+static void motor3_Do(_UBYTE command, _UBYTE* value);
+static void motor4_Do(_UBYTE command, _UBYTE* value);
+static void motor5_Do(_UBYTE command, _UBYTE* value);
+static void motor6_Do(_UBYTE command, _UBYTE* value);
+
+ModulePortState motor1_DutyIn_State = Free;
+ModulePortState motor2_DutyIn_State = Free;
+ModulePortState motor3_DutyIn_State = Free;
+ModulePortState motor4_DutyIn_State = Free;
+ModulePortState motor5_DutyIn_State = Free;
+ModulePortState motor6_DutyIn_State = Free;
+
+ModulePortState motor1_DutyOut_State = Free;
+ModulePortState motor2_DutyOut_State = Free;
+ModulePortState motor3_DutyOut_State = Free;
+ModulePortState motor4_DutyOut_State = Free;
+ModulePortState motor5_DutyOut_State = Free;
+ModulePortState motor6_DutyOut_State = Free;
 
 float trgDuty[6];
 float actualDuty[6];
@@ -67,14 +94,12 @@ void _Motor_Loop(void)
 		actualDuty[i] += a;
 	}
 
-
-
-	PWM_M1_set(norm(actualDuty[0], &direction[0]));
-	PWM_M2_set(norm(actualDuty[1], &direction[1]));
-	PWM_M3_set(norm(actualDuty[2], &direction[2]));
-	PWM_M4_set(norm(actualDuty[3], &direction[3]));
-	PWM_M5_set(norm(actualDuty[4], &direction[4]));
-	PWM_M6_set(norm(actualDuty[5], &direction[5]));
+	Motor1_DutyOut(norm(actualDuty[0], &direction[0]));
+	Motor2_DutyOut(norm(actualDuty[1], &direction[1]));
+	Motor3_DutyOut(norm(actualDuty[2], &direction[2]));
+	Motor4_DutyOut(norm(actualDuty[3], &direction[3]));
+	Motor5_DutyOut(norm(actualDuty[4], &direction[4]));
+	Motor6_DutyOut(norm(actualDuty[5], &direction[5]));
 
 	if(actualDuty[0] < THRESHOLD && actualDuty[0] > -THRESHOLD)
 		motor1_SetMode(MotorMode_BRAKE);
@@ -128,41 +153,107 @@ void _Motor_Loop(void)
 	}
 }
 
-/**
- *  Motor1モジュールのPWM値を設定します。
- *
- *  @param duty デューティー比　( -1.0 ～ 1.0の値 )
- */
-void Motor1_SetPWM(float duty)
+void Motor1_DutyIn(float duty, SetBy setter)
 {
-	trgDuty[0] = duty;
+	if(motor1_DutyIn_State == Free)
+		trgDuty[0] = duty;
+	else if(motor1_DutyIn_State == ForceByHost && setter == MatStudio)
+	{
+		trgDuty[0] = duty;
+	}
 }
 
-void Motor2_SetPWM(float duty)
+void Motor1_DutyOut(float duty)
 {
-	trgDuty[1] = duty;
+	PWM_M1_set(duty);
+	if(motor1_DutyOut_State == LookByHost)
+		Connecter_SendFloat("Mm1;5:", 6, duty);
 }
 
-void Motor3_SetPWM(float duty)
+void Motor2_DutyIn(float duty, SetBy setter)
 {
-	trgDuty[2] = duty;
+	if(motor2_DutyIn_State == Free)
+		trgDuty[1] = duty;
+	else if(motor2_DutyIn_State == ForceByHost && setter == MatStudio)
+	{
+		trgDuty[1] = duty;
+	}
 }
 
-void Motor4_SetPWM(float duty)
+void Motor2_DutyOut(float duty)
 {
-	trgDuty[3] = duty;
+	PWM_M2_set(duty);
+	if(motor2_DutyOut_State == LookByHost)
+		Connecter_SendFloat("Mm2;5:", 6, duty);
 }
 
-void Motor5_SetPWM(float duty)
+void Motor3_DutyIn(float duty, SetBy setter)
 {
-	trgDuty[4] = duty;
+	if(motor3_DutyIn_State == Free)
+		trgDuty[2] = duty;
+	else if(motor3_DutyIn_State == ForceByHost && setter == MatStudio)
+	{
+		trgDuty[2] = duty;
+	}
 }
 
-void Motor6_SetPWM(float duty)
+void Motor3_DutyOut(float duty)
 {
-	trgDuty[5] = duty;
+	PWM_M3_set(duty);
+	if(motor3_DutyOut_State == LookByHost)
+		Connecter_SendFloat("Mm3;5:", 6, duty);
 }
 
+void Motor4_DutyIn(float duty, SetBy setter)
+{
+	if(motor4_DutyIn_State == Free)
+		trgDuty[3] = duty;
+	else if(motor4_DutyIn_State == ForceByHost && setter == MatStudio)
+	{
+		trgDuty[3] = duty;
+	}
+}
+
+void Motor4_DutyOut(float duty)
+{
+	PWM_M4_set(duty);
+	if(motor4_DutyOut_State == LookByHost)
+		Connecter_SendFloat("Mm4;5:", 6, duty);
+}
+
+void Motor5_DutyIn(float duty, SetBy setter)
+{
+	if(motor5_DutyIn_State == Free)
+		trgDuty[4] = duty;
+	else if(motor5_DutyIn_State == ForceByHost && setter == MatStudio)
+	{
+		trgDuty[4] = duty;
+	}
+}
+
+void Motor5_DutyOut(float duty)
+{
+	PWM_M5_set(duty);
+	if(motor5_DutyOut_State == LookByHost)
+		Connecter_SendFloat("Mm5;5:", 6, duty);
+}
+
+void Motor6_DutyIn(float duty, SetBy setter)
+{
+	if(motor6_DutyIn_State == Free)
+		trgDuty[5] = duty;
+	else if(motor6_DutyIn_State == ForceByHost && setter == MatStudio)
+	{
+		trgDuty[5] = duty;
+	}
+}
+
+void Motor6_DutyOut(float duty)
+{
+	PWM_M6_set(duty);
+	if(motor6_DutyOut_State == LookByHost)
+		Connecter_SendFloat("Mm6;5:", 6, duty);
+}
 
 void motor1_SetMode(MotorMode mode)
 {
@@ -344,6 +435,25 @@ void _Motor_Do(_UBYTE module, _UBYTE command, _UBYTE* value)
 			motor1_Do(command, value);
 			break;
 
+		case '2':
+			motor2_Do(command, value);
+			break;
+
+		case '3':
+			motor3_Do(command, value);
+			break;
+
+		case '4':
+			motor4_Do(command, value);
+			break;
+
+		case '5':
+			motor5_Do(command, value);
+			break;
+
+		case '6':
+			motor6_Do(command, value);
+			break;
 		default:
 			break;
 	}
@@ -353,8 +463,139 @@ void motor1_Do(_UBYTE command, _UBYTE* value)
 {
 	switch(command)
 	{
-		case 3:
-			PWM_M1_set(BitsToFloat(value));
+		case 3:		// DutyIn_DL_Value
+			Motor1_DutyIn(BitsToFloat(value), MatStudio);
+			break;
+
+		case 4:		// DutyOut_DL_State
+			if(value[0] == 1)
+				motor1_DutyOut_State = LookByHost;
+			else
+				motor1_DutyOut_State = Free;
+			break;
+
+		case 5:		// DutyOut_UP_Value
+			Connecter_SendFloat("Mm1;5:", 6, trgDuty[0]);
+			break;
+
+		default:
+			break;
+	}
+}
+
+void motor2_Do(_UBYTE command, _UBYTE* value)
+{
+	switch(command)
+	{
+		case 3:		// DutyIn_DL_Value
+			Motor2_DutyIn(BitsToFloat(value), MatStudio);
+			break;
+
+		case 4:		// DutyOut_DL_State
+			if(value[0] == 1)
+				motor2_DutyOut_State = LookByHost;
+			else
+				motor2_DutyOut_State = Free;
+			break;
+
+		case 5:		// DutyOut_UP_Value
+			Connecter_SendFloat("Mm2;5:", 6, trgDuty[1]);
+			break;
+
+		default:
+			break;
+	}
+}
+
+void motor3_Do(_UBYTE command, _UBYTE* value)
+{
+	switch(command)
+	{
+		case 3:		// DutyIn_DL_Value
+			Motor3_DutyIn(BitsToFloat(value), MatStudio);
+			break;
+
+		case 4:		// DutyOut_DL_State
+			if(value[0] == 1)
+				motor3_DutyOut_State = LookByHost;
+			else
+				motor3_DutyOut_State = Free;
+			break;
+
+		case 5:		// DutyOut_UP_Value
+			Connecter_SendFloat("Mm3;5:", 6, trgDuty[2]);
+			break;
+
+		default:
+			break;
+	}
+}
+
+void motor4_Do(_UBYTE command, _UBYTE* value)
+{
+	switch(command)
+	{
+		case 3:		// DutyIn_DL_Value
+			Motor4_DutyIn(BitsToFloat(value), MatStudio);
+			break;
+
+		case 4:		// DutyOut_DL_State
+			if(value[0] == 1)
+				motor4_DutyOut_State = LookByHost;
+			else
+				motor4_DutyOut_State = Free;
+			break;
+
+		case 5:		// DutyOut_UP_Value
+			Connecter_SendFloat("Mm4;5:", 6, trgDuty[3]);
+			break;
+
+		default:
+			break;
+	}
+}
+
+void motor5_Do(_UBYTE command, _UBYTE* value)
+{
+	switch(command)
+	{
+		case 3:		// DutyIn_DL_Value
+			Motor5_DutyIn(BitsToFloat(value), MatStudio);
+			break;
+
+		case 4:		// DutyOut_DL_State
+			if(value[0] == 1)
+				motor5_DutyOut_State = LookByHost;
+			else
+				motor5_DutyOut_State = Free;
+			break;
+
+		case 5:		// DutyOut_UP_Value
+			Connecter_SendFloat("Mm5;5:", 6, trgDuty[4]);
+			break;
+
+		default:
+			break;
+	}
+}
+
+void motor6_Do(_UBYTE command, _UBYTE* value)
+{
+	switch(command)
+	{
+		case 3:		// DutyIn_DL_Value
+			Motor6_DutyIn(BitsToFloat(value), MatStudio);
+			break;
+
+		case 4:		// DutyOut_DL_State
+			if(value[0] == 1)
+				motor6_DutyOut_State = LookByHost;
+			else
+				motor6_DutyOut_State = Free;
+			break;
+
+		case 5:		// DutyOut_UP_Value
+			Connecter_SendFloat("Mm6;5:", 6, trgDuty[5]);
 			break;
 
 		default:

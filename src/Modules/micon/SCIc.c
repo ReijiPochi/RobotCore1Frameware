@@ -6,6 +6,7 @@
  */
 
 #include "SCIc.h"
+#include "IO.h"
 
 #include "vect.h"
 #include "iodefine.h"
@@ -21,7 +22,7 @@ _UWORD uart1_bufR_index_B = 0;
 _UBYTE uart1_bufSelect = 0;
 _UBYTE *uart1_bufT;
 _UWORD uart1_bufT_index = 0;
-_UWORD uart1_bufT_maxCount = 1;
+_UWORD uart1_bufT_maxCount = 0;
 
 _UBYTE uart0_data;
 
@@ -110,8 +111,18 @@ _UBYTE* uart1_read(_UWORD* count)
 
 void uart1_send(_UBYTE* data, _UWORD count)
 {
-//	uart1_bufT = data;
-//	uart1_bufT_maxCount = count;
+	if(uart1_bufT_maxCount != 0)
+	{
+		LED_ERROR(1);
+		return;
+	}
+
+	uart1_bufT = data;
+	uart1_bufT_maxCount = count;
+
+	SCI1.TDR = uart1_bufT[uart1_bufT_index];
+
+	uart1_bufT_index ++;
 }
 
 
@@ -148,18 +159,19 @@ void Excep_SCI1_TXI1(void)
 {
 	IR(SCI1,TXI1) = 0x0;
 
-//	if(uart1_bufT_index != 0)
-//	{
-//		if(uart1_bufT_index + 1 == uart1_bufT_maxCount)
-//		{
-//			uart1_bufT_index = 0;
-//			return;
-//		}
-//
-//		SCI1.TDR = uart1_bufT[uart1_bufT_index];
-//
-//		uart1_bufT_index ++;
-//	}
+	if(uart1_bufT_maxCount != 0)
+	{
+		if(uart1_bufT_index >= uart1_bufT_maxCount)
+		{
+			uart1_bufT_index = 0;
+			uart1_bufT_maxCount = 0;
+			return;
+		}
+
+		SCI1.TDR = uart1_bufT[uart1_bufT_index];
+
+		uart1_bufT_index ++;
+	}
 }
 
 static void uart1_set(unsigned char bit)
@@ -252,7 +264,7 @@ _SWORD uart0_read(void)
 	{
 		// エラー処理
 		_SWORD dumy = SCI0.RDR;
-		uart1_clear_errorFlag();
+		uart0_clear_errorFlag();
 
 		flag_RXI0 = 0;
 		return -1;

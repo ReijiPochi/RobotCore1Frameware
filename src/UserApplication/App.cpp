@@ -1,12 +1,16 @@
 
 #include "App.h"
 #include "..\typedefine.h"
+#include "..\DataConverter.h"
 #include "..\Modules\LED.h"
 #include "..\Modules\Motor.h"
 #include "..\Modules\Bluetooth.h"
 #include "..\Modules\AnalogIN.h"
 #include "..\Modules\AnalogOUT.h"
 #include "..\Modules\Buzzer.h"
+#include "..\Modules\Servo.h"
+
+#include "..\matSystem\Connecter.h"
 
 static void DecipherAndExecute(_SWORD*);
 
@@ -19,6 +23,7 @@ void Initialize()
 	AnalogIN_Activate();
 	AnalogOUT_Activate();
 	Buzzer_Activate();
+	Servo_Activate();
 
 	Buzzer_StepUp();
 }
@@ -92,26 +97,28 @@ void DecipherAndExecute(_SWORD* order)
 	// まる
 	if ((button & (1 << 6)) != 0)
 	{
-
+		_UBYTE test[] = "Mm1;5:0.594\n";
+		Connecter_Send(test, 12);
 	}
 
-	// ばつ
+	// しかく
 	if ((button & (1 << 8)) != 0)
 	{
-
+		_UBYTE b[] = {'B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','\n'};
+		Connecter_Send(b, 34);
 	}
 
 	if ((button & (1 << 9)) != 0)
 	{
-		Motor5_SetPWM(-1.0);
+		Motor5_DutyIn(-1.0, RobotCore);
 	}
 	else if ((button & (1 << 10)) != 0)
 	{
-		Motor5_SetPWM(1.0);
+		Motor5_DutyIn(1.0, RobotCore);
 	}
 	else
 	{
-		Motor5_SetPWM(0.0);
+		Motor5_DutyIn(0.0, RobotCore);
 	}
 
 	// アナログスティックの解析
@@ -132,10 +139,12 @@ void DecipherAndExecute(_SWORD* order)
 	if(_stick_r_h > 0) stick_r_h_2 = _stick_r_h * _stick_r_h / 64;
 	else stick_r_h_2 = _stick_r_h * _stick_r_h / -64;
 
-	Motor1_SetPWM(-(stick_l_v_2 - stick_l_h_2 - stick_r_h_2) / 64.0);
-	Motor2_SetPWM((stick_l_v_2 + stick_l_h_2 + stick_r_h_2) / 64.0);
-	Motor3_SetPWM((stick_l_v_2 - stick_l_h_2 + stick_r_h_2) / 64.0);
-	Motor4_SetPWM(-(stick_l_v_2 + stick_l_h_2 - stick_r_h_2) / 64.0);
+	Motor1_DutyIn(-(stick_l_v_2 - stick_l_h_2 - stick_r_h_2) / 64.0, RobotCore);
+	Motor2_DutyIn((stick_l_v_2 + stick_l_h_2 + stick_r_h_2) / 64.0, RobotCore);
+	Motor3_DutyIn((stick_l_v_2 - stick_l_h_2 + stick_r_h_2) / 64.0, RobotCore);
+	Motor4_DutyIn(-(stick_l_v_2 + stick_l_h_2 - stick_r_h_2) / 64.0, RobotCore);
+
+	Servo1_RotationIn(stick_l_v_2, RobotCore);
 }
 
 

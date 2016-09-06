@@ -81,3 +81,18 @@ float BitsToFloat(_UBYTE* bits)
 
 	return data.Float;
 }
+
+_UBYTE bytes[4];
+
+_UBYTE* FloatToBits(float value)
+{
+	IntFloat data;
+	data.Float = value;
+
+	bytes[0] = data.Int & 0x000000FF;
+	bytes[1] = (data.Int & 0x0000FF00) >> 8;
+	bytes[2] = (data.Int & 0x00FF0000) >> 16;
+	bytes[3] = (data.Int & 0xFF000000) >> 24;
+
+	return bytes;
+}

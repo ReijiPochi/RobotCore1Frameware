@@ -10,7 +10,7 @@
 #include "iodefine.h"
 #include "..\..\typedefine.h"
 
-#define TIMER_FQ	(12500000)
+#define TIMER_FQ	(3125000)
 
 void GPT46_init(void)
 {
