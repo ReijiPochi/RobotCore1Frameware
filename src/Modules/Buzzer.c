@@ -13,6 +13,7 @@ _UWORD oneTime = 0;
 _UWORD stepUp = 0;
 _UWORD stepDown = 0;
 _UWORD siren1 = 0, siren1Fq = 500;
+_UWORD siren2 = 0, siren2Fq = 1000;
 
 void Buzzer_Activate(void)
 {
@@ -93,6 +94,27 @@ void _Buzzer_Loop(void)
 
 		siren1--;
 	}
+
+	if(siren2 != 0)
+	{
+		if(siren2 % 50 == 0)
+		{
+			if(siren2Fq == 1000)
+				siren2Fq = 550;
+			else
+				siren2Fq = 1000;
+
+			BUZZER_set(siren2Fq, 0.5);
+			BUZZER_On();
+		}
+
+		if(siren2 == 1)
+		{
+			BUZZER_Off();
+		}
+
+		siren2--;
+	}
 }
 
 void Buzzer_On(void)
@@ -147,4 +169,14 @@ void Buzzer_Siren1(void)
 	BUZZER_set(500, 0.5);
 	BUZZER_On();
 	siren1 = 40;
+}
+
+void Buzzer_Siren2(void)
+{
+	if(siren2 != 0)
+		return;
+
+	BUZZER_set(1000, 0.5);
+	BUZZER_On();
+	siren2 = 400;
 }

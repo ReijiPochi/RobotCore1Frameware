@@ -19,5 +19,9 @@ src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..
 ../src/UserApplication/..\Modules\Buzzer.h:
 src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\Servo.h
 ../src/UserApplication/..\Modules\Servo.h:
+src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\DataLogger.h
+../src/UserApplication/..\Modules\DataLogger.h:
+src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\..\matSystem\Connecter.h
+../src/UserApplication/..\Modules\..\matSystem\Connecter.h:
 src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\matSystem\Connecter.h
 ../src/UserApplication/..\matSystem\Connecter.h:

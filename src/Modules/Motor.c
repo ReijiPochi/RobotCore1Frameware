@@ -51,6 +51,8 @@ ModulePortState motor4_DutyOut_State = Free;
 ModulePortState motor5_DutyOut_State = Free;
 ModulePortState motor6_DutyOut_State = Free;
 
+_UBYTE motor1_DutyIn_HardwarePortAdress = 0;
+
 float trgDuty[6];
 float actualDuty[6];
 _UBYTE direction[6];
@@ -165,9 +167,15 @@ void Motor1_DutyIn(float duty, SetBy setter)
 
 void Motor1_DutyOut(float duty)
 {
+	DataValue data;
 	PWM_M1_set(duty);
 	if(motor1_DutyOut_State == LookByHost)
 		Connecter_SendFloat("Mm1;5:", 6, duty);
+	if(motor1_DutyIn_HardwarePortAdress != 0)
+	{
+		data.Float = duty;
+		Connecter_InputToHardwarePort(motor1_DutyIn_HardwarePortAdress, data);
+	}
 }
 
 void Motor2_DutyIn(float duty, SetBy setter)
@@ -476,6 +484,14 @@ void motor1_Do(_UBYTE command, _UBYTE* value)
 
 		case 5:		// DutyOut_UP_Value
 			Connecter_SendFloat("Mm1;5:", 6, trgDuty[0]);
+			break;
+
+		case 6:		// DutyOut_DL_ConnectToHardwarePort
+			motor1_DutyIn_HardwarePortAdress = BitsToInt(value);
+			if(value == '0')
+				DataLogger1_LoggingStop();
+			else
+				DataLogger1_LoggingStart();
 			break;
 
 		default:

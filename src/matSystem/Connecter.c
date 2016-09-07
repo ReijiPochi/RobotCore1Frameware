@@ -189,3 +189,14 @@ void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value)
 	}
 }
 
+
+void Connecter_InputToHardwarePort(_UBYTE Adress, DataValue data)
+{
+	Inputs[Adress](data);
+}
+
+void Connecter_RegistHardwarePort(_UBYTE Adress, void (*Input)(DataValue data))
+{
+	Inputs[Adress] = Input;
+}
+

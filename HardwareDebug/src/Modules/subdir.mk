@@ -9,6 +9,7 @@ C_SRCS += \
 ..\src/Modules/Battery.c \
 ..\src/Modules/Bluetooth.c \
 ..\src/Modules/Buzzer.c \
+..\src/Modules/DataLogger.c \
 ..\src/Modules/LED.c \
 ..\src/Modules/Motor.c \
 ..\src/Modules/Servo.c \
@@ -21,6 +22,7 @@ C_DEPS += \
 ./src/Modules/Battery.d \
 ./src/Modules/Bluetooth.d \
 ./src/Modules/Buzzer.d \
+./src/Modules/DataLogger.d \
 ./src/Modules/LED.d \
 ./src/Modules/Motor.d \
 ./src/Modules/Servo.d \
@@ -33,6 +35,7 @@ OBJS += \
 ./src/Modules/Battery.obj \
 ./src/Modules/Bluetooth.obj \
 ./src/Modules/Buzzer.obj \
+./src/Modules/DataLogger.obj \
 ./src/Modules/LED.obj \
 ./src/Modules/Motor.obj \
 ./src/Modules/Servo.obj \
@@ -44,8 +47,8 @@ OBJS += \
 src/Modules/%.obj: ../src/Modules/%.c
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
-	ccrx  -MM -MP -output=dep="$(@:%.obj=%.d)" -MT="$(@:%.obj=%.obj)" -MT="$(@:%.obj=%.d)" -lang=c   -include="C:\PROGRA~2\Renesas\RX\2_3_0/include"  -debug -isa=rxv1 -optimize=0 -fpu -alias=noansi -nologo  -define=__RX   "$<"
-	ccrx -lang=c -output=obj="$(@:%.d=%.obj)"  -include="C:\PROGRA~2\Renesas\RX\2_3_0/include"  -debug -isa=rxv1 -optimize=0 -fpu -alias=noansi -nologo  -define=__RX   "$<"
+	ccrx  -MM -MP -output=dep="$(@:%.obj=%.d)" -MT="$(@:%.obj=%.obj)" -MT="$(@:%.obj=%.d)" -lang=c   -include="C:\PROGRA~2\Renesas\RX\2_4_1/include"  -debug -isa=rxv1 -optimize=0 -fpu -alias=noansi -nologo  -define=__RX   "$<"
+	ccrx -lang=c -output=obj="$(@:%.d=%.obj)"  -include="C:\PROGRA~2\Renesas\RX\2_4_1/include"  -debug -isa=rxv1 -optimize=0 -fpu -alias=noansi -nologo  -define=__RX   "$<"
 	@echo 'Finished scanning and building: $<'
 	@echo.
 

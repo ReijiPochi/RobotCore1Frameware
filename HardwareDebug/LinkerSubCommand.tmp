@@ -20,6 +20,7 @@
 -input="./src/Modules/Battery.obj"
 -input="./src/Modules/Bluetooth.obj"
 -input="./src/Modules/Buzzer.obj"
+-input="./src/Modules/DataLogger.obj"
 -input="./src/Modules/LED.obj"
 -input="./src/Modules/Motor.obj"
 -input="./src/Modules/Servo.obj"

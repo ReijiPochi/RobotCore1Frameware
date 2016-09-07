@@ -9,6 +9,7 @@
 #include "..\Modules\AnalogOUT.h"
 #include "..\Modules\Buzzer.h"
 #include "..\Modules\Servo.h"
+#include "..\Modules\DataLogger.h"
 
 #include "..\matSystem\Connecter.h"
 
@@ -24,6 +25,7 @@ void Initialize()
 	AnalogOUT_Activate();
 	Buzzer_Activate();
 	Servo_Activate();
+	DataLogger_Activate();
 
 	Buzzer_StepUp();
 }
@@ -85,12 +87,13 @@ void DecipherAndExecute(_SWORD* order)
 	if ((button & (1 << 11)) != 0)
 	{
 //		pump_on();
-		Buzzer_On();
+		//Buzzer_On();
+		Buzzer_Siren2();
 		_LED_R_On();
 	}
 	else
 	{
-		Buzzer_Off();
+		//Buzzer_Off();
 		_LED_R_Off();
 	}
 

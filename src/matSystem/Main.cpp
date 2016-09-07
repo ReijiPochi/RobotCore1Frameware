@@ -21,6 +21,7 @@
 #include "..\Modules\Battery.h"
 #include "..\Modules\LED.h"
 #include "..\Modules\Buzzer.h"
+#include "..\Modules\DataLogger.h"
 
 
 void main(void);
@@ -60,6 +61,7 @@ void Timer1_Caooback()
 	_Motor_Loop();
 	_Battery_Sample();
 	_Buzzer_Loop();
+	_DataLogger_Loop();
 
 	_Connecter_Recieve();
 	_Connecter_Transmit();

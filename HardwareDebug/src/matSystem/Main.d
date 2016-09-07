@@ -17,3 +17,7 @@ src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\LED.h
 ../src/matSystem/..\Modules\LED.h:
 src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\Buzzer.h
 ../src/matSystem/..\Modules\Buzzer.h:
+src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\DataLogger.h
+../src/matSystem/..\Modules\DataLogger.h:
+src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\..\matSystem\Connecter.h
+../src/matSystem/..\Modules\..\matSystem\Connecter.h:

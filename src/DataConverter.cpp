@@ -82,8 +82,16 @@ float BitsToFloat(_UBYTE* bits)
 	return data.Float;
 }
 
-_UBYTE bytes[4];
+_SWORD BitsToInt(_UBYTE* bits)
+{
+	_UDWORD data = 0, data1 = bits[0], data2 = bits[1], data3 = bits[2], data4 = bits[3];
 
+	data = data1 | data2 << 8 | data3 << 16 | data4 << 24;
+
+	return data;
+}
+
+_UBYTE bytes[4];
 _UBYTE* FloatToBits(float value)
 {
 	IntFloat data;

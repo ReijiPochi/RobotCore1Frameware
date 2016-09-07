@@ -33,6 +33,8 @@ void Buzzer_StepDown(void);
 
 void Buzzer_Siren1(void);
 
+void Buzzer_Siren2(void);
+
 
 #ifdef __cplusplus
 }
