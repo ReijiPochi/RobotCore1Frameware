@@ -10,6 +10,13 @@
 #ifndef MODULES_BLUETOOTH_H_
 #define MODULES_BLUETOOTH_H_
 
+
+typedef struct
+{
+	BOOL Maru;
+} DUALSHOCK3;
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -18,6 +25,8 @@ extern "C" {
 void Bluetooth_Activate(void);
 
 _SWORD Bluetooth_GetRecieveData(void);
+
+
 
 
 #ifdef __cplusplus

@@ -107,8 +107,6 @@ void DecipherAndExecute(_SWORD* order)
 	// しかく
 	if ((button & (1 << 8)) != 0)
 	{
-		_UBYTE b[] = {'B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','\n'};
-		Connecter_Send(b, 34);
 	}
 
 	if ((button & (1 << 9)) != 0)
