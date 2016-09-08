@@ -13,59 +13,33 @@
 
 #include "..\matSystem\Connecter.h"
 
-static void DecipherAndExecute(_SWORD*);
+static void BluetoothCallback(DUALSHOCK3 data);
 
 void Initialize()
 {
 	_LED_B_On();
 
 	Motor_Activate();
-	Bluetooth_Activate();
 	AnalogIN_Activate();
 	AnalogOUT_Activate();
 	Buzzer_Activate();
 	Servo_Activate();
 	DataLogger_Activate();
 
+	Bluetooth_Activate(BluetoothCallback);
+
 	Buzzer_StepUp();
 }
 
-
-_SWORD orderBuffer[8] = { 0 };
-_UBYTE i = 0;
-
 void MainLoop()
 {
-	_SWORD orderChar = Bluetooth_GetRecieveData();
 
-	if (orderChar != -1)
-	{
-		if(i == 0 && orderChar != 0x80)
-		{
-		}
-		else
-		{
-			orderBuffer[i] = orderChar;
-			i++;
-		}
-	}
-
-	if (i == 7)
-	{
-		i = 0;
-
-		DecipherAndExecute(orderBuffer);
-	}
 }
 
 
-
-void DecipherAndExecute(_SWORD* order)
+static void BluetoothCallback(DUALSHOCK3 data)
 {
-	_UDWORD button = (order[1] << 8) + order[2];
-
-	// START
-	if(button == 0x0003)
+	if(data.Buttons.BIT.Start)
 	{
 		Motor_UnlockSTBY();
 		Buzzer_Siren1();
@@ -74,8 +48,7 @@ void DecipherAndExecute(_SWORD* order)
 		_LED_G_On();
 	}
 
-	// SELECT
-	if(button == 0x000C)
+	if(data.Buttons.BIT.Select)
 	{
 		Motor_LockSTBY();
 		Buzzer_StepDown();
@@ -84,49 +57,28 @@ void DecipherAndExecute(_SWORD* order)
 		_LED_G_Off();
 	}
 
-	if ((button & (1 << 11)) != 0)
-	{
-//		pump_on();
-		//Buzzer_On();
+	if(data.Buttons.BIT.Maru)
+		Buzzer_OneTime(100);
+
+	if(data.Buttons.BIT.Batsu)
 		Buzzer_Siren2();
-		_LED_R_On();
-	}
-	else
-	{
-		//Buzzer_Off();
-		_LED_R_Off();
-	}
 
-	// まる
-	if ((button & (1 << 6)) != 0)
-	{
-		_UBYTE test[] = "Mm1;5:0.594\n";
-		Connecter_Send(test, 12);
-	}
-
-	// しかく
-	if ((button & (1 << 8)) != 0)
-	{
-	}
-
-	if ((button & (1 << 9)) != 0)
-	{
-		Motor5_DutyIn(-1.0, RobotCore);
-	}
-	else if ((button & (1 << 10)) != 0)
+	if(data.Buttons.BIT.UpArrow)
 	{
 		Motor5_DutyIn(1.0, RobotCore);
+	}
+	else if(data.Buttons.BIT.DownArrow)
+	{
+		Motor5_DutyIn(-1.0, RobotCore);
 	}
 	else
 	{
 		Motor5_DutyIn(0.0, RobotCore);
 	}
 
-	// アナログスティックの解析
-	_SDWORD _stick_l_h = order[3] - 64;	// 左水平
-	_SDWORD _stick_l_v = -order[4] + 64;	// 左垂直
-	_SDWORD _stick_r_h = order[5] - 64;	// 右水平
-
+	_SDWORD _stick_l_h = data.AnalogL.X;
+	_SDWORD _stick_l_v = data.AnalogL.Y;
+	_SDWORD _stick_r_h = data.AnalogR.X;
 	_SDWORD stick_l_h_2;
 	_SDWORD stick_l_v_2;
 	_SDWORD stick_r_h_2;
@@ -144,8 +96,5 @@ void DecipherAndExecute(_SWORD* order)
 	Motor2_DutyIn((stick_l_v_2 + stick_l_h_2 + stick_r_h_2) / 64.0, RobotCore);
 	Motor3_DutyIn((stick_l_v_2 - stick_l_h_2 + stick_r_h_2) / 64.0, RobotCore);
 	Motor4_DutyIn(-(stick_l_v_2 + stick_l_h_2 - stick_r_h_2) / 64.0, RobotCore);
-
-	Servo1_RotationIn(stick_l_v_2, RobotCore);
 }
-
 

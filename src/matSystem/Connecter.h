@@ -31,6 +31,8 @@ void Connecter_Send(_UBYTE* data, _UBYTE count);
 
 void Connecter_SendFloat(_UBYTE* head, _UBYTE headCount, float value);
 
+void Connecter_SendInte(_UBYTE* head, _UBYTE headCount, _SDWORD value);
+
 void Connecter_InputToHardwarePort(_UBYTE Adress, DataValue data);
 
 void Connecter_RegistHardwarePort(_UBYTE Adress, void (*Input)(DataValue data));

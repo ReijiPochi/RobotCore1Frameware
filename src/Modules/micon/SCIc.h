@@ -20,10 +20,11 @@ _UBYTE* uart1_read(_UWORD* count);
 
 void uart1_send(_UBYTE* data, _UWORD count);
 
-
 void uart0_init(void);
 
-_SWORD uart0_read(void);
+_UBYTE* uart0_read(_UWORD* count);
+
+void uart0_send(_UBYTE* data, _UWORD count);
 
 #ifdef __cplusplus
 }

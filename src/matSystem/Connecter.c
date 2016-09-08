@@ -11,8 +11,9 @@
 #include "..\DataConverter.h"
 
 #include "..\Modules\Motor.h"
+#include "..\Modules\Bluetooth.h"
 
-_UBYTE *RecievedData;
+_UBYTE *uart1RecievedData;
 _UBYTE line[64];
 _UBYTE line_index = 0;
 
@@ -39,11 +40,11 @@ void _Connecter_Recieve(void)
 	_UWORD count;
 	_UWORD RecievedData_index = 0;
 
-	RecievedData = _UART1_GetRecievedData(&count);
+	uart1RecievedData = _UART1_GetRecievedData(&count);
 
 	while(RecievedData_index != count)
 	{
-		line[line_index] = RecievedData[RecievedData_index];
+		line[line_index] = uart1RecievedData[RecievedData_index];
 
 		line_index ++;
 		RecievedData_index ++;
@@ -173,6 +174,13 @@ void Connecter_SendFloat(_UBYTE* head, _UBYTE headCount, float value)
 	}
 }
 
+void Connecter_SendInt(_UBYTE* head, _UBYTE headCount, _SDWORD value)
+{
+	Connecter_Send(head, headCount);
+	Connecter_Send(IntToBits(value), 4);
+	Connecter_Send("\n", 1);
+}
+
 void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value)
 {
 	if(trg[0] == 'M')
@@ -181,6 +189,10 @@ void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value)
 		{
 			case 'm':
 				_Motor_Do(trg[2], command, value);
+				break;
+
+			case 'b':
+				_Bluetooth_Do(trg[2], command, value);
 				break;
 
 			default:

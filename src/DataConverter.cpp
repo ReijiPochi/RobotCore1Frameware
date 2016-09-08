@@ -104,3 +104,14 @@ _UBYTE* FloatToBits(float value)
 
 	return bytes;
 }
+
+_UBYTE intBytes[4];
+_UBYTE* IntToBits(_SDWORD value)
+{
+	intBytes[0] = value & 0x000000FF;
+	intBytes[1] = (value & 0x0000FF00) >> 8;
+	intBytes[2] = (value & 0x00FF0000) >> 16;
+	intBytes[3] = (value & 0xFF000000) >> 24;
+
+	return intBytes;
+}

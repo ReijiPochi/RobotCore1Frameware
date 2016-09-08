@@ -22,6 +22,12 @@ _UBYTE* _UART1_GetRecievedData(_UWORD* count);
 
 void _UART1_TransmitData(_UBYTE* data, _UWORD count);
 
+void _UART0_Activate(void);
+
+_UBYTE* _UART0_GetRecievedData(_UWORD* count);
+
+void _UART0_TransmitData(_UBYTE* data, _UWORD count);
+
 
 #ifdef __cplusplus
 }

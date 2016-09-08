@@ -24,7 +24,14 @@ _UBYTE *uart1_bufT;
 _UWORD uart1_bufT_index = 0;
 _UWORD uart1_bufT_maxCount = 0;
 
-_UBYTE uart0_data;
+_UBYTE uart0_bufR_A[256];
+_UWORD uart0_bufR_index_A = 0;
+_UBYTE uart0_bufR_B[256];
+_UWORD uart0_bufR_index_B = 0;
+_UBYTE uart0_bufSelect = 0;
+_UBYTE *uart0_bufT;
+_UWORD uart0_bufT_index = 0;
+_UWORD uart0_bufT_maxCount = 0;
 
 static void uart0_set(unsigned char bit);
 static void uart0_clear_errorFlag(void);
@@ -258,43 +265,86 @@ void uart0_init(void)
 	uart0_set(1);
 }
 
-_SWORD uart0_read(void)
+_UBYTE* uart0_read(_UWORD* count)
 {
-	if(	SCI0.SSR.BIT.ORER == 1 || SCI0.SSR.BIT.PER == 1 || SCI0.SSR.BIT.FER == 1 )
-	{
-		// エラー処理
-		_SWORD dumy = SCI0.RDR;
-		uart0_clear_errorFlag();
+	uart0_bufSelect = !uart0_bufSelect;
 
-		flag_RXI0 = 0;
-		return -1;
+	if(uart0_bufSelect)
+	{
+		*count = uart0_bufR_index_B;
+		uart0_bufR_index_B = 0;
+		return uart0_bufR_B;
 	}
 	else
 	{
-		if(flag_RXI0 == 1)
-		{
-			flag_RXI0 = 0;
-
-			uart0_data = SCI0.RDR;
-			return uart0_data;
-		}
-		else
-		{
-			return -1;
-		}
+		*count = uart0_bufR_index_A;
+		uart0_bufR_index_A = 0;
+		return uart0_bufR_A;
 	}
+}
+
+
+void uart0_send(_UBYTE* data, _UWORD count)
+{
+	if(uart0_bufT_maxCount != 0)
+	{
+		LED_ERROR(1);
+		return;
+	}
+
+	uart0_bufT = data;
+	uart0_bufT_maxCount = count;
+
+	SCI0.TDR = uart0_bufT[uart0_bufT_index];
+
+	uart0_bufT_index ++;
 }
 
 void Excep_SCI0_RXI0(void)
 {
-	flag_RXI0 = 1;
 	IR(SCI0,RXI0) = 0x0;
+
+	if(	SCI0.SSR.BIT.ORER == 1 || SCI0.SSR.BIT.PER == 1 || SCI0.SSR.BIT.FER == 1 )
+	{
+		// エラー処理
+		_UBYTE dumy;
+		dumy = SCI0.RDR;
+		uart0_clear_errorFlag();
+
+		return;
+	}
+	else
+	{
+		if(uart0_bufSelect)
+		{
+			uart0_bufR_A[uart0_bufR_index_A] = SCI0.RDR;
+			uart0_bufR_index_A ++;
+		}
+		else
+		{
+			uart0_bufR_B[uart0_bufR_index_B] = SCI0.RDR;
+			uart0_bufR_index_B ++;
+		}
+	}
 }
 
 void Excep_SCI0_TXI0(void)
 {
-	flag_TXI0 = 1;
 	IR(SCI0,TXI0) = 0x0;
+
+	if(uart0_bufT_maxCount != 0)
+	{
+		if(uart0_bufT_index >= uart0_bufT_maxCount)
+		{
+			uart0_bufT_index = 0;
+			uart0_bufT_maxCount = 0;
+			return;
+		}
+
+		SCI0.TDR = uart0_bufT[uart0_bufT_index];
+
+		uart0_bufT_index ++;
+	}
 }
 
 static void uart0_set(unsigned char bit)

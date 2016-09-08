@@ -20,6 +20,7 @@ _SWORD StringToWORD(_UBYTE* string, _UBYTE count);
 float BitsToFloat(_UBYTE* bits);
 _SWORD BitsToInt(_UBYTE* bits);
 _UBYTE* FloatToBits(float value);
+_UBYTE* IntToBits(_SDWORD value);
 
 
 #ifdef __cplusplus

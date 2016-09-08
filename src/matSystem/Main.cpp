@@ -22,6 +22,7 @@
 #include "..\Modules\LED.h"
 #include "..\Modules\Buzzer.h"
 #include "..\Modules\DataLogger.h"
+#include "..\Modules\Bluetooth.h"
 
 
 void main(void);
@@ -58,6 +59,7 @@ void main(void)
 void Timer1_Caooback()
 {
 	BatteryCheck();
+	_Bluetooth_Loop();
 	_Motor_Loop();
 	_Battery_Sample();
 	_Buzzer_Loop();
