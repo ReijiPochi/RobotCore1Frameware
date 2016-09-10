@@ -69,9 +69,9 @@ void _Bluetooth_Loop(void)
 			}
 
 			data.AnalogL.X = orderBuffer[3] - 64;
-			data.AnalogL.Y = -orderBuffer[4] + 64;
+			data.AnalogL.Y = orderBuffer[4] - 64;
 			data.AnalogR.X = orderBuffer[5] - 64;
-			data.AnalogR.Y = -orderBuffer[6] + 64;
+			data.AnalogR.Y = orderBuffer[6] - 64;
 
 			Bluetooth_CommandOut(data);
 		}
@@ -114,4 +114,14 @@ void _Bluetooth_Do(_UBYTE module, _UBYTE command, _UBYTE* value)
 		default:
 			break;
 	}
+}
+
+void Bluetooth_Vibrate1(void)
+{
+	uart0_send("1", 1);
+}
+
+void Bluetooth_Vibrate2(void)
+{
+	uart0_send("2", 1);
 }

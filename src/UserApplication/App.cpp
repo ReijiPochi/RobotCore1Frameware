@@ -33,7 +33,6 @@ void Initialize()
 
 void MainLoop()
 {
-
 }
 
 
@@ -62,6 +61,12 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 	if(data.Buttons.BIT.Batsu)
 		Buzzer_Siren2();
+
+	if(data.Buttons.BIT.Sankaku)
+		Bluetooth_Vibrate1();
+
+	if(data.Buttons.BIT.Shikaku)
+		Bluetooth_Vibrate2();
 
 	if(data.Buttons.BIT.UpArrow)
 	{
@@ -96,5 +101,7 @@ static void BluetoothCallback(DUALSHOCK3 data)
 	Motor2_DutyIn((stick_l_v_2 + stick_l_h_2 + stick_r_h_2) / 64.0, RobotCore);
 	Motor3_DutyIn((stick_l_v_2 - stick_l_h_2 + stick_r_h_2) / 64.0, RobotCore);
 	Motor4_DutyIn(-(stick_l_v_2 + stick_l_h_2 - stick_r_h_2) / 64.0, RobotCore);
+
+	Servo1_RotationIn(data.AnalogR.Y, RobotCore);
 }
 
