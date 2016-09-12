@@ -5,6 +5,7 @@
 -input="./src/matSystem/BatteryCheck.obj"
 -input="./src/matSystem/Connecter.obj"
 -input="./src/matSystem/Main.obj"
+-input="./src/matSystem/System.obj"
 -input="./src/UserApplication/App.obj"
 -input="./src/Modules/micon/CMT.obj"
 -input="./src/Modules/micon/DAa.obj"

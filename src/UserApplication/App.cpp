@@ -12,6 +12,7 @@
 #include "..\Modules\DataLogger.h"
 
 #include "..\matSystem\Connecter.h"
+#include "..\matSystem\System.h"
 
 static void BluetoothCallback(DUALSHOCK3 data);
 
@@ -27,6 +28,7 @@ void Initialize()
 	DataLogger_Activate();
 
 	Bluetooth_Activate(BluetoothCallback);
+	//System_ClockStart();
 
 	Buzzer_StepUp();
 }
@@ -41,6 +43,8 @@ static void BluetoothCallback(DUALSHOCK3 data)
 	if(data.Buttons.BIT.Start)
 	{
 		Motor_UnlockSTBY();
+		System_ClockStart();
+
 		Buzzer_Siren1();
 
 		_LED_B_Off();
@@ -53,7 +57,6 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		Buzzer_StepDown();
 
 		_LED_B_On();
-		_LED_G_Off();
 	}
 
 	if(data.Buttons.BIT.Maru)

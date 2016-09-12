@@ -15,6 +15,7 @@
 
 #include "BatteryCheck.h"
 #include "Connecter.h"
+#include "System.h"
 
 #include "..\Modules\Timer.h"
 #include "..\Modules\Motor.h"
@@ -29,7 +30,7 @@ void main(void);
 #ifdef __cplusplus
 extern "C" {
 void abort(void);
-static void Timer1_Caooback(void);
+static void Timer1_Callback(void);
 }
 #endif
 
@@ -45,7 +46,7 @@ void main(void)
 	_Battery_Activate();
 
 	_Timer_Activate();
-	_Timer1_Set(TimerClock_32, 10000, Timer1_Caooback);
+	_Timer1_Set(TimerClock_32, 10000, Timer1_Callback);
 	_Timer1_Start();
 
 	_Connecter_Activate();
@@ -56,8 +57,10 @@ void main(void)
 	}
 }
 
-void Timer1_Caooback()
+void Timer1_Callback()
 {
+	_System_Loop();
+
 	BatteryCheck();
 	_Bluetooth_Loop();
 	_Motor_Loop();

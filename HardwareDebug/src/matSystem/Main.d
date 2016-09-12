@@ -7,6 +7,8 @@ src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/Connecter.h
 ../src/matSystem/Connecter.h:
 src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\typedefine.h
 ../src/matSystem/..\typedefine.h:
+src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/System.h
+../src/matSystem/System.h:
 src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\Timer.h
 ../src/matSystem/..\Modules\Timer.h:
 src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\Motor.h

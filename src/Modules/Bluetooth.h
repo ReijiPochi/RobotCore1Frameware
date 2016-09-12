@@ -13,6 +13,8 @@
 
 typedef struct
 {
+	_UDWORD Time;
+
 	union
 	{
 		_UWORD WORD;
@@ -61,9 +63,14 @@ void _Bluetooth_Loop(void);
 
 void _Bluetooth_Do(_UBYTE module, _UBYTE command, _UBYTE* value);
 
+void Bluetooth_IsLoggingIn(BOOL value);
+
+void Bluetooth_CommandIn(DUALSHOCK3 value);
+
 void Bluetooth_Vibrate1(void);
 
 void Bluetooth_Vibrate2(void);
+
 
 #ifdef __cplusplus
 }

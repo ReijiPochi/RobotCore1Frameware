@@ -53,7 +53,7 @@ extern void _CALL_END(void);
 
 #pragma entry PowerON_Reset_PC
 void PowerON_Reset_PC(void)
-{ 
+{
 #ifdef __RXV2
 	set_extb(__sectop("EXCEPTVECT"));
 #endif

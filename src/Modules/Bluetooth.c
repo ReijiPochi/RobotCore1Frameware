@@ -8,6 +8,7 @@
 
 #include "Bluetooth.h"
 #include "micon/SCIc.h"
+#include "..\matSystem\System.h"
 
 _UBYTE *bluetoothRecievedData;
 _SWORD orderBuffer[8] = { 0 };
@@ -73,6 +74,7 @@ void _Bluetooth_Loop(void)
 			data.AnalogR.X = orderBuffer[5] - 64;
 			data.AnalogR.Y = orderBuffer[6] - 64;
 
+			data.Time = System_CurrentTime;
 			Bluetooth_CommandOut(data);
 		}
 
@@ -82,21 +84,25 @@ void _Bluetooth_Loop(void)
 
 static void Bluetooth_CommandOut(DUALSHOCK3 data)
 {
-	_UBYTE dataBytes[7];
+	_UBYTE dataBytes[11];
 
 	Callback(data);
 
 	if(commandOut_State == LookByHost)
 	{
 		Connecter_Send("Mb0;6:", 6);
-		dataBytes[0] = data.Buttons.WORD & 0x0000000000FF;
-		dataBytes[1] = (data.Buttons.WORD & 0x00000000FF00) >> 8;
-		dataBytes[2] = data.AnalogL.X;
-		dataBytes[3] = data.AnalogL.Y;
-		dataBytes[4] = data.AnalogR.X;
-		dataBytes[5] = data.AnalogR.Y;
-		dataBytes[6] = '\n';
-		Connecter_Send(dataBytes, 7);
+		dataBytes[0] = data.Time & 0x000000FF;
+		dataBytes[1] = (data.Time & 0x0000FF00) >> 8;
+		dataBytes[2] = (data.Time & 0x00FF0000) >> 16;
+		dataBytes[3] = (data.Time & 0xFF000000) >> 24;
+		dataBytes[4] = data.Buttons.WORD & 0x00FF;
+		dataBytes[5] = (data.Buttons.WORD & 0xFF00) >> 8;
+		dataBytes[6] = data.AnalogL.X;
+		dataBytes[7] = data.AnalogL.Y;
+		dataBytes[8] = data.AnalogR.X;
+		dataBytes[9] = data.AnalogR.Y;
+		dataBytes[10] = '\n';
+		Connecter_Send(dataBytes, 11);
 	}
 }
 
@@ -114,6 +120,16 @@ void _Bluetooth_Do(_UBYTE module, _UBYTE command, _UBYTE* value)
 		default:
 			break;
 	}
+}
+
+void Bluetooth_IsLoggingIn(BOOL value)
+{
+
+}
+
+void Bluetooth_CommandIn(DUALSHOCK3 value)
+{
+
 }
 
 void Bluetooth_Vibrate1(void)
