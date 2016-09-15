@@ -21,21 +21,21 @@ void _Battery_Sample(void)
 
 float _Battery_GetVoltage1(void)
 {
-	float volts = S12ADB_GetVoltage(0);
-	volts /= 203.4277198;
+	float volts = S12ADB_GetVoltage(2);
+	volts /= 248.18181818;
 	return volts;
 }
 
 float _Battery_GetVoltage2(void)
 {
 	float volts = S12ADB_GetVoltage(1);
-	volts /= 203.4277198;
+	volts /= 248.18181818;
 	return volts;
 }
 
 float _Battery_GetVoltage3(void)
 {
-	float volts = S12ADB_GetVoltage(2);
-	volts /= 203.4277198;
+	float volts = S12ADB_GetVoltage(0);
+	volts /= 248.18181818;
 	return volts;
 }

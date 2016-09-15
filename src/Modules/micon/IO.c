@@ -16,12 +16,12 @@ void IO_LED_init()
 
 void LED_STATUS_R(_UBYTE value)
 {
-	PORT7.PODR.BIT.B6 = value;
+	PORT7.PODR.BIT.B2 = value;
 }
 
 void LED_STATUS_G(_UBYTE value)
 {
-	PORT7.PODR.BIT.B5 = value;
+	PORT7.PODR.BIT.B3 = value;
 }
 
 void LED_STATUS_B(_UBYTE value)
@@ -31,12 +31,13 @@ void LED_STATUS_B(_UBYTE value)
 
 void LED_INFO(_UBYTE value)
 {
-	PORT7.PODR.BIT.B3 = value;
+	PORT7.PODR.BIT.B5 = value;
 }
 
 void LED_ERROR(_UBYTE value)
 {
-	PORT7.PODR.BIT.B2 = value;
+
+	PORT7.PODR.BIT.B6 = value;
 }
 
 
@@ -94,4 +95,34 @@ void Motor6_MODE(_UBYTE m1, _UBYTE m2)
 {
 	PORT3.PODR.BIT.B5 = m1;
 	PORTA.PODR.BIT.B0 = m2;
+}
+
+
+
+void IO_DIO_Init(IOMode dio1, IOMode dio2, IOMode dio3, IOMode dio4)
+{
+	PORT3.PDR.BIT.B2 = (_UBYTE)dio1;
+	PORT3.PDR.BIT.B3 = (_UBYTE)dio2;
+	PORT7.PDR.BIT.B0 = (_UBYTE)dio3;
+	PORT7.PDR.BIT.B1 = (_UBYTE)dio4;
+}
+
+void DIO_1_Out(_UBYTE value)
+{
+	PORT3.PODR.BIT.B2 = value;
+}
+
+void DIO_2_Out(_UBYTE value)
+{
+	PORT3.PODR.BIT.B3 = value;
+}
+
+void DIO_3_Out(_UBYTE value)
+{
+	PORT7.PODR.BIT.B0 = value;
+}
+
+void DIO_4_Out(_UBYTE value)
+{
+	PORT7.PODR.BIT.B1 = value;
 }

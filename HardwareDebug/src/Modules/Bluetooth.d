@@ -7,3 +7,5 @@ src/Modules/Bluetooth.obj src/Modules/Bluetooth.d: ../src/Modules/micon/SCIc.h
 ../src/Modules/micon/SCIc.h:
 src/Modules/Bluetooth.obj src/Modules/Bluetooth.d: ../src/Modules/..\matSystem\System.h
 ../src/Modules/..\matSystem\System.h:
+src/Modules/Bluetooth.obj src/Modules/Bluetooth.d: ../src/Modules/..\DataConverter.h
+../src/Modules/..\DataConverter.h:

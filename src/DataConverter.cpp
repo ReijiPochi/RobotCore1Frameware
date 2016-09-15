@@ -91,6 +91,20 @@ _SWORD BitsToInt(_UBYTE* bits)
 	return data;
 }
 
+DUALSHOCK3 BitsToDUALSHOCK3(_UBYTE* bits)
+{
+	DUALSHOCK3 data;
+
+	data.Time = bits[0] | bits[1] << 8 | bits[2] << 16 | bits[3] << 24;
+	data.Buttons.WORD = bits[4] | bits[5] << 8;
+	data.AnalogL.X = bits[6];
+	data.AnalogL.Y = bits[7];
+	data.AnalogR.X = bits[8];
+	data.AnalogR.Y = bits[9];
+
+	return data;
+}
+
 _UBYTE bytes[4];
 _UBYTE* FloatToBits(float value)
 {

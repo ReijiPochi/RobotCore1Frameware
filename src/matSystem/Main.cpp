@@ -57,8 +57,18 @@ void main(void)
 	}
 }
 
+bool timer1_callbackRunning = false;
+
 void Timer1_Callback()
 {
+	if(timer1_callbackRunning)
+	{
+		_LED_Error_On();
+		Buzzer_Siren2();
+	}
+
+	timer1_callbackRunning = true;
+
 	_System_Loop();
 
 	BatteryCheck();
@@ -70,6 +80,8 @@ void Timer1_Callback()
 
 	_Connecter_Recieve();
 	_Connecter_Transmit();
+
+	timer1_callbackRunning = false;
 }
 
 #ifdef __cplusplus

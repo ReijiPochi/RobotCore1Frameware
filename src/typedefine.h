@@ -64,5 +64,51 @@ typedef enum
 	True			= 0x1
 } BOOL;
 
+typedef enum
+{
+	IN				= 0x0,
+	OUT				= 0x1
+} IOMode;
+
+typedef struct
+{
+	_UDWORD Time;
+
+	union
+	{
+		_UWORD WORD;
+		struct
+		{
+			BOOL UpArrow:1;
+			BOOL DownArrow:1;
+			BOOL RightArrow:1;
+			BOOL LeftArrow:1;
+			BOOL Sankaku:1;
+			BOOL Batsu:1;
+			BOOL Maru:1;
+			BOOL dummy:1;
+			BOOL Shikaku:1;
+			BOOL L1:1;
+			BOOL L2:1;
+			BOOL R1:1;
+			BOOL R2:1;
+			BOOL Start:1;
+			BOOL Select:1;
+		}BIT;
+	} Buttons;
+
+	struct
+	{
+		_SBYTE X;
+		_SBYTE Y;
+	} AnalogL;
+
+	struct
+	{
+		_SBYTE X;
+		_SBYTE Y;
+	} AnalogR;
+} DUALSHOCK3;
+
 #endif
 

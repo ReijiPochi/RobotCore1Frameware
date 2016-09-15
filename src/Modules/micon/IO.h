@@ -33,6 +33,13 @@ void Motor4_MODE(_UBYTE m1, _UBYTE m2);
 void Motor5_MODE(_UBYTE m1, _UBYTE m2);
 void Motor6_MODE(_UBYTE m1, _UBYTE m2);
 
+void IO_DIO_Init(IOMode dio1, IOMode dio2, IOMode dio3, IOMode dio4);
+
+void DIO_1_Out(_UBYTE value);
+void DIO_2_Out(_UBYTE value);
+void DIO_3_Out(_UBYTE value);
+void DIO_4_Out(_UBYTE value);
+
 #ifdef __cplusplus
 }
 #endif

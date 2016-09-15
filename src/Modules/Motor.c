@@ -157,7 +157,7 @@ void _Motor_Loop(void)
 
 void Motor1_DutyIn(float duty, SetBy setter)
 {
-	if(motor1_DutyIn_State == Free)
+	if(motor1_DutyIn_State == Free && setter == RobotCore)
 		trgDuty[0] = duty;
 	else if(motor1_DutyIn_State == ForceByHost && setter == MatStudio)
 	{
@@ -180,7 +180,7 @@ void Motor1_DutyOut(float duty)
 
 void Motor2_DutyIn(float duty, SetBy setter)
 {
-	if(motor2_DutyIn_State == Free)
+	if(motor2_DutyIn_State == Free && setter == RobotCore)
 		trgDuty[1] = duty;
 	else if(motor2_DutyIn_State == ForceByHost && setter == MatStudio)
 	{
@@ -197,7 +197,7 @@ void Motor2_DutyOut(float duty)
 
 void Motor3_DutyIn(float duty, SetBy setter)
 {
-	if(motor3_DutyIn_State == Free)
+	if(motor3_DutyIn_State == Free && setter == RobotCore)
 		trgDuty[2] = duty;
 	else if(motor3_DutyIn_State == ForceByHost && setter == MatStudio)
 	{
@@ -214,7 +214,7 @@ void Motor3_DutyOut(float duty)
 
 void Motor4_DutyIn(float duty, SetBy setter)
 {
-	if(motor4_DutyIn_State == Free)
+	if(motor4_DutyIn_State == Free && setter == RobotCore)
 		trgDuty[3] = duty;
 	else if(motor4_DutyIn_State == ForceByHost && setter == MatStudio)
 	{
@@ -231,7 +231,7 @@ void Motor4_DutyOut(float duty)
 
 void Motor5_DutyIn(float duty, SetBy setter)
 {
-	if(motor5_DutyIn_State == Free)
+	if(motor5_DutyIn_State == Free && setter == RobotCore)
 		trgDuty[4] = duty;
 	else if(motor5_DutyIn_State == ForceByHost && setter == MatStudio)
 	{
@@ -248,7 +248,7 @@ void Motor5_DutyOut(float duty)
 
 void Motor6_DutyIn(float duty, SetBy setter)
 {
-	if(motor6_DutyIn_State == Free)
+	if(motor6_DutyIn_State == Free && setter == RobotCore)
 		trgDuty[5] = duty;
 	else if(motor6_DutyIn_State == ForceByHost && setter == MatStudio)
 	{

@@ -8,18 +8,27 @@
 #include "BatteryCheck.h"
 #include "..\Modules\Battery.h"
 #include "..\Modules\LED.h"
+#include "..\Modules\Buzzer.h"
 
-#define THRESHOLD	(0.1)
+#define THRESHOLD	(0.01)
 
 void BatteryCheck(void)
 {
-	float cell1 = _Battery_GetVoltage1();
-	float cell2 = _Battery_GetVoltage2();
-	float cell3 = _Battery_GetVoltage3();
+	float v1 = _Battery_GetVoltage1();
+	float v2 = _Battery_GetVoltage2();
+	float v3 = _Battery_GetVoltage3();
 
-	if(cell1 < 1.0) return;
+	if(v1 < 1.0) return;
 
-	if(cell1 - _Battery_GetVoltage2() > THRESHOLD || cell1 - _Battery_GetVoltage3() > THRESHOLD)
+	float cell1 = v1;
+	float cell2 = v2 - v1;
+	float cell3 = v3 - v2;
+
+	float d1 = (cell1 - cell2) * (cell1 - cell2);
+	float d2 = (cell1 - cell3) * (cell1 - cell3);
+	float d3 = (cell3 - cell2) * (cell3 - cell2);
+
+	if(d1 > THRESHOLD || d2 > THRESHOLD || d3 > THRESHOLD)
 	{
 		_LED_Error_On();
 	}
@@ -27,5 +36,6 @@ void BatteryCheck(void)
 	if(cell1 < 3.0)
 	{
 		_LED_Error_On();
+		Buzzer_Siren2();
 	}
 }

@@ -10,6 +10,7 @@ C_SRCS += \
 ..\src/Modules/Bluetooth.c \
 ..\src/Modules/Buzzer.c \
 ..\src/Modules/DataLogger.c \
+..\src/Modules/DigitalIO.c \
 ..\src/Modules/LED.c \
 ..\src/Modules/Motor.c \
 ..\src/Modules/Servo.c \
@@ -23,6 +24,7 @@ C_DEPS += \
 ./src/Modules/Bluetooth.d \
 ./src/Modules/Buzzer.d \
 ./src/Modules/DataLogger.d \
+./src/Modules/DigitalIO.d \
 ./src/Modules/LED.d \
 ./src/Modules/Motor.d \
 ./src/Modules/Servo.d \
@@ -36,6 +38,7 @@ OBJS += \
 ./src/Modules/Bluetooth.obj \
 ./src/Modules/Buzzer.obj \
 ./src/Modules/DataLogger.obj \
+./src/Modules/DigitalIO.obj \
 ./src/Modules/LED.obj \
 ./src/Modules/Motor.obj \
 ./src/Modules/Servo.obj \

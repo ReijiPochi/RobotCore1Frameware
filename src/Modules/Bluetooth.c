@@ -9,12 +9,14 @@
 #include "Bluetooth.h"
 #include "micon/SCIc.h"
 #include "..\matSystem\System.h"
+#include "..\DataConverter.h"
 
 _UBYTE *bluetoothRecievedData;
 _SWORD orderBuffer[8] = { 0 };
 _UBYTE i = 0;
 
 ModulePortState commandOut_State = Free;
+ModulePortState commandIn_State = Free;
 
 static void Bluetooth_CommandOut(DUALSHOCK3 data);
 
@@ -82,6 +84,11 @@ void _Bluetooth_Loop(void)
 	}
 }
 
+void Bluetooth_CommandIn(DUALSHOCK3 value, SetBy setter)
+{
+	Bluetooth_CommandOut(value);
+}
+
 static void Bluetooth_CommandOut(DUALSHOCK3 data)
 {
 	_UBYTE dataBytes[11];
@@ -110,6 +117,17 @@ void _Bluetooth_Do(_UBYTE module, _UBYTE command, _UBYTE* value)
 {
 	switch(command)
 	{
+		case 3:		// CommandIn_DL_State
+			if(value[0] == 0)
+				commandIn_State = ForceByHost;
+			else
+				commandIn_State = Free;
+			break;
+
+		case 4:		// CommandIn_DL_Value
+			Bluetooth_CommandIn(BitsToDUALSHOCK3(value), MatStudio);
+			break;
+
 		case 5:		// CommandOut_DL_State
 			if(value[0] == 1)
 				commandOut_State = LookByHost;
@@ -120,16 +138,6 @@ void _Bluetooth_Do(_UBYTE module, _UBYTE command, _UBYTE* value)
 		default:
 			break;
 	}
-}
-
-void Bluetooth_IsLoggingIn(BOOL value)
-{
-
-}
-
-void Bluetooth_CommandIn(DUALSHOCK3 value)
-{
-
 }
 
 void Bluetooth_Vibrate1(void)

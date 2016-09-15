@@ -10,6 +10,7 @@
 #include "..\Modules\Buzzer.h"
 #include "..\Modules\Servo.h"
 #include "..\Modules\DataLogger.h"
+#include "..\Modules\DigitalIO.h"
 
 #include "..\matSystem\Connecter.h"
 #include "..\matSystem\System.h"
@@ -26,11 +27,14 @@ void Initialize()
 	Buzzer_Activate();
 	Servo_Activate();
 	DataLogger_Activate();
+	DIO_Activate(OUT, OUT, IN, IN);
 
 	Bluetooth_Activate(BluetoothCallback);
 	//System_ClockStart();
 
 	Buzzer_StepUp();
+
+	Servo1_RotationIn(90.0, RobotCore);
 }
 
 void MainLoop()
@@ -40,6 +44,7 @@ void MainLoop()
 
 static void BluetoothCallback(DUALSHOCK3 data)
 {
+
 	if(data.Buttons.BIT.Start)
 	{
 		Motor_UnlockSTBY();
@@ -71,6 +76,18 @@ static void BluetoothCallback(DUALSHOCK3 data)
 	if(data.Buttons.BIT.Shikaku)
 		Bluetooth_Vibrate2();
 
+	if(data.Buttons.BIT.L1)
+		DIO1_On();
+
+	if(data.Buttons.BIT.L2)
+		DIO1_Off();
+
+	if(data.Buttons.BIT.R1)
+		DIO2_On();
+
+	if(data.Buttons.BIT.R2)
+		DIO2_Off();
+
 	if(data.Buttons.BIT.UpArrow)
 	{
 		Motor5_DutyIn(1.0, RobotCore);
@@ -84,9 +101,9 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		Motor5_DutyIn(0.0, RobotCore);
 	}
 
-	_SDWORD _stick_l_h = data.AnalogL.X;
-	_SDWORD _stick_l_v = data.AnalogL.Y;
-	_SDWORD _stick_r_h = data.AnalogR.X;
+	_SDWORD _stick_l_h = -data.AnalogL.X * 0.55;
+	_SDWORD _stick_l_v = data.AnalogL.Y * 0.55;
+	_SDWORD _stick_r_h = -data.AnalogR.X * 0.55;
 	_SDWORD stick_l_h_2;
 	_SDWORD stick_l_v_2;
 	_SDWORD stick_r_h_2;
