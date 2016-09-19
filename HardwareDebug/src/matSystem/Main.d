@@ -25,3 +25,5 @@ src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\..\matS
 ../src/matSystem/..\Modules\..\matSystem\Connecter.h:
 src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\Bluetooth.h
 ../src/matSystem/..\Modules\Bluetooth.h:
+src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\AnalogIN.h
+../src/matSystem/..\Modules\AnalogIN.h:

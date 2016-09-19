@@ -14,6 +14,7 @@ _UWORD stepUp = 0;
 _UWORD stepDown = 0;
 _UWORD siren1 = 0, siren1Fq = 500;
 _UWORD siren2 = 0, siren2Fq = 1000;
+_UWORD lowBattery = 0, lowBatteryFq = 2300, flag = 0;
 
 void Buzzer_Activate(void)
 {
@@ -115,6 +116,36 @@ void _Buzzer_Loop(void)
 
 		siren2--;
 	}
+
+	if(lowBattery != 0)
+	{
+		lowBatteryFq -= 3;
+
+		if(lowBattery % 5 == 0)
+		{
+			if(flag)
+			{
+				flag = 0;
+				lowBatteryFq -= 80;
+			}
+			else
+			{
+				flag = 1;
+				lowBatteryFq += 50;
+			}
+		}
+
+		BUZZER_set(lowBatteryFq, 0.5);
+		BUZZER_On();
+
+		if(lowBattery == 1)
+		{
+			lowBatteryFq = 2300;
+			lowBattery = 400;
+		}
+
+		lowBattery--;
+	}
 }
 
 void Buzzer_On(void)
@@ -179,4 +210,14 @@ void Buzzer_Siren2(void)
 	BUZZER_set(1000, 0.5);
 	BUZZER_On();
 	siren2 = 400;
+}
+
+void Buzzer_LowBattery(void)
+{
+	if(lowBattery != 0)
+		return;
+
+	BUZZER_set(2300, 0.5);
+	BUZZER_On();
+	lowBattery = 400;
 }

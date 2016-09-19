@@ -10,7 +10,7 @@
 #include "..\Modules\LED.h"
 #include "..\Modules\Buzzer.h"
 
-#define THRESHOLD	(0.01)
+#define THRESHOLD	(0.1)
 
 void BatteryCheck(void)
 {
@@ -31,11 +31,12 @@ void BatteryCheck(void)
 	if(d1 > THRESHOLD || d2 > THRESHOLD || d3 > THRESHOLD)
 	{
 		_LED_Error_On();
+		Buzzer_Siren2();
 	}
 
-	if(cell1 < 3.0)
+	if(cell1 < 3.3)
 	{
 		_LED_Error_On();
-		Buzzer_Siren2();
+		Buzzer_LowBattery();
 	}
 }

@@ -113,7 +113,7 @@ all: RobotCore1Framework.mot
 # Tool invocations
 RobotCore1Framework.mot: $(LINKER_OUTPUT_OUTPUTS)
 	@echo 'Invoking: Converter'
-	rlink   "C:\Users\Matsutomo2\Documents\GitHub\RobotCore1Frameware\HardwareDebug\RobotCore1Framework.abs" -form=stype  -output="C:\Users\Matsutomo2\Documents\GitHub\RobotCore1Frameware\HardwareDebug\RobotCore1Framework.mot"
+	rlink   "C:\Users\Reiji\Documents\GitHub\RobotCore1Frameware\HardwareDebug\RobotCore1Framework.abs" -form=stype  -output="C:\Users\Reiji\Documents\GitHub\RobotCore1Frameware\HardwareDebug\RobotCore1Framework.mot"
 	@echo 'Finished building target:'
 	@echo.
 	$(MAKE) --no-print-directory post-build
@@ -121,7 +121,7 @@ RobotCore1Framework.mot: $(LINKER_OUTPUT_OUTPUTS)
 RobotCore1Framework.abs: $(OBJS) $(LIBRARY_GENERATOR_OUTPUTTYPE_OUTPUTS) $(ALL_ASMS) 
 	@echo 'Invoking: Linker'
 	@echo 'Building target:'
-	rlink  -subcommand="LinkerSubCommand.tmp"  -library="C:\Users\MATSUT~1\DOCUME~1\GitHub\ROBOTC~1\HARDWA~2\RobotCore1Framework.lib" -list="RobotCore1Framework.map" -show -nooptimize -debug -output="C:\Users\Matsutomo2\Documents\GitHub\RobotCore1Frameware\HardwareDebug\RobotCore1Framework.abs" -rom=D=R,D_1=R_1,D_2=R_2 -nocompress -nomessage -nologo
+	rlink  -subcommand="LinkerSubCommand.tmp"  -library="C:\Users\Reiji\DOCUME~1\GitHub\ROBOTC~1\HARDWA~2\RobotCore1Framework.lib" -list="RobotCore1Framework.map" -show -nooptimize -debug -output="C:\Users\Reiji\Documents\GitHub\RobotCore1Frameware\HardwareDebug\RobotCore1Framework.abs" -rom=D=R,D_1=R_1,D_2=R_2 -nocompress -nomessage -nologo
 	@echo 'Finished building:'
 	@echo.
 

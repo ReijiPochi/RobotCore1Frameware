@@ -16,6 +16,8 @@ void Initialize();
 
 void MainLoop();
 
+void _SystemClockCallBack();
+
 #ifdef __cplusplus
 }
 #endif

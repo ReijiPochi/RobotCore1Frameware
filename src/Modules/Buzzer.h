@@ -35,6 +35,8 @@ void Buzzer_Siren1(void);
 
 void Buzzer_Siren2(void);
 
+void Buzzer_LowBattery(void);
+
 
 #ifdef __cplusplus
 }

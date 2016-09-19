@@ -24,6 +24,7 @@
 #include "..\Modules\Buzzer.h"
 #include "..\Modules\DataLogger.h"
 #include "..\Modules\Bluetooth.h"
+#include "..\Modules\AnalogIN.h"
 
 
 void main(void);
@@ -80,6 +81,8 @@ void Timer1_Callback()
 
 	_Connecter_Recieve();
 	_Connecter_Transmit();
+
+	_SystemClockCallBack();
 
 	timer1_callbackRunning = false;
 }
