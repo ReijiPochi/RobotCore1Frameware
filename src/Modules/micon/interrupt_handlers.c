@@ -74,7 +74,7 @@ void Excep_ICU_SWINT(void){ }
 //void Excep_CMT0_CMI0(void){ }
 
 // CMT1 CMI1
-void Excep_CMT1_CMI1(void){ }
+//void Excep_CMT1_CMI1(void){ }
 
 // CMT2 CMI2
 void Excep_CMT2_CMI2(void){ }

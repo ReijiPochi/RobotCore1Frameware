@@ -44,6 +44,13 @@ void Motor4_DutyIn(float duty, SetBy setter);
 void Motor5_DutyIn(float duty, SetBy setter);
 void Motor6_DutyIn(float duty, SetBy setter);
 
+void Motor1_AccelerationIn(float a, SetBy setter);
+void Motor2_AccelerationIn(float a, SetBy setter);
+void Motor3_AccelerationIn(float a, SetBy setter);
+void Motor4_AccelerationIn(float a, SetBy setter);
+void Motor5_AccelerationIn(float a, SetBy setter);
+void Motor6_AccelerationIn(float a, SetBy setter);
+
 void _Motor_Do(_UBYTE module, _UBYTE command, _UBYTE* value);
 
 

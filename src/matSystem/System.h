@@ -17,5 +17,7 @@ void System_ClockStart(void);
 
 void _System_Loop(void);
 
+void System_Log(_UWORD errorNum);
+
 
 #endif /* MATSYSTEM_SYSTEM_H_ */

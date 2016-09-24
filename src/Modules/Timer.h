@@ -34,6 +34,12 @@ void _Timer1_Start(void);
 
 void _Timer1_Stop(void);
 
+void Timer2_Set(TimerClock clock, _UDWORD interval, void (*callback)(void));
+
+void Timer2_Start(void);
+
+void Timer2_Stop(void);
+
 
 #ifdef __cplusplus
 }

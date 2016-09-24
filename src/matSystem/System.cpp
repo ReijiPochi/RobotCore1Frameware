@@ -11,8 +11,9 @@
 #include "..\Modules\LED.h"
 
 _UDWORD System_CurrentTime = 0;
-
 BOOL isCounting = False;
+
+
 
 void System_ClockStart(void)
 {
@@ -31,4 +32,9 @@ void _System_Loop(void)
 			Buzzer_Siren2();
 		}
 	}
+}
+
+void System_Log(_UWORD errorNum)
+{
+
 }

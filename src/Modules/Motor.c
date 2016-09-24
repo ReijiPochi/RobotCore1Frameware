@@ -12,10 +12,11 @@
 #include "..\DataConverter.h"
 #include "..\matSystem\Connecter.h"
 
-#define THRESHOLD	 		(0.001)
+#define THRESHOLD	 		(0.01)
 #define MAX_ACCELERATION	(0.5)
 
 static float norm(float, _UBYTE*);
+
 static void motor1_SetMode(MotorMode);
 static void motor2_SetMode(MotorMode);
 static void motor3_SetMode(MotorMode);
@@ -44,6 +45,13 @@ ModulePortState motor4_DutyIn_State = Free;
 ModulePortState motor5_DutyIn_State = Free;
 ModulePortState motor6_DutyIn_State = Free;
 
+ModulePortState motor1_AccelerationIn_State = Free;
+ModulePortState motor2_AccelerationIn_State = Free;
+ModulePortState motor3_AccelerationIn_State = Free;
+ModulePortState motor4_AccelerationIn_State = Free;
+ModulePortState motor5_AccelerationIn_State = Free;
+ModulePortState motor6_AccelerationIn_State = Free;
+
 ModulePortState motor1_DutyOut_State = Free;
 ModulePortState motor2_DutyOut_State = Free;
 ModulePortState motor3_DutyOut_State = Free;
@@ -53,8 +61,9 @@ ModulePortState motor6_DutyOut_State = Free;
 
 _UBYTE motor1_DutyIn_HardwarePortAdress = 0;
 
-float trgDuty[6];
-float actualDuty[6];
+float trgDuty[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+float acceleration[6] = {0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
+float actualDuty[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 _UBYTE direction[6];
 
 /**
@@ -86,7 +95,7 @@ void _Motor_Loop(void)
 	{
 		d = trgDuty[i] - actualDuty[i];
 
-		a = d * 0.2;
+		a = d * acceleration[i];
 
 		if(a > MAX_ACCELERATION)
 			a = MAX_ACCELERATION;
@@ -157,12 +166,16 @@ void _Motor_Loop(void)
 
 void Motor1_DutyIn(float duty, SetBy setter)
 {
-	if(motor1_DutyIn_State == Free && setter == RobotCore)
+	if((motor1_DutyIn_State == Free && setter == RobotCore) || (motor1_DutyIn_State == ForceByHost && setter == MatStudio))
 		trgDuty[0] = duty;
-	else if(motor1_DutyIn_State == ForceByHost && setter == MatStudio)
-	{
-		trgDuty[0] = duty;
-	}
+}
+
+void Motor1_AccelerationIn(float a, SetBy setter)
+{
+	if(motor1_AccelerationIn_State == Free && setter == RobotCore)
+		acceleration[0] = a;
+	else if(motor1_AccelerationIn_State == ForceByHost && setter == MatStudio)
+		acceleration[0] = a;
 }
 
 void Motor1_DutyOut(float duty)
@@ -180,12 +193,16 @@ void Motor1_DutyOut(float duty)
 
 void Motor2_DutyIn(float duty, SetBy setter)
 {
-	if(motor2_DutyIn_State == Free && setter == RobotCore)
+	if((motor2_DutyIn_State == Free && setter == RobotCore) || (motor2_DutyIn_State == ForceByHost && setter == MatStudio))
 		trgDuty[1] = duty;
-	else if(motor2_DutyIn_State == ForceByHost && setter == MatStudio)
-	{
-		trgDuty[1] = duty;
-	}
+}
+
+void Motor2_AccelerationIn(float a, SetBy setter)
+{
+	if(motor2_AccelerationIn_State == Free && setter == RobotCore)
+		acceleration[1] = a;
+	else if(motor1_AccelerationIn_State == ForceByHost && setter == MatStudio)
+		acceleration[1] = a;
 }
 
 void Motor2_DutyOut(float duty)
@@ -197,12 +214,16 @@ void Motor2_DutyOut(float duty)
 
 void Motor3_DutyIn(float duty, SetBy setter)
 {
-	if(motor3_DutyIn_State == Free && setter == RobotCore)
+	if((motor3_DutyIn_State == Free && setter == RobotCore) || (motor3_DutyIn_State == ForceByHost && setter == MatStudio))
 		trgDuty[2] = duty;
-	else if(motor3_DutyIn_State == ForceByHost && setter == MatStudio)
-	{
-		trgDuty[2] = duty;
-	}
+}
+
+void Motor3_AccelerationIn(float a, SetBy setter)
+{
+	if(motor3_AccelerationIn_State == Free && setter == RobotCore)
+		acceleration[2] = a;
+	else if(motor1_AccelerationIn_State == ForceByHost && setter == MatStudio)
+		acceleration[2] = a;
 }
 
 void Motor3_DutyOut(float duty)
@@ -214,12 +235,16 @@ void Motor3_DutyOut(float duty)
 
 void Motor4_DutyIn(float duty, SetBy setter)
 {
-	if(motor4_DutyIn_State == Free && setter == RobotCore)
+	if((motor4_DutyIn_State == Free && setter == RobotCore) || (motor4_DutyIn_State == ForceByHost && setter == MatStudio))
 		trgDuty[3] = duty;
-	else if(motor4_DutyIn_State == ForceByHost && setter == MatStudio)
-	{
-		trgDuty[3] = duty;
-	}
+}
+
+void Motor4_AccelerationIn(float a, SetBy setter)
+{
+	if(motor4_AccelerationIn_State == Free && setter == RobotCore)
+		acceleration[3] = a;
+	else if(motor1_AccelerationIn_State == ForceByHost && setter == MatStudio)
+		acceleration[3] = a;
 }
 
 void Motor4_DutyOut(float duty)
@@ -231,12 +256,16 @@ void Motor4_DutyOut(float duty)
 
 void Motor5_DutyIn(float duty, SetBy setter)
 {
-	if(motor5_DutyIn_State == Free && setter == RobotCore)
+	if((motor5_DutyIn_State == Free && setter == RobotCore) || (motor5_DutyIn_State == ForceByHost && setter == MatStudio))
 		trgDuty[4] = duty;
-	else if(motor5_DutyIn_State == ForceByHost && setter == MatStudio)
-	{
-		trgDuty[4] = duty;
-	}
+}
+
+void Motor5_AccelerationIn(float a, SetBy setter)
+{
+	if(motor5_AccelerationIn_State == Free && setter == RobotCore)
+		acceleration[4] = a;
+	else if(motor1_AccelerationIn_State == ForceByHost && setter == MatStudio)
+		acceleration[4] = a;
 }
 
 void Motor5_DutyOut(float duty)
@@ -248,12 +277,16 @@ void Motor5_DutyOut(float duty)
 
 void Motor6_DutyIn(float duty, SetBy setter)
 {
-	if(motor6_DutyIn_State == Free && setter == RobotCore)
+	if((motor6_DutyIn_State == Free && setter == RobotCore) || (motor6_DutyIn_State == ForceByHost && setter == MatStudio))
 		trgDuty[5] = duty;
-	else if(motor6_DutyIn_State == ForceByHost && setter == MatStudio)
-	{
-		trgDuty[5] = duty;
-	}
+}
+
+void Motor6_AccelerationIn(float a, SetBy setter)
+{
+	if(motor6_AccelerationIn_State == Free && setter == RobotCore)
+		acceleration[5] = a;
+	else if(motor1_AccelerationIn_State == ForceByHost && setter == MatStudio)
+		acceleration[5] = a;
 }
 
 void Motor6_DutyOut(float duty)
@@ -488,7 +521,7 @@ void motor1_Do(_UBYTE command, _UBYTE* value)
 
 		case 6:		// DutyOut_DL_ConnectToHardwarePort
 			motor1_DutyIn_HardwarePortAdress = BitsToInt(value);
-			if(value == '0')
+			if(value[0] == 0)
 				DataLogger1_LoggingStop();
 			else
 				DataLogger1_LoggingStart();

@@ -42,8 +42,6 @@ void main(void)
 {
 	_LED_Activate();
 
-	Initialize();
-
 	_Battery_Activate();
 
 	_Timer_Activate();
@@ -51,6 +49,9 @@ void main(void)
 	_Timer1_Start();
 
 	_Connecter_Activate();
+
+
+	Initialize();
 
 	while(true)
 	{
@@ -65,7 +66,7 @@ void Timer1_Callback()
 	if(timer1_callbackRunning)
 	{
 		_LED_Error_On();
-		Buzzer_Siren2();
+		return;
 	}
 
 	timer1_callbackRunning = true;

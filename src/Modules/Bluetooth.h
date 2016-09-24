@@ -26,6 +26,8 @@ void Bluetooth_CommandIn(DUALSHOCK3 value, SetBy setter);
 
 void Bluetooth_Vibrate1(void);
 
+void Bluetooth_Vibrate1Long(void);
+
 void Bluetooth_Vibrate2(void);
 
 

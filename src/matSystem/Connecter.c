@@ -12,6 +12,9 @@
 
 #include "..\Modules\Motor.h"
 #include "..\Modules\Bluetooth.h"
+#include "..\Modules\LED.h"
+
+BOOL Connecter_isConnecting = False;
 
 _UBYTE *uart1RecievedData;
 _UBYTE line[64];
@@ -155,23 +158,9 @@ void Connecter_Send(_UBYTE* data, _UBYTE count)
 
 void Connecter_SendFloat(_UBYTE* head, _UBYTE headCount, float value)
 {
-	_UBYTE *data;
-
 	Connecter_Send(head, headCount);
-
-	data = FloatToBits(value);
-	Connecter_Send(data, 4);
-
-	if(BufferAisSelected)
-	{
-		TransmitDataBufferA[BufferA_Count] = '\n';
-		BufferA_Count++;
-	}
-	else
-	{
-		TransmitDataBufferB[BufferB_Count] = '\n';
-		BufferB_Count++;
-	}
+	Connecter_Send(FloatToBits(value), 4);
+	Connecter_Send("\n", 1);
 }
 
 void Connecter_SendInt(_UBYTE* head, _UBYTE headCount, _SDWORD value)
@@ -183,6 +172,32 @@ void Connecter_SendInt(_UBYTE* head, _UBYTE headCount, _SDWORD value)
 
 void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value)
 {
+	if(trg[0] == 'S')
+	{
+		switch(command)
+		{
+			case 1:
+				if(value[0] == 1)
+				{
+					Connecter_isConnecting = True;
+					_LED_R_On();
+				}
+				else
+				{
+					Connecter_isConnecting = False;
+					_LED_R_Off();
+				}
+				break;
+
+			default:
+				break;
+		}
+	}
+
+
+	if(!Connecter_isConnecting) return;
+
+
 	if(trg[0] == 'M')
 	{
 		switch(trg[1])

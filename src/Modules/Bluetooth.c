@@ -15,6 +15,8 @@ _UBYTE *bluetoothRecievedData;
 _SWORD orderBuffer[8] = { 0 };
 _UBYTE i = 0;
 
+_SWORD vibration1count = 0;
+
 ModulePortState commandOut_State = Free;
 ModulePortState commandIn_State = Free;
 
@@ -34,6 +36,12 @@ void _Bluetooth_Loop(void)
 	_UWORD count;
 	_UWORD RecievedData_index = 0;
 	DUALSHOCK3 data;
+
+	if(vibration1count != 0)
+	{
+		uart0_send("1", 1);
+		vibration1count--;
+	}
 
 	bluetoothRecievedData = uart0_read(&count);
 
@@ -143,6 +151,11 @@ void _Bluetooth_Do(_UBYTE module, _UBYTE command, _UBYTE* value)
 void Bluetooth_Vibrate1(void)
 {
 	uart0_send("1", 1);
+}
+
+void Bluetooth_Vibrate1Long(void)
+{
+	vibration1count = 100;
 }
 
 void Bluetooth_Vibrate2(void)
