@@ -177,7 +177,7 @@ void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value)
 		switch(command)
 		{
 			case 1:
-				if(value[0] == 1)
+				if(value[0] == '1')
 				{
 					Connecter_isConnecting = True;
 					_LED_R_On();

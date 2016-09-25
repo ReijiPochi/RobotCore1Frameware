@@ -130,6 +130,8 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 		Buzzer_Siren1();
 
+		System_ClockStart();
+
 		_LED_B_Off();
 		_LED_G_On();
 	}
