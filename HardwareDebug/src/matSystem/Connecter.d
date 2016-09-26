@@ -13,3 +13,5 @@ src/matSystem/Connecter.obj src/matSystem/Connecter.d: ../src/matSystem/..\Modul
 ../src/matSystem/..\Modules\Bluetooth.h:
 src/matSystem/Connecter.obj src/matSystem/Connecter.d: ../src/matSystem/..\Modules\LED.h
 ../src/matSystem/..\Modules\LED.h:
+src/matSystem/Connecter.obj src/matSystem/Connecter.d: ../src/matSystem/..\Modules\Buzzer.h
+../src/matSystem/..\Modules\Buzzer.h:

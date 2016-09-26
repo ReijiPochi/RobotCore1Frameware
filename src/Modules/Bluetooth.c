@@ -105,7 +105,7 @@ static void Bluetooth_CommandOut(DUALSHOCK3 data)
 
 	if(commandOut_State == LookByHost)
 	{
-		Connecter_Send("Mb0;6:", 6);
+		Connecter_Send("Mb0;6:10)", 9);
 		dataBytes[0] = data.Time & 0x000000FF;
 		dataBytes[1] = (data.Time & 0x0000FF00) >> 8;
 		dataBytes[2] = (data.Time & 0x00FF0000) >> 16;

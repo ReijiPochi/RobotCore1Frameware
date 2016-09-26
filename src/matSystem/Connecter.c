@@ -13,6 +13,7 @@
 #include "..\Modules\Motor.h"
 #include "..\Modules\Bluetooth.h"
 #include "..\Modules\LED.h"
+#include "..\Modules\Buzzer.h"
 
 BOOL Connecter_isConnecting = False;
 
@@ -134,9 +135,16 @@ void Decipher()
 	}
 }
 
+BOOL connecter_send_running = False;
 void Connecter_Send(_UBYTE* data, _UBYTE count)
 {
 	_UBYTE i;
+
+	if(connecter_send_running)
+	{
+		Buzzer_OneTime(300);
+	}
+	connecter_send_running = True;
 
 	if(BufferAisSelected)
 	{
@@ -154,11 +162,14 @@ void Connecter_Send(_UBYTE* data, _UBYTE count)
 			BufferB_Count++;
 		}
 	}
+
+	connecter_send_running = False;
 }
 
 void Connecter_SendFloat(_UBYTE* head, _UBYTE headCount, float value)
 {
 	Connecter_Send(head, headCount);
+	Connecter_Send("4)", 2);
 	Connecter_Send(FloatToBits(value), 4);
 	Connecter_Send("\n", 1);
 }
@@ -166,6 +177,7 @@ void Connecter_SendFloat(_UBYTE* head, _UBYTE headCount, float value)
 void Connecter_SendInt(_UBYTE* head, _UBYTE headCount, _SDWORD value)
 {
 	Connecter_Send(head, headCount);
+	Connecter_Send("4)", 2);
 	Connecter_Send(IntToBits(value), 4);
 	Connecter_Send("\n", 1);
 }
