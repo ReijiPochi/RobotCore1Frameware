@@ -73,7 +73,7 @@ void uart1_init(void)
 	SCI1.SMR.BIT.CKS = 0x0;			// PCLK/1クロック
 
 	// ビットレート設定
-	SCI1.BRR = 4;					// 1.25Mbps
+	SCI1.BRR = 49;					// 0.125Mbps
 
 	// エラーフラグをクリア
 	uart1_clear_errorFlag();

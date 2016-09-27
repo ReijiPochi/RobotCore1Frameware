@@ -17,9 +17,26 @@
 
 BOOL Connecter_isConnecting = False;
 
-_UBYTE *uart1RecievedData;
-_UBYTE line[64];
-_UBYTE line_index = 0;
+
+_UBYTE trg[5];
+_UBYTE trg_index = 0;
+BOOL trgRecieved = False;
+
+_UBYTE command[5];
+_UBYTE command_index = 0;
+BOOL commandRecieved = False;
+
+_UBYTE valueLength[5];
+_UBYTE valueLength_index = 0;
+_UBYTE lengthOfValue = 0;
+BOOL valueLengthRecieved = False;
+
+_UBYTE value[15];
+_UBYTE value_index = 0;
+BOOL valueRecieved = False;
+
+BOOL lineRecieved = False;
+
 
 _UBYTE TransmitDataBufferA[1024];
 _UBYTE BufferA_Count = 0;
@@ -44,21 +61,91 @@ void _Connecter_Recieve(void)
 	_UWORD count;
 	_UWORD RecievedData_index = 0;
 
-	uart1RecievedData = _UART1_GetRecievedData(&count);
+	_UBYTE* uart1RecievedData = _UART1_GetRecievedData(&count);
 
 	while(RecievedData_index != count)
 	{
-		line[line_index] = uart1RecievedData[RecievedData_index];
-
-		line_index ++;
-		RecievedData_index ++;
-
-		if(line[line_index - 1] == '\n')
+		if(uart1RecievedData[RecievedData_index] == ';')
 		{
-			Decipher();
-
-			line_index = 0;
+			trgRecieved = True;
+			RecievedData_index ++;
+			continue;
 		}
+		else if(uart1RecievedData[RecievedData_index] == ':')
+		{
+			commandRecieved = True;
+			RecievedData_index ++;
+			continue;
+		}
+		else if(uart1RecievedData[RecievedData_index] == ')')
+		{
+			valueLengthRecieved = True;
+			lengthOfValue = (_UBYTE)StringToWORD(valueLength, valueLength_index);
+			RecievedData_index ++;
+			continue;
+		}
+
+		if(!trgRecieved)
+		{
+			trg[trg_index] = uart1RecievedData[RecievedData_index];
+			trg_index++;
+		}
+		else if(!commandRecieved)
+		{
+			command[command_index] = uart1RecievedData[RecievedData_index];
+			command_index++;
+		}
+		else if(!valueLengthRecieved)
+		{
+			valueLength[valueLength_index] = uart1RecievedData[RecievedData_index];
+			valueLength_index++;
+		}
+		else if(!valueRecieved)
+		{
+			value[value_index] = uart1RecievedData[RecievedData_index];
+			value_index++;
+
+
+			if(value_index >= lengthOfValue)
+			{
+				valueRecieved = True;
+			}
+		}
+		else if(uart1RecievedData[RecievedData_index] == '\n')
+		{
+			lineRecieved = True;
+		}
+		else
+		{
+			trgRecieved = False;
+			commandRecieved = False;
+			valueLengthRecieved = False;
+			valueRecieved = False;
+			lineRecieved = False;
+
+			trg_index = 0;
+			command_index = 0;
+			valueLength_index = 0;
+			value_index = 0;
+		}
+
+		if(trgRecieved && commandRecieved && valueLengthRecieved && valueRecieved && lineRecieved)
+		{
+			trgRecieved = False;
+			commandRecieved = False;
+			valueLengthRecieved = False;
+			valueRecieved = False;
+			lineRecieved = False;
+
+			Execute(trg , (_UBYTE)StringToWORD(command, command_index), value);
+
+			trg_index = 0;
+			command_index = 0;
+			valueLength_index = 0;
+			value_index = 0;
+		}
+
+		RecievedData_index ++;
 	}
 }
 
@@ -81,57 +168,6 @@ void _Connecter_Transmit(void)
 			BufferB_Count = 0;
 			BufferAisSelected = 1;
 		}
-	}
-}
-
-
-void Decipher()
-{
-	_UBYTE trg[5];
-	_UBYTE trg_index = 0;
-	_UBYTE trgRecieved = 0;
-
-	_UBYTE command[5];
-	_UBYTE command_index = 0;
-	_UBYTE commandRecieved = 0;
-
-	_UBYTE value[15];
-	_UBYTE value_index = 0;
-
-	_UBYTE i;
-
-	for(i = 0; i < line_index - 1; i ++)
-	{
-		if(line[i] == ';')
-		{
-			trgRecieved = 1;
-		}
-
-		if(line[i] == ':')
-		{
-			commandRecieved = 1;
-		}
-
-		if(!trgRecieved)
-		{
-			trg[trg_index] = line[i];
-			trg_index++;
-		}
-		else if(!commandRecieved && line[i] != ';')
-		{
-			command[command_index] = line[i];
-			command_index++;
-		}
-		else if(line[i] != ':' && line[i] != ';')
-		{
-			value[value_index] = line[i];
-			value_index++;
-		}
-	}
-
-	if(trg_index != 0 && command_index != 0)
-	{
-		Execute(trg , (_UBYTE)StringToWORD(command, command_index), value);
 	}
 }
 

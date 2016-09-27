@@ -166,8 +166,7 @@ void _Motor_Loop(void)
 
 void Motor1_DutyIn(float duty, SetBy setter)
 {
-	if((motor1_DutyIn_State == Free && setter == RobotCore) || (motor1_DutyIn_State == ForceByHost && setter == MatStudio))
-		trgDuty[0] = duty;
+	trgDuty[0] = duty;
 }
 
 void Motor1_AccelerationIn(float a, SetBy setter)
@@ -193,8 +192,7 @@ void Motor1_DutyOut(float duty)
 
 void Motor2_DutyIn(float duty, SetBy setter)
 {
-	if((motor2_DutyIn_State == Free && setter == RobotCore) || (motor2_DutyIn_State == ForceByHost && setter == MatStudio))
-		trgDuty[1] = duty;
+	trgDuty[1] = duty;
 }
 
 void Motor2_AccelerationIn(float a, SetBy setter)
@@ -214,8 +212,7 @@ void Motor2_DutyOut(float duty)
 
 void Motor3_DutyIn(float duty, SetBy setter)
 {
-	if((motor3_DutyIn_State == Free && setter == RobotCore) || (motor3_DutyIn_State == ForceByHost && setter == MatStudio))
-		trgDuty[2] = duty;
+	trgDuty[2] = duty;
 }
 
 void Motor3_AccelerationIn(float a, SetBy setter)
@@ -235,8 +232,7 @@ void Motor3_DutyOut(float duty)
 
 void Motor4_DutyIn(float duty, SetBy setter)
 {
-	if((motor4_DutyIn_State == Free && setter == RobotCore) || (motor4_DutyIn_State == ForceByHost && setter == MatStudio))
-		trgDuty[3] = duty;
+	trgDuty[3] = duty;
 }
 
 void Motor4_AccelerationIn(float a, SetBy setter)
@@ -256,8 +252,7 @@ void Motor4_DutyOut(float duty)
 
 void Motor5_DutyIn(float duty, SetBy setter)
 {
-	if((motor5_DutyIn_State == Free && setter == RobotCore) || (motor5_DutyIn_State == ForceByHost && setter == MatStudio))
-		trgDuty[4] = duty;
+	trgDuty[4] = duty;
 }
 
 void Motor5_AccelerationIn(float a, SetBy setter)
@@ -277,8 +272,7 @@ void Motor5_DutyOut(float duty)
 
 void Motor6_DutyIn(float duty, SetBy setter)
 {
-	if((motor6_DutyIn_State == Free && setter == RobotCore) || (motor6_DutyIn_State == ForceByHost && setter == MatStudio))
-		trgDuty[5] = duty;
+	trgDuty[5] = duty;
 }
 
 void Motor6_AccelerationIn(float a, SetBy setter)
