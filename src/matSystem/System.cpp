@@ -11,11 +11,13 @@
 #include "..\Modules\LED.h"
 
 _UDWORD System_CurrentTime = 0;
+_UBYTE count = 0;
+
 BOOL isCounting = False;
 
 
 
-void System_ClockStart(void)
+void _System_ClockStart(void)
 {
 	isCounting = True;
 }

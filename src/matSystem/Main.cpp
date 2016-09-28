@@ -42,6 +42,8 @@ void main(void)
 {
 	_LED_Activate();
 
+	_System_ClockStart();
+
 	_Battery_Activate();
 
 	_Timer_Activate();

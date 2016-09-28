@@ -11,9 +11,11 @@
 #include "micon/GPT012.h"
 #include "..\DataConverter.h"
 #include "..\matSystem\Connecter.h"
+#include "..\matSystem\System.h"
 
 #define THRESHOLD	 		(0.01)
 #define MAX_ACCELERATION	(0.5)
+#define SEND_COUNT			(4)
 
 static float norm(float, _UBYTE*);
 
@@ -181,7 +183,7 @@ void Motor1_DutyOut(float duty)
 {
 	DataValue data;
 	PWM_M1_set(duty);
-	if(motor1_DutyOut_State == LookByHost)
+	if(motor1_DutyOut_State == LookByHost && System_CurrentTime % SEND_COUNT == 0)
 		Connecter_SendFloat("Mm1;5:", 6, duty);
 	if(motor1_DutyIn_HardwarePortAdress != 0)
 	{
@@ -206,7 +208,7 @@ void Motor2_AccelerationIn(float a, SetBy setter)
 void Motor2_DutyOut(float duty)
 {
 	PWM_M2_set(duty);
-	if(motor2_DutyOut_State == LookByHost)
+	if(motor2_DutyOut_State == LookByHost && System_CurrentTime % SEND_COUNT == 0)
 		Connecter_SendFloat("Mm2;5:", 6, duty);
 }
 
@@ -226,7 +228,7 @@ void Motor3_AccelerationIn(float a, SetBy setter)
 void Motor3_DutyOut(float duty)
 {
 	PWM_M3_set(duty);
-	if(motor3_DutyOut_State == LookByHost)
+	if(motor3_DutyOut_State == LookByHost && System_CurrentTime % SEND_COUNT == 0)
 		Connecter_SendFloat("Mm3;5:", 6, duty);
 }
 
@@ -246,7 +248,7 @@ void Motor4_AccelerationIn(float a, SetBy setter)
 void Motor4_DutyOut(float duty)
 {
 	PWM_M4_set(duty);
-	if(motor4_DutyOut_State == LookByHost)
+	if(motor4_DutyOut_State == LookByHost && System_CurrentTime % SEND_COUNT == 0)
 		Connecter_SendFloat("Mm4;5:", 6, duty);
 }
 
@@ -266,7 +268,7 @@ void Motor5_AccelerationIn(float a, SetBy setter)
 void Motor5_DutyOut(float duty)
 {
 	PWM_M5_set(duty);
-	if(motor5_DutyOut_State == LookByHost)
+	if(motor5_DutyOut_State == LookByHost && System_CurrentTime % SEND_COUNT == 0)
 		Connecter_SendFloat("Mm5;5:", 6, duty);
 }
 
@@ -286,7 +288,7 @@ void Motor6_AccelerationIn(float a, SetBy setter)
 void Motor6_DutyOut(float duty)
 {
 	PWM_M6_set(duty);
-	if(motor6_DutyOut_State == LookByHost)
+	if(motor6_DutyOut_State == LookByHost && System_CurrentTime % SEND_COUNT == 0)
 		Connecter_SendFloat("Mm6;5:", 6, duty);
 }
 

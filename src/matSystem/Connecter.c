@@ -47,7 +47,6 @@ _UBYTE BufferAisSelected = 1;
 void (*Inputs[32])(DataValue data);
 
 
-static void Decipher(void);
 static void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value);
 
 
@@ -56,12 +55,21 @@ void _Connecter_Activate(void)
 	_UART1_Activate();
 }
 
+BOOL connecter_Recieve_running = False;
 void _Connecter_Recieve(void)
 {
 	_UWORD count;
 	_UWORD RecievedData_index = 0;
 
 	_UBYTE* uart1RecievedData = _UART1_GetRecievedData(&count);
+
+	if(connecter_Recieve_running)
+	{
+		Buzzer_OneTime(1000);
+		return;
+	}
+
+	connecter_Recieve_running = True;
 
 	while(RecievedData_index != count)
 	{
@@ -123,6 +131,8 @@ void _Connecter_Recieve(void)
 			valueRecieved = False;
 			lineRecieved = False;
 
+			Buzzer_OneTime(300);
+
 			trg_index = 0;
 			command_index = 0;
 			valueLength_index = 0;
@@ -147,6 +157,8 @@ void _Connecter_Recieve(void)
 
 		RecievedData_index ++;
 	}
+
+	connecter_Recieve_running = False;
 }
 
 void _Connecter_Transmit(void)

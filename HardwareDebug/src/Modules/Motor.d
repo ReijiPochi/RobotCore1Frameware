@@ -11,3 +11,5 @@ src/Modules/Motor.obj src/Modules/Motor.d: ../src/Modules/..\DataConverter.h
 ../src/Modules/..\DataConverter.h:
 src/Modules/Motor.obj src/Modules/Motor.d: ../src/Modules/..\matSystem\Connecter.h
 ../src/Modules/..\matSystem\Connecter.h:
+src/Modules/Motor.obj src/Modules/Motor.d: ../src/Modules/..\matSystem\System.h
+../src/Modules/..\matSystem\System.h:

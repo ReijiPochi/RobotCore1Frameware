@@ -12,8 +12,9 @@
 
 
 extern _UDWORD System_CurrentTime;
+extern BOOL System_OnSendTIme;
 
-void System_ClockStart(void);
+void _System_ClockStart(void);
 
 void _System_Loop(void);
 

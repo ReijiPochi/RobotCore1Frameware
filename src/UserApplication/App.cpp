@@ -126,12 +126,8 @@ static void BluetoothCallback(DUALSHOCK3 data)
 	if(data.Buttons.BIT.Start)
 	{
 		Motor_UnlockSTBY();
-		System_ClockStart();
 
 		Buzzer_Siren1();
-
-		System_ClockStart();
-
 		_LED_B_Off();
 		_LED_G_On();
 	}
