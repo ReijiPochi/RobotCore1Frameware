@@ -16,6 +16,10 @@
 #include "..\matSystem\Connecter.h"
 #include "..\matSystem\System.h"
 
+//#define BIGFORK
+//#define LITTLEFORK
+#define DOLLY
+
 static void BluetoothCallback(DUALSHOCK3 data);
 static void Timer2Callback(void);
 static void StartAimMode(void);
@@ -139,6 +143,8 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 		_LED_B_On();
 	}
+
+#ifdef BIGFORK
 
 	if(data.Buttons.BIT.Maru)
 	{
@@ -285,6 +291,25 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		Motor5_AccelerationIn(0.1, RobotCore);
 		Motor5_DutyIn(-stick_r_v / 100.0, RobotCore);
 	}
+
+#endif
+
+#ifdef DOLLY
+
+	Motor1_DutyIn(data.AnalogL.Y / 64.0, RobotCore);
+
+	if(data.Buttons.BIT.Maru)
+	{
+		Servo1_RotationIn(90.0, RobotCore);
+		Servo2_RotationIn(90.0, RobotCore);
+	}
+	else if(data.Buttons.BIT.Shikaku)
+	{
+		Servo1_RotationIn(0.0, RobotCore);
+		Servo2_RotationIn(0.0, RobotCore);
+	}
+
+#endif
 }
 
 void StartAimMode(void)

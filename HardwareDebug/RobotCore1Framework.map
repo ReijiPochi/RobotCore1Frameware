@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W2.04.00 )             28-Sep-2016 16:11:31
+Renesas Optimizing Linker (W2.04.00 )             29-Sep-2016 20:04:10
 
 *** Options ***
 
@@ -15,7 +15,7 @@ Renesas Optimizing Linker (W2.04.00 )             28-Sep-2016 16:11:31
 -input="./src/Modules/micon/CMT.obj"
 -input="./src/Modules/micon/DAa.obj"
 -input="./src/Modules/micon/GPT012.obj"
--input="./src/Modules/micon/GPT46.obj"
+-input="./src/Modules/micon/GPT456.obj"
 -input="./src/Modules/micon/IO.obj"
 -input="./src/Modules/micon/S12ADB.obj"
 -input="./src/Modules/micon/SCIc.obj"
@@ -103,7 +103,7 @@ L
 PIntPRG
                                   fff8062e  fff80788       15b   1
 P
-                                  fff80789  fff8432c      3ba4   1
+                                  fff80789  fff840af      3927   1
 FIXEDVECT
                                   ffffff80  ffffffff        80   4
 
@@ -189,21 +189,21 @@ FILE=.\src\UserApplication\App.obj
   _sumpleCount
                                   0000163a         1   data ,g         3
   _ArmDown
-                                  0000163b         1   data ,g         6
+                                  0000163b         1   data ,g         2
   _ArmUpForce
-                                  0000163c         1   data ,g         6
+                                  0000163c         1   data ,g         1
   _waitingForStop
-                                  0000163d         1   data ,g         4
+                                  0000163d         1   data ,g         0
   _pumpOnL
-                                  0000163e         1   data ,g         6
+                                  0000163e         1   data ,g         3
   _pumpOnR
-                                  0000163f         1   data ,g         6
+                                  0000163f         1   data ,g         3
   _pumpHold
-                                  00001640         1   data ,g         7
+                                  00001640         1   data ,g         2
   _autoUpCount
-                                  00001641         1   data ,g         6
+                                  00001641         1   data ,g         3
   _isAimMode
-                                  00001642         1   data ,g         6
+                                  00001642         1   data ,g         0
 FILE=.\src\Modules\micon\SCIc.obj
                                   00001643  00001646         4
   _flag_RXI0
@@ -355,9 +355,9 @@ FILE=.\src\matSystem\Connecter.obj
 FILE=.\src\matSystem\System.obj
                                   00005ce4  00005ceb         8
   _System_CurrentTime
-                                  00005ce4         4   data ,g         8
+                                  00005ce4         4   data ,g         3
   _isCounting
-                                  00005ce8         4   data ,g         2
+                                  00005ce8         4   data ,g         3
 FILE=.\src\Modules\Bluetooth.obj
                                   00005cec  00005cf3         8
   _commandOut_State
@@ -873,7 +873,7 @@ FILE=.\src\matSystem\BatteryCheck.obj
   BatteryCheck()
                                   fff8092d        b4   func ,g         1
 FILE=.\src\matSystem\Connecter.obj
-                                  fff809e1  fff80f31       551
+                                  fff809e1  fff80f56       576
   __Connecter_Activate
                                   fff809e1         5   func ,g         1
   __Connecter_Recieve
@@ -887,485 +887,493 @@ FILE=.\src\matSystem\Connecter.obj
   _Connecter_SendInt
                                   fff80e4c        32   func ,g         0
   _Execute
-                                  fff80e7e        8a   func ,l         1
+                                  fff80e7e        af   func ,l         1
   _Connecter_InputToHardwarePort
-                                  fff80f08        17   func ,g         1
+                                  fff80f2d        17   func ,g         1
   _Connecter_RegistHardwarePort
-                                  fff80f1f        13   func ,g         1
+                                  fff80f44        13   func ,g         1
 FILE=.\src\matSystem\Main.obj
-                                  fff80f32  fff80fb0        7f
+                                  fff80f57  fff80fd5        7f
   _main
-                                  fff80f32        33   func ,g         1
+                                  fff80f57        33   func ,g         1
   Timer1_Callback()
-                                  fff80f65        4b   func ,l         1
+                                  fff80f8a        4b   func ,l         1
   _abort
-                                  fff80fb0         1   func ,g         1
+                                  fff80fd5         1   func ,g         1
 FILE=.\src\matSystem\System.obj
-                                  fff80fb1  fff80fdb        2b
-  _System_ClockStart()
-                                  fff80fb1         a   func ,g         1
-  _System_Loop()
-                                  fff80fbb        1b   func ,g         1
-  System_Log(unsigned short)
-                                  fff80fd6         6   func ,g         0
+                                  fff80fd6  fff81018        43
+  __System_ClockStart
+                                  fff80fd6         a   func ,g         2
+  __System_ClockStop
+                                  fff80fe0         a   func ,g         1
+  __System_SetTime
+                                  fff80fea         e   func ,g         1
+  __System_Loop
+                                  fff80ff8        1b   func ,g         1
+  _System_Log
+                                  fff81013         6   func ,g         0
 FILE=.\src\UserApplication\App.obj
-                                  fff80fdc  fff8166b       690
+                                  fff81019  fff81310       2f8
   _Initialize
-                                  fff80fdc        58   func ,g         1
+                                  fff81019        58   func ,g         1
   _MainLoop
-                                  fff81034         1   func ,g         1
+                                  fff81071         1   func ,g         1
   __SystemClockCallBack
-                                  fff81035        52   func ,g         1
+                                  fff81072        52   func ,g         1
   Timer2Callback()
-                                  fff81087       1d5   func ,l         1
+                                  fff810c4       1d5   func ,l         1
   BluetoothCallback(DUALSHOCK3)
-                                  fff8125c       3e8   func ,l         1
-  StartAimMode()
-                                  fff81644        16   func ,l         1
-  EndAimMode()
-                                  fff8165a        12   func ,l         3
+                                  fff81299        78   func ,l         1
 FILE=.\src\Modules\micon\CMT.obj
-                                  fff8166c  fff817be       153
+                                  fff81311  fff81463       153
   _CMT_init
-                                  fff8166c        2d   func ,g         1
+                                  fff81311        2d   func ,g         1
   _CMT0_Set
-                                  fff81699        5d   func ,g         4
+                                  fff8133e        5d   func ,g         4
   _CMT0_Start
-                                  fff816f6         c   func ,g         1
+                                  fff8139b         c   func ,g         1
   _Excep_CMT0_CMI0
-                                  fff81702        1b   func ,g         0
+                                  fff813a7        1b   func ,g         0
   _CMT0_Stop
-                                  fff8171d         f   func ,g         1
+                                  fff813c2         f   func ,g         1
   _CMT1_Set
-                                  fff8172c        5d   func ,g         4
+                                  fff813d1        5d   func ,g         4
   _CMT1_Start
-                                  fff81789         c   func ,g         1
+                                  fff8142e         c   func ,g         1
   _Excep_CMT1_CMI1
-                                  fff81795        1b   func ,g         0
+                                  fff8143a        1b   func ,g         0
   _CMT1_Stop
-                                  fff817b0         f   func ,g         1
+                                  fff81455         f   func ,g         1
 FILE=.\src\Modules\micon\DAa.obj
-                                  fff817bf  fff8182d        6f
+                                  fff81464  fff814d2        6f
   _DAa_init
-                                  fff817bf        55   func ,g         1
+                                  fff81464        55   func ,g         1
   _DA0_SetValue
-                                  fff81814         d   func ,g         1
+                                  fff814b9         d   func ,g         1
   _DA1_SetValue
-                                  fff81821         d   func ,g         1
+                                  fff814c6         d   func ,g         1
 FILE=.\src\Modules\micon\GPT012.obj
-                                  fff8182e  fff81bd7       3aa
+                                  fff814d3  fff8187c       3aa
   _GPT012_init
-                                  fff8182e       2c0   func ,g         1
+                                  fff814d3       2c0   func ,g         1
   _PWM_M1_set
-                                  fff81aee        27   func ,g         1
+                                  fff81793        27   func ,g         1
   _PWM_M2_set
-                                  fff81b15        27   func ,g         1
+                                  fff817ba        27   func ,g         1
   _PWM_M3_set
-                                  fff81b3c        27   func ,g         1
+                                  fff817e1        27   func ,g         1
   _PWM_M4_set
-                                  fff81b63        27   func ,g         1
+                                  fff81808        27   func ,g         1
   _PWM_M5_set
-                                  fff81b8a        27   func ,g         1
+                                  fff8182f        27   func ,g         1
   _PWM_M6_set
-                                  fff81bb1        27   func ,g         1
-FILE=.\src\Modules\micon\GPT46.obj
-                                  fff81bd8  fff81e0f       238
-  _GPT46_init
-                                  fff81bd8       167   func ,g         1
-  _PWM1_set
-                                  fff81d3f        4e   func ,g         2
-  _PWM1_On
-                                  fff81d8d         c   func ,g         2
+                                  fff81856        27   func ,g         1
+FILE=.\src\Modules\micon\GPT456.obj
+                                  fff8187d  fff81bb2       336
+  _GPT456_init
+                                  fff8187d       1fc   func ,g         1
+  _Servo1_set
+                                  fff81a79        4e   func ,g         2
+  _Servo1_On
+                                  fff81ac7         c   func ,g         2
+  _Servo1_Off
+                                  fff81ad3         f   func ,g         0
+  _Servo2_set
+                                  fff81ae2        4e   func ,g         2
+  _Servo2_On
+                                  fff81b30         c   func ,g         2
   _PWM1_Off
-                                  fff81d99         f   func ,g         0
+                                  fff81b3c         f   func ,g         0
   _BUZZER_set
-                                  fff81da8        4e   func ,g         e
+                                  fff81b4b        4e   func ,g         e
   _BUZZER_On
-                                  fff81df6         c   func ,g         a
+                                  fff81b99         c   func ,g         a
   _BUZZER_Off
-                                  fff81e02         e   func ,g         6
+                                  fff81ba5         e   func ,g         6
 FILE=.\src\Modules\micon\IO.obj
-                                  fff81e10  fff820be       2af
+                                  fff81bb3  fff81e61       2af
   _IO_LED_init
-                                  fff81e10         9   func ,g         1
+                                  fff81bb3         9   func ,g         1
   _LED_STATUS_R
-                                  fff81e19        18   func ,g         2
+                                  fff81bbc        18   func ,g         2
   _LED_STATUS_G
-                                  fff81e31        18   func ,g         2
+                                  fff81bd4        18   func ,g         2
   _LED_STATUS_B
-                                  fff81e49        19   func ,g         2
+                                  fff81bec        19   func ,g         2
   _LED_INFO
-                                  fff81e62        19   func ,g         2
+                                  fff81c05        19   func ,g         2
   _LED_ERROR
-                                  fff81e7b        19   func ,g         4
+                                  fff81c1e        19   func ,g         4
   _IO_Motor_Init
-                                  fff81e94        26   func ,g         1
+                                  fff81c37        26   func ,g         1
   _ALERT
-                                  fff81eba        13   func ,g         0
+                                  fff81c5d        13   func ,g         0
   _STBY
-                                  fff81ecd        19   func ,g         2
+                                  fff81c70        19   func ,g         2
   _Motor1_MODE
-                                  fff81ee6        30   func ,g         4
+                                  fff81c89        30   func ,g         4
   _Motor2_MODE
-                                  fff81f16        2e   func ,g         4
+                                  fff81cb9        2e   func ,g         4
   _Motor3_MODE
-                                  fff81f44        32   func ,g         4
+                                  fff81ce7        32   func ,g         4
   _Motor4_MODE
-                                  fff81f76        31   func ,g         4
+                                  fff81d19        31   func ,g         4
   _Motor5_MODE
-                                  fff81fa7        30   func ,g         4
+                                  fff81d4a        30   func ,g         4
   _Motor6_MODE
-                                  fff81fd7        2f   func ,g         4
+                                  fff81d7a        2f   func ,g         4
   _IO_DIO_Init
-                                  fff82006        5b   func ,g         1
+                                  fff81da9        5b   func ,g         1
   _DIO_1_Out
-                                  fff82061        18   func ,g         2
+                                  fff81e04        18   func ,g         2
   _DIO_2_Out
-                                  fff82079        18   func ,g         2
+                                  fff81e1c        18   func ,g         2
   _DIO_3_Out
-                                  fff82091        16   func ,g         2
+                                  fff81e34        16   func ,g         2
   _DIO_4_Out
-                                  fff820a7        18   func ,g         2
+                                  fff81e4a        18   func ,g         2
 FILE=.\src\Modules\micon\S12ADB.obj
-                                  fff820bf  fff82325       267
+                                  fff81e62  fff820c8       267
   _S12AD_init
-                                  fff820bf        ad   func ,g         1
+                                  fff81e62        ad   func ,g         1
   _S12AD_Sample
-                                  fff8216c        1f   func ,g         1
+                                  fff81f0f        1f   func ,g         1
   _Excep_S12AD_S12ADI
-                                  fff8218b        38   func ,g         0
+                                  fff81f2e        38   func ,g         0
   _S12ADB_GetVoltage
-                                  fff821c3        24   func ,g         3
+                                  fff81f66        24   func ,g         3
   _S12AD1_init
-                                  fff821e7        b5   func ,g         1
+                                  fff81f8a        b5   func ,g         1
   _S12AD1_Sample
-                                  fff8229c        1f   func ,g         1
+                                  fff8203f        1f   func ,g         1
   _Excep_S12AD1_S12ADI1
-                                  fff822bb        47   func ,g         0
+                                  fff8205e        47   func ,g         0
   _S12AD1_GetVoltage
-                                  fff82302        24   func ,g         1
+                                  fff820a5        24   func ,g         1
 FILE=.\src\Modules\micon\SCIc.obj
-                                  fff82326  fff8297c       657
+                                  fff820c9  fff8271f       657
   _uart1_init
-                                  fff82326        d1   func ,g         1
+                                  fff820c9        d1   func ,g         1
   _uart1_read
-                                  fff823f7        61   func ,g         1
+                                  fff8219a        61   func ,g         1
   _uart1_send
-                                  fff82458        53   func ,g         1
+                                  fff821fb        53   func ,g         1
   _Excep_SCI1_RXI1
-                                  fff824ab        c8   func ,g         0
+                                  fff8224e        c8   func ,g         0
   _Excep_SCI1_TXI1
-                                  fff82573        6c   func ,g         0
+                                  fff82316        6c   func ,g         0
   _uart1_set
-                                  fff825df        5f   func ,l         2
+                                  fff82382        5f   func ,l         2
   _uart1_clear_errorFlag
-                                  fff8263e        16   func ,l         2
+                                  fff823e1        16   func ,l         2
   _uart0_init
-                                  fff82654        cc   func ,g         2
+                                  fff823f7        cc   func ,g         2
   _uart0_read
-                                  fff82720        61   func ,g         2
+                                  fff824c3        61   func ,g         2
   _uart0_send
-                                  fff82781        53   func ,g         4
+                                  fff82524        53   func ,g         4
   _Excep_SCI0_RXI0
-                                  fff827d4        c8   func ,g         0
+                                  fff82577        c8   func ,g         0
   _Excep_SCI0_TXI0
-                                  fff8289c        6c   func ,g         0
+                                  fff8263f        6c   func ,g         0
   _uart0_set
-                                  fff82908        5f   func ,l         2
+                                  fff826ab        5f   func ,l         2
   _uart0_clear_errorFlag
-                                  fff82967        16   func ,l         2
+                                  fff8270a        16   func ,l         2
 FILE=.\src\Modules\AnalogIN.obj
-                                  fff8297d  fff829aa        2e
+                                  fff82720  fff8274d        2e
   _AnalogIN_Activate
-                                  fff8297d         5   func ,g         1
+                                  fff82720         5   func ,g         1
   _AnalogIN_Sample
-                                  fff82982         5   func ,g         1
+                                  fff82725         5   func ,g         1
   _AnalogIN_GetVoltage
-                                  fff82987        24   func ,g         1
+                                  fff8272a        24   func ,g         1
 FILE=.\src\Modules\AnalogOUT.obj
-                                  fff829ab  fff829ff        55
+                                  fff8274e  fff827a2        55
   _AnalogOUT_Activate
-                                  fff829ab         5   func ,g         1
+                                  fff8274e         5   func ,g         1
   _AnalogOUT1_SetVoltage
-                                  fff829b0        28   func ,g         0
+                                  fff82753        28   func ,g         0
   _AnalogOUT2_SetVoltage
-                                  fff829d8        28   func ,g         0
+                                  fff8277b        28   func ,g         0
 FILE=.\src\Modules\Battery.obj
-                                  fff82a00  fff82a63        64
+                                  fff827a3  fff82806        64
   __Battery_Activate
-                                  fff82a00         5   func ,g         1
+                                  fff827a3         5   func ,g         1
   __Battery_Sample
-                                  fff82a05         5   func ,g         1
+                                  fff827a8         5   func ,g         1
   __Battery_GetVoltage1
-                                  fff82a0a        1e   func ,g         1
+                                  fff827ad        1e   func ,g         1
   __Battery_GetVoltage2
-                                  fff82a28        1e   func ,g         1
+                                  fff827cb        1e   func ,g         1
   __Battery_GetVoltage3
-                                  fff82a46        1e   func ,g         1
+                                  fff827e9        1e   func ,g         1
 FILE=.\src\Modules\Bluetooth.obj
-                                  fff82a64  fff82d01       29e
+                                  fff82807  fff82aa4       29e
   _Bluetooth_Activate
-                                  fff82a64        12   func ,g         1
+                                  fff82807        12   func ,g         1
   __Bluetooth_Loop
-                                  fff82a76       177   func ,g         1
+                                  fff82819       177   func ,g         1
   _Bluetooth_CommandIn
-                                  fff82bed        16   func ,g         1
+                                  fff82990        16   func ,g         1
   _Bluetooth_CommandOut
-                                  fff82c03        6f   func ,l         2
+                                  fff829a6        6f   func ,l         2
   __Bluetooth_Do
-                                  fff82c72        6c   func ,g         1
+                                  fff82a15        6c   func ,g         1
   _Bluetooth_Vibrate1
-                                  fff82cde         d   func ,g         1
+                                  fff82a81         d   func ,g         0
   _Bluetooth_Vibrate1Long
-                                  fff82ceb         a   func ,g         1
+                                  fff82a8e         a   func ,g         0
   _Bluetooth_Vibrate2
-                                  fff82cf5         d   func ,g         1
+                                  fff82a98         d   func ,g         1
 FILE=.\src\Modules\Buzzer.obj
-                                  fff82d02  fff830d3       3d2
+                                  fff82aa5  fff82e76       3d2
   _Buzzer_Activate
-                                  fff82d02         5   func ,g         1
+                                  fff82aa5         5   func ,g         1
   __Buzzer_Loop
-                                  fff82d07       258   func ,g         1
+                                  fff82aaa       258   func ,g         1
   _Buzzer_On
-                                  fff82f5f        13   func ,g         0
+                                  fff82d02        13   func ,g         0
   _Buzzer_Off
-                                  fff82f72        5d   func ,g         0
+                                  fff82d15        5d   func ,g         0
   _Buzzer_OneTime
-                                  fff82fcf        36   func ,g         4
+                                  fff82d72        36   func ,g         3
   _Buzzer_StepUp
-                                  fff83005        29   func ,g         2
+                                  fff82da8        29   func ,g         1
   _Buzzer_StepDown
-                                  fff8302e        29   func ,g         1
+                                  fff82dd1        29   func ,g         1
   _Buzzer_Siren1
-                                  fff83057        29   func ,g         1
+                                  fff82dfa        29   func ,g         1
   _Buzzer_Siren2
-                                  fff83080        2a   func ,g         2
+                                  fff82e23        2a   func ,g         2
   _Buzzer_LowBattery
-                                  fff830aa        2a   func ,g         1
+                                  fff82e4d        2a   func ,g         1
 FILE=.\src\Modules\DataLogger.obj
-                                  fff830d4  fff831d4       101
+                                  fff82e77  fff82f77       101
   _DataLogger_Activate
-                                  fff830d4         d   func ,g         1
+                                  fff82e77         d   func ,g         1
   __DataLogger_Loop
-                                  fff830e1        1a   func ,g         1
+                                  fff82e84        1a   func ,g         1
   __DataLogger_Do
-                                  fff830fb        19   func ,g         0
+                                  fff82e9e        19   func ,g         0
   _dataLogger1_Do
-                                  fff83114         8   func ,l         1
+                                  fff82eb7         8   func ,l         1
   _DataLogger1_DataIn
-                                  fff8311c        94   func ,g         1
+                                  fff82ebf        94   func ,g         1
   _DataLogger1_LoggingStart
-                                  fff831b0        13   func ,g         1
+                                  fff82f53        13   func ,g         1
   _DataLogger1_LoggingStop
-                                  fff831c3         a   func ,g         2
+                                  fff82f66         a   func ,g         2
   _DataLogger_Log
-                                  fff831cd         8   func ,g         0
+                                  fff82f70         8   func ,g         0
 FILE=.\src\Modules\DigitalIO.obj
-                                  fff831d5  fff83223        4f
+                                  fff82f78  fff82fc6        4f
   _DIO_Activate
-                                  fff831d5        17   func ,g         1
+                                  fff82f78        17   func ,g         1
   _DIO1_On
-                                  fff831ec         7   func ,g         1
+                                  fff82f8f         7   func ,g         0
   _DIO1_Off
-                                  fff831f3         7   func ,g         1
+                                  fff82f96         7   func ,g         0
   _DIO2_On
-                                  fff831fa         7   func ,g         1
+                                  fff82f9d         7   func ,g         0
   _DIO2_Off
-                                  fff83201         7   func ,g         1
+                                  fff82fa4         7   func ,g         0
   _DIO3_On
-                                  fff83208         7   func ,g         0
+                                  fff82fab         7   func ,g         0
   _DIO3_Off
-                                  fff8320f         7   func ,g         0
+                                  fff82fb2         7   func ,g         0
   _DIO4_On
-                                  fff83216         7   func ,g         0
+                                  fff82fb9         7   func ,g         0
   _DIO4_Off
-                                  fff8321d         7   func ,g         0
+                                  fff82fc0         7   func ,g         0
 FILE=.\src\Modules\LED.obj
-                                  fff83224  fff8326e        4b
+                                  fff82fc7  fff83011        4b
   __LED_Activate
-                                  fff83224         5   func ,g         1
+                                  fff82fc7         5   func ,g         1
   __LED_R_On
-                                  fff83229         7   func ,g         1
+                                  fff82fcc         7   func ,g         1
   __LED_G_On
-                                  fff83230         7   func ,g         1
+                                  fff82fd3         7   func ,g         1
   __LED_B_On
-                                  fff83237         7   func ,g         2
+                                  fff82fda         7   func ,g         2
   __LED_Info_On
-                                  fff8323e         7   func ,g         1
+                                  fff82fe1         7   func ,g         1
   __LED_Error_On
-                                  fff83245         7   func ,g         3
+                                  fff82fe8         7   func ,g         3
   __LED_R_Off
-                                  fff8324c         7   func ,g         1
+                                  fff82fef         7   func ,g         1
   __LED_G_Off
-                                  fff83253         7   func ,g         0
+                                  fff82ff6         7   func ,g         0
   __LED_B_Off
-                                  fff8325a         7   func ,g         1
+                                  fff82ffd         7   func ,g         1
   __LED_Info_Off
-                                  fff83261         7   func ,g         1
+                                  fff83004         7   func ,g         1
   __LED_Error_Off
-                                  fff83268         7   func ,g         0
+                                  fff8300b         7   func ,g         0
 FILE=.\src\Modules\Motor.obj
-                                  fff8326f  fff83e3b       bcd
+                                  fff83012  fff83b8a       b79
   _Motor_Activate
-                                  fff8326f         9   func ,g         1
+                                  fff83012         9   func ,g         1
   _Motor_UnlockSTBY
-                                  fff83278         7   func ,g         1
+                                  fff8301b         7   func ,g         1
   _Motor_LockSTBY
-                                  fff8327f         7   func ,g         1
+                                  fff83022         7   func ,g         1
   __Motor_Loop
-                                  fff83286       35a   func ,g         1
+                                  fff83029       35a   func ,g         1
   _Motor1_DutyIn
-                                  fff835e0        11   func ,g         3
+                                  fff83383        11   func ,g         2
   _Motor1_AccelerationIn
-                                  fff835f1        58   func ,g         0
+                                  fff83394        58   func ,g         0
   _Motor1_DutyOut
-                                  fff83649        5e   func ,l         1
+                                  fff833ec        50   func ,l         1
   _Motor2_DutyIn
-                                  fff836a7        12   func ,g         3
+                                  fff8343c        12   func ,g         1
   _Motor2_AccelerationIn
-                                  fff836b9        5a   func ,g         0
+                                  fff8344e        5a   func ,g         0
   _Motor2_DutyOut
-                                  fff83713        40   func ,l         1
+                                  fff834a8        32   func ,l         1
   _Motor3_DutyIn
-                                  fff83753        12   func ,g         3
+                                  fff834da        12   func ,g         1
   _Motor3_AccelerationIn
-                                  fff83765        5a   func ,g         0
+                                  fff834ec        5a   func ,g         0
   _Motor3_DutyOut
-                                  fff837bf        40   func ,l         1
+                                  fff83546        32   func ,l         1
   _Motor4_DutyIn
-                                  fff837ff        12   func ,g         3
+                                  fff83578        12   func ,g         1
   _Motor4_AccelerationIn
-                                  fff83811        5a   func ,g         0
+                                  fff8358a        5a   func ,g         0
   _Motor4_DutyOut
-                                  fff8386b        40   func ,l         1
+                                  fff835e4        32   func ,l         1
   _Motor5_DutyIn
-                                  fff838ab        12   func ,g         a
+                                  fff83616        12   func ,g         4
   _Motor5_AccelerationIn
-                                  fff838bd        5a   func ,g         6
+                                  fff83628        5a   func ,g         3
   _Motor5_DutyOut
-                                  fff83917        40   func ,l         1
+                                  fff83682        32   func ,l         1
   _Motor6_DutyIn
-                                  fff83957        12   func ,g         1
+                                  fff836b4        12   func ,g         1
   _Motor6_AccelerationIn
-                                  fff83969        5a   func ,g         0
+                                  fff836c6        5a   func ,g         0
   _Motor6_DutyOut
-                                  fff839c3        40   func ,l         1
+                                  fff83720        32   func ,l         1
   _motor1_SetMode
-                                  fff83a03        3e   func ,l         3
+                                  fff83752        3e   func ,l         3
   _motor2_SetMode
-                                  fff83a41        3e   func ,l         3
+                                  fff83790        3e   func ,l         3
   _motor3_SetMode
-                                  fff83a7f        3e   func ,l         3
+                                  fff837ce        3e   func ,l         3
   _motor4_SetMode
-                                  fff83abd        3e   func ,l         3
+                                  fff8380c        3e   func ,l         3
   _motor5_SetMode
-                                  fff83afb        3e   func ,l         3
+                                  fff8384a        3e   func ,l         3
   _motor6_SetMode
-                                  fff83b39        3e   func ,l         3
+                                  fff83888        3e   func ,l         3
   _norm
-                                  fff83b77        42   func ,l         6
+                                  fff838c6        42   func ,l         6
   __Motor_Do
-                                  fff83bb9        54   func ,g         1
+                                  fff83908        54   func ,g         1
   _motor1_Do
-                                  fff83c0d        7c   func ,l         1
+                                  fff8395c        7c   func ,l         1
   _motor2_Do
-                                  fff83c89        57   func ,l         1
+                                  fff839d8        57   func ,l         1
   _motor3_Do
-                                  fff83ce0        57   func ,l         1
+                                  fff83a2f        57   func ,l         1
   _motor4_Do
-                                  fff83d37        57   func ,l         1
+                                  fff83a86        57   func ,l         1
   _motor5_Do
-                                  fff83d8e        57   func ,l         1
+                                  fff83add        57   func ,l         1
   _motor6_Do
-                                  fff83de5        57   func ,l         1
+                                  fff83b34        57   func ,l         1
 FILE=.\src\Modules\Servo.obj
-                                  fff83e3c  fff83e86        4b
+                                  fff83b8b  fff83c0d        83
   _Servo_Activate
-                                  fff83e3c        12   func ,g         1
+                                  fff83b8b        23   func ,g         1
   _Servo1_RotationIn
-                                  fff83e4e        39   func ,g         0
+                                  fff83bae        30   func ,g         2
+  _Servo2_RotationIn
+                                  fff83bde        30   func ,g         2
 FILE=.\src\Modules\Timer.obj
-                                  fff83e87  fff83feb       165
+                                  fff83c0e  fff83d72       165
   __Timer_Activate
-                                  fff83e87         5   func ,g         1
+                                  fff83c0e         5   func ,g         1
   __Timer1_Set
-                                  fff83e8c        a6   func ,g         1
+                                  fff83c13        a6   func ,g         1
   __Timer1_Start
-                                  fff83f32         5   func ,g         1
+                                  fff83cb9         5   func ,g         1
   __Timer1_Stop
-                                  fff83f37         5   func ,g         0
+                                  fff83cbe         5   func ,g         0
   _Timer2_Set
-                                  fff83f3c        a6   func ,g         1
+                                  fff83cc3        a6   func ,g         1
   _Timer2_Start
-                                  fff83fe2         5   func ,g         1
+                                  fff83d69         5   func ,g         1
   _Timer2_Stop
-                                  fff83fe7         5   func ,g         0
+                                  fff83d6e         5   func ,g         0
 FILE=.\src\Modules\UART.obj
-                                  fff83fec  fff84035        4a
+                                  fff83d73  fff83dbc        4a
   __UART1_Activate
-                                  fff83fec         5   func ,g         1
+                                  fff83d73         5   func ,g         1
   __UART1_GetRecievedData
-                                  fff83ff1        10   func ,g         1
+                                  fff83d78        10   func ,g         1
   __UART1_TransmitData
-                                  fff84001        10   func ,g         2
+                                  fff83d88        10   func ,g         2
   __UART0_Activate
-                                  fff84011         5   func ,g         0
+                                  fff83d98         5   func ,g         0
   __UART0_GetRecievedData
-                                  fff84016        10   func ,g         0
+                                  fff83d9d        10   func ,g         0
   __UART0_TransmitData
-                                  fff84026        10   func ,g         0
+                                  fff83dad        10   func ,g         0
 FILE=.\src\DataConverter.obj
-                                  fff84036  fff8420d       1d8
+                                  fff83dbd  fff83f90       1d4
   IntParse(unsigned char)
-                                  fff84036        53   func ,l         1
+                                  fff83dbd        53   func ,l         1
   _StringToWORD
-                                  fff84089        45   func ,g         2
+                                  fff83e10        45   func ,g         2
   _BitsToFloat
-                                  fff840ce        3a   func ,g         6
+                                  fff83e55        3a   func ,g         6
   _BitsToInt
-                                  fff84108        40   func ,g         1
+                                  fff83e8f        3c   func ,g         2
   _BitsToDUALSHOCK3
-                                  fff84148        4f   func ,g         1
+                                  fff83ecb        4f   func ,g         1
   _FloatToBits
-                                  fff84197        3c   func ,g         1
+                                  fff83f1a        3c   func ,g         1
   _IntToBits
-                                  fff841d3        3b   func ,g         1
+                                  fff83f56        3b   func ,g         1
 FILE=cppinit
-                                  fff8420e  fff8422d        20
+                                  fff83f91  fff83fb0        20
   __CALL_INIT
-                                  fff8420e        1c   func ,g         1
+                                  fff83f91        1c   func ,g         1
   __CALL_END
-                                  fff8422a         4   func ,g         1
+                                  fff83fad         4   func ,g         1
 FILE=__initsct
-                                  fff8422e  fff84277        4a
+                                  fff83fb1  fff83ffa        4a
   __INITSCT
-                                  fff8422e         0   none ,g         1
+                                  fff83fb1         0   none ,g         1
   loop1
-                                  fff84240         0   none ,l         1
+                                  fff83fc3         0   none ,l         1
   next_loop1
-                                  fff8424e         0   none ,l         2
+                                  fff83fd1         0   none ,l         2
   loop3
-                                  fff84260         0   none ,l         1
+                                  fff83fe3         0   none ,l         1
   next_loop3
-                                  fff84271         0   none ,l         2
+                                  fff83ff4         0   none ,l         2
 FILE=static_init
-                                  fff84278  fff842dd        66
+                                  fff83ffb  fff84060        66
   __call_dtors()
-                                  fff84278        66   func ,g         1
+                                  fff83ffb        66   func ,g         1
 FILE=dtor_list
-                                  fff842de  fff84328        4b
+                                  fff84061  fff840ab        4b
   __process_needed_destructions()
-                                  fff842de        26   func ,g         2
+                                  fff84061        26   func ,g         2
   ___already_marked_for_destruction
-                                  fff84304         6   func ,g         1
+                                  fff84087         6   func ,g         1
   ___record_needed_destruction
-                                  fff8430a        1d   func ,g         0
+                                  fff8408d        1d   func ,g         0
   ___std__needed_destruction_list
-                                  fff84327         2   func ,g         0
+                                  fff840aa         2   func ,g         0
 FILE=error
-                                  fff84329  fff8432c         4
+                                  fff840ac  fff840af         4
   ___abort_execution
-                                  fff84329         4   func ,g         1
+                                  fff840ac         4   func ,g         1
 
 SECTION=FIXEDVECT
 FILE=.\src\Modules\micon\vector_table.obj

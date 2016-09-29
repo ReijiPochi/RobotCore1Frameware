@@ -18,7 +18,7 @@ extern "C" {
 
 _SWORD StringToWORD(_UBYTE* string, _UBYTE count);
 float BitsToFloat(_UBYTE* bits);
-_SWORD BitsToInt(_UBYTE* bits);
+_SDWORD BitsToInt(_UBYTE* bits);
 DUALSHOCK3 BitsToDUALSHOCK3(_UBYTE* bits);
 _UBYTE* FloatToBits(float value);
 _UBYTE* IntToBits(_SDWORD value);

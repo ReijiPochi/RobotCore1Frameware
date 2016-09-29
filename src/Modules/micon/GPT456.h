@@ -15,14 +15,21 @@
 extern "C" {
 #endif
 
-void GPT46_init(void);
+void GPT456_init(void);
 
 
-void PWM1_set(_UWORD fq, float duty);
+void Servo1_set(_UWORD fq, float duty);
 
-void PWM1_On(void);
+void Servo1_On(void);
 
-void PWM1_Off(void);
+void Servo1_Off(void);
+
+
+void Servo2_set(_UWORD fq, float duty);
+
+void Servo2_On(void);
+
+void Servo2_Off(void);
 
 
 void BUZZER_set(_UWORD fq, float duty);

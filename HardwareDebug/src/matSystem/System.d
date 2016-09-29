@@ -1,4 +1,4 @@
-src/matSystem/System.obj src/matSystem/System.d: ../src/matSystem/System.cpp
+src/matSystem/System.obj src/matSystem/System.d: ../src/matSystem/System.c
 src/matSystem/System.obj src/matSystem/System.d: ../src/matSystem/System.h
 ../src/matSystem/System.h:
 src/matSystem/System.obj src/matSystem/System.d: ../src/matSystem/..\typedefine.h

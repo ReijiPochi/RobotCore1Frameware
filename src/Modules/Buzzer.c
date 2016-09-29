@@ -7,7 +7,8 @@
 
 
 #include "Buzzer.h"
-#include "micon/GPT46.h"
+
+#include "micon/GPT456.h"
 
 _UWORD oneTime = 0;
 _UWORD stepUp = 0;
@@ -18,7 +19,7 @@ _UWORD lowBattery = 0, lowBatteryFq = 2300, flag = 0;
 
 void Buzzer_Activate(void)
 {
-	GPT46_init();
+	GPT456_init();
 }
 
 void _Buzzer_Loop(void)

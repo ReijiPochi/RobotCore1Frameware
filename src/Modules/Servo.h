@@ -20,6 +20,8 @@ void Servo_Activate(void);
 
 void Servo1_RotationIn(float degree, SetBy setter);
 
+void Servo2_RotationIn(float degree, SetBy setter);
+
 
 #ifdef __cplusplus
 }

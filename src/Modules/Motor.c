@@ -15,7 +15,7 @@
 
 #define THRESHOLD	 		(0.01)
 #define MAX_ACCELERATION	(0.5)
-#define SEND_COUNT			(4)
+#define SEND_COUNT			(1)
 
 static float norm(float, _UBYTE*);
 

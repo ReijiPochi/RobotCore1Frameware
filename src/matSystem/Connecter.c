@@ -232,6 +232,8 @@ void Connecter_SendInt(_UBYTE* head, _UBYTE headCount, _SDWORD value)
 
 void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value)
 {
+	_SDWORD data;
+
 	if(trg[0] == 'S')
 	{
 		switch(command)
@@ -246,6 +248,19 @@ void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value)
 				{
 					Connecter_isConnecting = False;
 					_LED_R_Off();
+				}
+				break;
+
+			case 2:
+				data = BitsToInt(value);
+				if(data < 0)
+				{
+					_System_ClockStop();
+				}
+				else
+				{
+					_System_SetTime(data);
+					_System_ClockStart();
 				}
 				break;
 

@@ -22,6 +22,16 @@ void _System_ClockStart(void)
 	isCounting = True;
 }
 
+void _System_ClockStop(void)
+{
+	isCounting = False;
+}
+
+void _System_SetTime(_UDWORD time)
+{
+	System_CurrentTime = time;
+}
+
 void _System_Loop(void)
 {
 	if(isCounting)

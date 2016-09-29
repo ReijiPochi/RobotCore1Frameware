@@ -5,14 +5,15 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ..\src/matSystem/BatteryCheck.cpp \
-..\src/matSystem/Main.cpp \
-..\src/matSystem/System.cpp 
+..\src/matSystem/Main.cpp 
 
 C_SRCS += \
-..\src/matSystem/Connecter.c 
+..\src/matSystem/Connecter.c \
+..\src/matSystem/System.c 
 
 C_DEPS += \
-./src/matSystem/Connecter.d 
+./src/matSystem/Connecter.d \
+./src/matSystem/System.d 
 
 OBJS += \
 ./src/matSystem/BatteryCheck.obj \
@@ -22,8 +23,7 @@ OBJS += \
 
 CPP_DEPS += \
 ./src/matSystem/BatteryCheck.d \
-./src/matSystem/Main.d \
-./src/matSystem/System.d 
+./src/matSystem/Main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

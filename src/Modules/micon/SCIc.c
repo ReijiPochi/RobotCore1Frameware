@@ -74,7 +74,8 @@ void uart1_init(void)
 
 	// ビットレート設定
 //	SCI1.BRR = 124;					// 50kbps
-	SCI1.BRR = 49;					// 125kbps
+//	SCI1.BRR = 49;					// 125kbps
+	SCI1.BRR = 4;					// 1250kbps
 
 	// エラーフラグをクリア
 	uart1_clear_errorFlag();

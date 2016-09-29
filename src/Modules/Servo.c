@@ -7,20 +7,30 @@
 
 
 #include "Servo.h"
-#include "micon\GPT46.h"
+
+#include "micon/GPT456.h"
 
 void Servo_Activate(void)
 {
 	//GPT46_init();
-	PWM1_set(50, 1.0);
-	PWM1_On();
+	Servo1_set(50, 1.0);
+	Servo1_On();
+	Servo2_set(50, 1.0);
+	Servo2_On();
 }
 
 void Servo1_RotationIn(float degree, SetBy setter)
 {
-	float duty = 0.05 + (degree + 90.0) / 3600.0;
-	duty = 1.0 - duty;
+	float duty = 1.0 - (0.05 + degree / 1800.0);
 
-	PWM1_set(50, duty);
-	PWM1_On();
+	Servo1_set(50, duty);
+	Servo1_On();
+}
+
+void Servo2_RotationIn(float degree, SetBy setter)
+{
+	float duty = 1.0 - (0.05 + degree / 1800.0);
+
+	Servo2_set(50, duty);
+	Servo2_On();
 }
