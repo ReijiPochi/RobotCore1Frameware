@@ -16,9 +16,11 @@
 #include "..\matSystem\Connecter.h"
 #include "..\matSystem\System.h"
 
+#define FORKLIFT
 //#define BIGFORK
-//#define LITTLEFORK
-#define DOLLY
+#define LITTLEFORK
+//#define DOLLY
+//#define BRIDGE
 
 static void BluetoothCallback(DUALSHOCK3 data);
 static void Timer2Callback(void);
@@ -56,6 +58,30 @@ void Initialize()
 	//System_ClockStart();
 
 	Buzzer_StepUp();
+
+#ifdef BIGFORK
+
+	Motor1_AccelerationIn(0.05, RobotCore);
+	Motor2_AccelerationIn(0.05, RobotCore);
+	Motor3_AccelerationIn(0.05, RobotCore);
+	Motor4_AccelerationIn(0.05, RobotCore);
+
+#endif
+
+#ifdef LITTLEFORK
+
+	Motor1_AccelerationIn(0.03, RobotCore);
+	Motor2_AccelerationIn(0.03, RobotCore);
+	Motor3_AccelerationIn(0.03, RobotCore);
+	Motor4_AccelerationIn(0.03, RobotCore);
+
+#endif
+
+#ifdef DOLLY
+
+	Motor1_AccelerationIn(0.3, RobotCore);
+
+#endif
 }
 
 void MainLoop()
@@ -144,7 +170,7 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		_LED_B_On();
 	}
 
-#ifdef BIGFORK
+#ifdef FORKLIFT
 
 	if(data.Buttons.BIT.Maru)
 	{
@@ -252,6 +278,22 @@ static void BluetoothCallback(DUALSHOCK3 data)
 	_SDWORD stick_r_h = -data.AnalogR.X;
 	_SDWORD stick_r_v = data.AnalogR.Y;
 
+#ifdef BIGFORK
+
+	stick_l_h *= 0.7;
+	stick_l_v *= 0.7;
+	stick_r_h *= 0.7;
+
+#endif
+
+#ifdef LITTLEFORK
+
+	stick_l_h *= 0.9;
+	stick_l_v *= 0.9;
+	stick_r_h *= 0.9;
+
+#endif
+
 	if(!isAimMode)
 	{
 		_SDWORD stick_l_h_2;
@@ -296,18 +338,68 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 #ifdef DOLLY
 
-	Motor1_DutyIn(data.AnalogL.Y / 64.0, RobotCore);
-
 	if(data.Buttons.BIT.Maru)
 	{
-		Servo1_RotationIn(90.0, RobotCore);
-		Servo2_RotationIn(90.0, RobotCore);
+		Servo1_RotationIn(87.0, RobotCore);
+		Servo2_RotationIn(87.0, RobotCore);
 	}
 	else if(data.Buttons.BIT.Shikaku)
 	{
 		Servo1_RotationIn(0.0, RobotCore);
 		Servo2_RotationIn(0.0, RobotCore);
 	}
+
+	if(data.Buttons.BIT.Sankaku)
+	{
+		StartAimMode();
+	}
+
+	if(data.Buttons.BIT.Batsu)
+	{
+		if(isAimMode) EndAimMode();
+	}
+
+	if(data.Buttons.BIT.L1 || data.Buttons.BIT.R1)
+	{
+		DIO1_On();
+	}
+	else if(data.Buttons.BIT.L2 || data.Buttons.BIT.R2)
+	{
+		DIO1_Off();
+		if(isAimMode) EndAimMode();
+	}
+
+	if(isAimMode)
+	{
+		Motor1_AccelerationIn(0.05, RobotCore);
+		Motor1_DutyIn(-data.AnalogL.Y / 256.0, RobotCore);
+	}
+	else
+	{
+		Motor1_AccelerationIn(0.3, RobotCore);
+		Motor1_DutyIn(-data.AnalogL.Y / 64.0, RobotCore);
+	}
+
+#endif
+
+#ifdef BRIDGE
+
+	Motor3_DutyIn(data.AnalogR.Y / 64.0, RobotCore);
+
+	_SDWORD stick_l_v = -data.AnalogL.Y;
+	_SDWORD stick_r_h = -data.AnalogR.X;
+
+	_SDWORD stick_l_v_2;
+	_SDWORD stick_r_h_2;
+
+	if(stick_l_v > 0) stick_l_v_2 = stick_l_v * stick_l_v / 64;
+	else stick_l_v_2 = stick_l_v * stick_l_v / -64;
+
+	if(stick_r_h > 0) stick_r_h_2 = stick_r_h * stick_r_h / 64;
+	else stick_r_h_2 = stick_r_h * stick_r_h / -64;
+
+	Motor1_DutyIn(-(stick_l_v_2 - stick_r_h_2) / 64.0, RobotCore);
+	Motor2_DutyIn((stick_l_v_2 + stick_r_h_2) / 64.0, RobotCore);
 
 #endif
 }
