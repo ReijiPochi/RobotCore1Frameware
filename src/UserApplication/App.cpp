@@ -17,8 +17,8 @@
 #include "..\matSystem\System.h"
 
 #define FORKLIFT
-//#define BIGFORK
-#define LITTLEFORK
+#define BIGFORK
+//#define LITTLEFORK
 //#define DOLLY
 //#define BRIDGE
 
@@ -37,6 +37,8 @@ bool pumpOnR = false;
 bool pumpHold = false;
 _SBYTE autoUpCount = 0;
 bool isAimMode = false;
+
+bool distLock = false;
 
 void Initialize()
 {
@@ -318,17 +320,35 @@ static void BluetoothCallback(DUALSHOCK3 data)
 	{
 		if(stick_l_h * stick_l_h < 1600)
 			stick_l_h = 0;
+//
+//		if(stick_l_v * stick_l_v < 1600)
+//			stick_l_v = 0;
+//
+//		if(stick_r_h * stick_r_h < 1600)
+//			stick_r_h = 0;
 
-		if(stick_l_v * stick_l_v < 1600)
-			stick_l_v = 0;
+		float distL, distR;
+		float moveL = 0.0, moveR = 0.0;
+#define TRG_DIST (1.5)
 
-		if(stick_r_h * stick_r_h < 1600)
-			stick_r_h = 0;
+		if(stick_l_v < -30 || stick_l_h != 0)
+		{
+			distL = AnalogIN_GetVoltage(2) - TRG_DIST;
+			distR = AnalogIN_GetVoltage(3) - TRG_DIST;
 
-		Motor1_DutyIn(-(stick_l_v - stick_l_h - stick_r_h) / 500.0, RobotCore);
-		Motor2_DutyIn((stick_l_v + stick_l_h + stick_r_h) / 500.0, RobotCore);
-		Motor3_DutyIn((stick_l_v - stick_l_h + stick_r_h) / 500.0, RobotCore);
-		Motor4_DutyIn(-(stick_l_v + stick_l_h - stick_r_h) / 500.0, RobotCore);
+			distL *= 0.6;
+			distR *= 0.6;
+
+			moveL = distL > 0.1 ? 0.1 : distL;
+			moveR = distR > 0.1 ? 0.1 : distR;
+		}
+
+		float moveH = stick_l_h / 300.0;
+
+		Motor1_DutyIn(moveH - moveR, RobotCore);
+		Motor2_DutyIn(moveH + moveL, RobotCore);
+		Motor3_DutyIn(-moveH + moveL, RobotCore);
+		Motor4_DutyIn(-moveH - moveR, RobotCore);
 
 		Motor5_AccelerationIn(0.1, RobotCore);
 		Motor5_DutyIn(-stick_r_v / 100.0, RobotCore);
@@ -406,6 +426,11 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 void StartAimMode(void)
 {
+	Motor1_AccelerationIn(0.1, RobotCore);
+	Motor2_AccelerationIn(0.1, RobotCore);
+	Motor3_AccelerationIn(0.1, RobotCore);
+	Motor4_AccelerationIn(0.1, RobotCore);
+
 	Bluetooth_Vibrate1Long();
 	Buzzer_OneTime(1000);
 	isAimMode = true;
@@ -413,6 +438,24 @@ void StartAimMode(void)
 
 void EndAimMode(void)
 {
+#ifdef BIGFORK
+
+	Motor1_AccelerationIn(0.05, RobotCore);
+	Motor2_AccelerationIn(0.05, RobotCore);
+	Motor3_AccelerationIn(0.05, RobotCore);
+	Motor4_AccelerationIn(0.05, RobotCore);
+
+#endif
+
+#ifdef LITTLEFORK
+
+	Motor1_AccelerationIn(0.03, RobotCore);
+	Motor2_AccelerationIn(0.03, RobotCore);
+	Motor3_AccelerationIn(0.03, RobotCore);
+	Motor4_AccelerationIn(0.03, RobotCore);
+
+#endif
+
 	isAimMode = false;
 	Bluetooth_Vibrate1();
 	Buzzer_StepUp();
