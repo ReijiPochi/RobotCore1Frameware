@@ -70,6 +70,12 @@ typedef enum
 	OUT				= 0x1
 } IOMode;
 
+typedef enum
+{
+	L				= 0x0,
+	H				= 0x1
+} LogicLevel;
+
 typedef struct
 {
 	_UDWORD Time;
