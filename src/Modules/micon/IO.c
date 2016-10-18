@@ -126,3 +126,11 @@ void DIO_4_Out(_UBYTE value)
 {
 	PORT7.PODR.BIT.B1 = value;
 }
+
+LogicLevel DIO_3_In(void)
+{
+	if(PORT7.PIDR.BIT.B0 == 0)
+		return L;
+	else
+		return H;
+}

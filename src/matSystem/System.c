@@ -15,7 +15,8 @@ _UBYTE count = 0;
 
 BOOL isCounting = False;
 
-
+Log log[256];
+_UWORD logIndex = 0;
 
 void _System_ClockStart(void)
 {
@@ -46,7 +47,8 @@ void _System_Loop(void)
 	}
 }
 
-void System_Log(_UWORD errorNum)
+void System_Log(_UWORD errorLog)
 {
-
+	log[logIndex].Time = System_CurrentTime;
+	log[logIndex].ErrorNumber = errorLog;
 }

@@ -44,6 +44,8 @@ typedef unsigned long _UDWORD;
 typedef signed long long _SQWORD;
 typedef unsigned long long _UQWORD;
 
+typedef void(*InterruptCallback)(void);
+
 typedef enum
 {
 	ForceByHost     		= 0x0,
@@ -115,6 +117,12 @@ typedef struct
 		_SBYTE Y;
 	} AnalogR;
 } DUALSHOCK3;
+
+typedef struct
+{
+	_UDWORD Time;
+	_UWORD ErrorNumber;
+} Log;
 
 #endif
 

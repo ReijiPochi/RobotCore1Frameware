@@ -7,6 +7,10 @@
 
 #include "..\typedefine.h"
 
+
+
+
+
 #ifndef MODULES_DIGITALIO_H_
 #define MODULES_DIGITALIO_H_
 
@@ -17,6 +21,10 @@ extern "C" {
 #endif
 
 void DIO_Activate(IOMode dio1, IOMode dio2, IOMode dio3, IOMode dio4);
+
+void _DIO_Loop(void);
+
+void DIO_SetInterrupt(InterruptCallback callback);
 
 void DIO1_On(void);
 void DIO1_Off(void);

@@ -3731,7 +3731,9 @@ struct st_mpc {
 	union {
 		unsigned char BYTE;
 		struct {
-			unsigned char :3;
+			unsigned char :1;
+			unsigned char ISEL:1;
+			unsigned char :1;
 			unsigned char PSEL:5;
 		} BIT;
 	} P72PFS;

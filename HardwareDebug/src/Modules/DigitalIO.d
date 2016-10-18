@@ -5,3 +5,5 @@ src/Modules/DigitalIO.obj src/Modules/DigitalIO.d: ../src/Modules/..\typedefine.
 ../src/Modules/..\typedefine.h:
 src/Modules/DigitalIO.obj src/Modules/DigitalIO.d: ../src/Modules/micon\IO.h
 ../src/Modules/micon\IO.h:
+src/Modules/DigitalIO.obj src/Modules/DigitalIO.d: ../src/Modules/micon\iodefine.h
+../src/Modules/micon\iodefine.h:

@@ -27,3 +27,5 @@ src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\Bluetoo
 ../src/matSystem/..\Modules\Bluetooth.h:
 src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\AnalogIN.h
 ../src/matSystem/..\Modules\AnalogIN.h:
+src/matSystem/Main.obj src/matSystem/Main.d: ../src/matSystem/..\Modules\DigitalIO.h
+../src/matSystem/..\Modules\DigitalIO.h:

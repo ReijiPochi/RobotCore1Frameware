@@ -25,6 +25,7 @@
 #include "..\Modules\DataLogger.h"
 #include "..\Modules\Bluetooth.h"
 #include "..\Modules\AnalogIN.h"
+#include "..\Modules\DigitalIO.h"
 
 
 void main(void);
@@ -57,6 +58,8 @@ void main(void)
 
 	while(true)
 	{
+		_DIO_Loop();
+
 		MainLoop();
 	}
 }

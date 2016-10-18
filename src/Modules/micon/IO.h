@@ -39,6 +39,7 @@ void DIO_1_Out(_UBYTE value);
 void DIO_2_Out(_UBYTE value);
 void DIO_3_Out(_UBYTE value);
 void DIO_4_Out(_UBYTE value);
+LogicLevel DIO_3_In(void);
 
 #ifdef __cplusplus
 }

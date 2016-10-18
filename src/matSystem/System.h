@@ -25,7 +25,7 @@ void _System_SetTime(_UDWORD time);
 
 void _System_Loop(void);
 
-void System_Log(_UWORD errorNum);
+void System_Log(_UWORD errorLog);
 
 #ifdef __cplusplus
 }

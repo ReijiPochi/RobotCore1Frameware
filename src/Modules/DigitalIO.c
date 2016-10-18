@@ -9,9 +9,62 @@
 #include "DigitalIO.h"
 #include "micon\IO.h"
 
+#include "micon\iodefine.h"
+
+BOOL DIO3interrupt = False;
+LogicLevel DIO3state;
+_UBYTE dio3count = 0;
+_UBYTE dio3count2 = 0;
+InterruptCallback DIO3callback;
+
 void DIO_Activate(IOMode dio1, IOMode dio2, IOMode dio3, IOMode dio4)
 {
 	IO_DIO_Init(dio1, dio2, dio3, dio4);
+}
+
+void _DIO_Loop(void)
+{
+	LogicLevel dio3;
+
+	if(DIO3interrupt == False)
+		return;
+
+	if(dio3count2 != 0)
+	{
+		dio3count2--;
+		return;
+	}
+
+	dio3 = PORT5.PIDR.BIT.B0;
+
+	if(dio3count >= 1 && dio3 == L)
+	{
+		dio3count++;
+	}
+	else
+	{
+		dio3count = 0;
+	}
+
+	if(dio3count == 0 && DIO3state == H && dio3 == L)
+	{
+		dio3count = 1;
+	}
+
+	if(dio3count > 3)
+	{
+		DIO3callback();
+		dio3count = 0;
+		dio3count2 = 100;
+	}
+
+	DIO3state = dio3;
+}
+
+void DIO_SetInterrupt(InterruptCallback callback)
+{
+	DIO3interrupt = True;
+	DIO3callback = callback;
 }
 
 void DIO1_On(void)

@@ -24,6 +24,7 @@
 
 static void BluetoothCallback(DUALSHOCK3 data);
 static void Timer2Callback(void);
+static void DIO3Callback(void);
 static void StartAimMode(void);
 static void EndAimMode(void);
 static void Sleep(void);
@@ -54,6 +55,8 @@ _SBYTE targetFloor = -1;
 float deltaL[] = {0.0, 0.0}, deltaR[] = {0.0, 0.0};
 float integralL = 0.0, integralR = 0.0;
 
+bool LEDOn = false;
+
 
 void Initialize()
 {
@@ -67,7 +70,20 @@ void Initialize()
 	Servo1_RotationIn(0.0, RobotCore);
 	Servo2_RotationIn(0.0, RobotCore);
 	DataLogger_Activate();
+
+#ifdef BIGFORK
+	DIO_Activate(OUT, OUT, IN, IN);
+	DIO_SetInterrupt(DIO3Callback);
+#endif
+#ifdef LITTLEFORK
 	DIO_Activate(OUT, OUT, OUT, IN);
+#endif
+#ifdef DOLLY
+	DIO_Activate(IN, IN, IN, IN);
+#endif
+#ifdef BRIDGE
+	DIO_Activate(IN, IN, IN, IN);
+#endif
 
 	Timer2_Set(TimerClock_32, 5000, Timer2Callback);
 	Timer2_Start();
@@ -172,6 +188,11 @@ void Timer2Callback(void)
 		ArmUpForce = true;
 		pumpHold = true;
 	}
+}
+
+void DIO3Callback(void)
+{
+	Buzzer_OneTime(50);
 }
 
 static void BluetoothCallback(DUALSHOCK3 data)
