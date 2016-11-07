@@ -33,6 +33,7 @@ void main(void);
 extern "C" {
 void abort(void);
 static void Timer1_Callback(void);
+static void Timer3_Callback(void);
 }
 #endif
 
@@ -50,6 +51,8 @@ void main(void)
 	_Timer_Activate();
 	_Timer1_Set(TimerClock_32, 10000, Timer1_Callback);
 	_Timer1_Start();
+	_Timer3_Set(TimerClock_8, 100, Timer3_Callback);
+	_Timer3_Start();
 
 	_Connecter_Activate();
 
@@ -58,8 +61,6 @@ void main(void)
 
 	while(true)
 	{
-		_DIO_Loop();
-
 		MainLoop();
 	}
 }
@@ -91,6 +92,11 @@ void Timer1_Callback()
 	_SystemClockCallBack();
 
 	timer1_callbackRunning = false;
+}
+
+void Timer3_Callback(void)
+{
+	_DIO_Loop();
 }
 
 #ifdef __cplusplus

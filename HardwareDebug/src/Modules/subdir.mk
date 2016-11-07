@@ -13,6 +13,7 @@ C_SRCS += \
 ..\src/Modules/DigitalIO.c \
 ..\src/Modules/LED.c \
 ..\src/Modules/Motor.c \
+..\src/Modules/Multi.c \
 ..\src/Modules/Servo.c \
 ..\src/Modules/Timer.c \
 ..\src/Modules/UART.c 
@@ -27,6 +28,7 @@ C_DEPS += \
 ./src/Modules/DigitalIO.d \
 ./src/Modules/LED.d \
 ./src/Modules/Motor.d \
+./src/Modules/Multi.d \
 ./src/Modules/Servo.d \
 ./src/Modules/Timer.d \
 ./src/Modules/UART.d 
@@ -41,6 +43,7 @@ OBJS += \
 ./src/Modules/DigitalIO.obj \
 ./src/Modules/LED.obj \
 ./src/Modules/Motor.obj \
+./src/Modules/Multi.obj \
 ./src/Modules/Servo.obj \
 ./src/Modules/Timer.obj \
 ./src/Modules/UART.obj 

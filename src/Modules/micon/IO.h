@@ -26,6 +26,7 @@ void IO_Motor_Init();
 
 _UBYTE ALERT(void);
 void STBY(_UBYTE value);
+
 void Motor1_MODE(_UBYTE m1, _UBYTE m2);
 void Motor2_MODE(_UBYTE m1, _UBYTE m2);
 void Motor3_MODE(_UBYTE m1, _UBYTE m2);
@@ -40,6 +41,12 @@ void DIO_2_Out(_UBYTE value);
 void DIO_3_Out(_UBYTE value);
 void DIO_4_Out(_UBYTE value);
 LogicLevel DIO_3_In(void);
+
+void IO_Multi1_Init(IOMode multi1_1, IOMode multi1_2, IOMode multi1_3);
+
+void Multi1_1_Out(LogicLevel value);
+void Multi1_2_Out(LogicLevel value);
+void Multi1_3_Out(LogicLevel value);
 
 #ifdef __cplusplus
 }

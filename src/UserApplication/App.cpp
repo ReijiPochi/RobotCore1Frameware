@@ -12,6 +12,7 @@
 #include "..\Modules\DataLogger.h"
 #include "..\Modules\DigitalIO.h"
 #include "..\Modules\Timer.h"
+#include "..\Modules\Multi.h"
 
 #include "..\matSystem\Connecter.h"
 #include "..\matSystem\System.h"
@@ -25,37 +26,49 @@
 static void BluetoothCallback(DUALSHOCK3 data);
 static void Timer2Callback(void);
 static void DIO3Callback(void);
+static void MotorCallack(void);
 static void StartAimMode(void);
 static void EndAimMode(void);
 static void Sleep(void);
 
+
+bool SystemStandby = true;
+bool motorMoving = false;
 bool dualshockConnecting = false;
 _SBYTE actCount = 50;
-float buffer[100];
-float buffer2[10];
-float buffer3[10];
-_SBYTE sumpleCount = 0;
-bool isStandby = true;
+
+float AIN1buffer[100];
+float AIN2buffer2[10];
+float AIN3buffer3[10];
+_SBYTE AIN1sumpleCount = 0;
+
 bool ArmDown = false;
 bool ArmUpForce = false;
 bool waitingForStop = false;
-bool motorMoving = false;
+
 bool pumpOnL = false;
 bool pumpOnR = false;
 bool pumpHold = false;
 _SBYTE autoUpCount = 0;
+
 bool isAimMode = false;
+
 bool dollyL_turned = false;
 bool dollyL_clicked = false;
 
-float floors[] = {0.75, 1.15};
-_SBYTE currentFloor = -1;
-_SBYTE targetFloor = -1;
+//_UBYTE floars[] = {0, 27, 47, 67, 87, 107};
+//_SBYTE rotationCount = -1;
+//_SBYTE currentFloor = 0;
+//_SBYTE targetFloor = 0;
+//float fdelta[] = {0.0, 0.0};
+//bool allowUp = false;
+//bool UpPressed = false;
+//bool DownPressed = false;
 
 float deltaL[] = {0.0, 0.0}, deltaR[] = {0.0, 0.0};
 float integralL = 0.0, integralR = 0.0;
 
-bool LEDOn = false;
+bool bridgeMode = false;
 
 
 void Initialize()
@@ -70,6 +83,7 @@ void Initialize()
 	Servo1_RotationIn(0.0, RobotCore);
 	Servo2_RotationIn(0.0, RobotCore);
 	DataLogger_Activate();
+	Multi1_Activate(AllIO);
 
 #ifdef BIGFORK
 	DIO_Activate(OUT, OUT, IN, IN);
@@ -77,9 +91,10 @@ void Initialize()
 #endif
 #ifdef LITTLEFORK
 	DIO_Activate(OUT, OUT, OUT, IN);
+	Motor_SetErrorCallback(MotorCallack);
 #endif
 #ifdef DOLLY
-	DIO_Activate(IN, IN, IN, IN);
+	DIO_Activate(OUT, IN, IN, IN);
 #endif
 #ifdef BRIDGE
 	DIO_Activate(IN, IN, IN, IN);
@@ -98,6 +113,7 @@ void Initialize()
 
 void MainLoop()
 {
+
 }
 
 void _SystemClockCallBack()
@@ -133,72 +149,139 @@ void _SystemClockCallBack()
 
 void Timer2Callback(void)
 {
+//#ifdef BIGFORK
+//	if(allowUp)
+//	{
+//		float p, move;
+//
+//		fdelta[1] = fdelta[0];
+//		fdelta[0] = floars[targetFloor] - rotationCount;
+//
+//		p = 0.1 * fdelta[0];
+//		move = p;
+//
+//		if(move > 1.0)
+//			move = 1.0;
+//		else if(move < -0.8)
+//			move = -0.8;
+//		else if(move < 0.1 && move > -0.1)
+//			move = 0;
+//
+//		Motor5_AccelerationIn(0.03, RobotCore);
+//		Motor5_DutyIn(move, RobotCore);
+//	}
+//#endif
+
 	AnalogIN_Sample();
 
-	buffer2[0] = AnalogIN_GetVoltage(2);
-	buffer3[0] = AnalogIN_GetVoltage(3);
+	AIN2buffer2[0] = AnalogIN_GetVoltage(2);
+	AIN3buffer3[0] = AnalogIN_GetVoltage(3);
 
 	for(_SBYTE i =9; i > 0; i--)
 	{
-		buffer2[i] = buffer2[i - 1];
-		buffer3[i] = buffer3[i - 1];
+		AIN2buffer2[i] = AIN2buffer2[i - 1];
+		AIN3buffer3[i] = AIN3buffer3[i - 1];
 	}
 
 
-
+#ifdef FORKLIFT
 	if(motorMoving || !ArmDown || (!pumpOnL && !pumpOnR) || pumpHold)
 	{
-		sumpleCount = 0;
+		AIN1sumpleCount = 0;
 		return;
 	}
+#endif
+#ifdef DOLLY
+	if((!pumpOnL && !pumpOnR) || pumpHold)
+	{
+		AIN1sumpleCount = 0;
+		return;
+	}
+#endif
 
 	for(_SBYTE i =99; i > 0; i--)
 	{
-		buffer[i] = buffer[i - 1];
+		AIN1buffer[i] = AIN1buffer[i - 1];
 	}
 
 
-	buffer[0] = AnalogIN_GetVoltage(1);
+	AIN1buffer[0] = AnalogIN_GetVoltage(1);
 
-	if(sumpleCount < 100)
+	if(AIN1sumpleCount < 100)
 	{
-		sumpleCount++;
+		AIN1sumpleCount++;
 		return;
 	}
 
 	float pumpCurrent = 0.0;
 	for(_SBYTE i = 0; i < 10; i++)
 	{
-		pumpCurrent += buffer[i];
+		pumpCurrent += AIN1buffer[i];
 	}
 	pumpCurrent /= 10.0;
 
 	float abeCurrent = 0.0;
 	for(_SBYTE i = 10; i < 100; i++)
 	{
-		abeCurrent += buffer[i];
+		abeCurrent += AIN1buffer[i];
 	}
 	abeCurrent /= 90.0;
 
 	if(pumpCurrent > abeCurrent + 0.015)	// max 0.2
 	{
-		Motor5_DutyIn(1.0, RobotCore);
-		Bluetooth_Vibrate2();
 		ArmDown = false;
 		ArmUpForce = true;
 		pumpHold = true;
+		Bluetooth_Vibrate2();
+
+#ifdef FORKLIFT
+//#ifdef LITTLEFORK
+		Motor5_DutyIn(1.0, RobotCore);
+//#endif
+
+//#ifdef BIGFORK
+//		rotationCount = 0;
+//		targetFloor = 1;
+//		if(!isAimMode)
+//		{
+//			allowUp = true;
+//		}
+//		else
+//		{
+//			Motor5_DutyIn(0.7, RobotCore);
+//		}
+//#endif
+#endif
+
+#ifdef DOLLY
+		Multi1_DOUT3(H);
+#endif
 	}
 }
 
 void DIO3Callback(void)
 {
-	Buzzer_OneTime(50);
+//	if(Motor5_GetDuty() == 0)
+//		return;
+//
+//	if(Motor5_GetDirection())
+//	{
+//		rotationCount++;
+//	}
+//	else
+//	{
+//		rotationCount--;
+//	}
+}
+
+void MotorCallack(void)
+{
+
 }
 
 static void BluetoothCallback(DUALSHOCK3 data)
 {
-	if(actCount < 50)
-		actCount = 50;
+	actCount = 50;
 
 	if(data.Buttons.BIT.Start)
 	{
@@ -208,8 +291,10 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		_LED_B_Off();
 		_LED_G_On();
 
-		isStandby = false;
+		SystemStandby = false;
 		dualshockConnecting = true;
+
+//		rotationCount = 0;
 	}
 
 	if(data.Buttons.BIT.Select)
@@ -219,10 +304,10 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		Buzzer_StepDown();
 		_LED_B_On();
 
-		isStandby = true;
+		SystemStandby = true;
 	}
 
-	if(isStandby)
+	if(SystemStandby)
 	{
 		return;
 	}
@@ -231,11 +316,27 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 	if(data.Buttons.BIT.Maru)
 	{
-
+//#ifdef BIGFORK
+//		allowUp = true;
+//#endif
+#ifdef BIGFORK
+		bridgeMode = true;
+#endif
+	}
+	else
+	{
+#ifdef BIGFORK
+		if(bridgeMode && data.AnalogL.X == 0 && data.AnalogL.Y == 0 && data.AnalogR.X == 0)
+		{
+			bridgeMode = false;
+		}
+#endif
 	}
 
 	if(data.Buttons.BIT.Batsu)
 	{
+//		allowUp = false;
+
 		Motor5_DutyIn(0.0, RobotCore);
 		ArmDown = false;
 		ArmUpForce = false;
@@ -257,6 +358,7 @@ static void BluetoothCallback(DUALSHOCK3 data)
 	if(data.Buttons.BIT.Sankaku)
 	{
 #ifdef BIGFORK
+//		allowUp = false;
 		StartAimMode();
 #endif
 
@@ -278,11 +380,12 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 	if(data.Buttons.BIT.L2)
 	{
+//		allowUp = false;
 		DIO1_Off();
 		pumpOnL = false;
 		if(pumpHold)
 		{
-			autoUpCount = 30;
+			autoUpCount = 60;
 			if(isAimMode) EndAimMode();
 		}
 		pumpHold = false;
@@ -296,26 +399,49 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 	if(data.Buttons.BIT.R2)
 	{
+//		allowUp = false;
 		DIO2_Off();
 		pumpOnR = false;
 		if(pumpHold)
 		{
-			autoUpCount = 30;
+			autoUpCount = 60;
 			if(isAimMode) EndAimMode();
 		}
 		pumpHold = false;
 	}
 
+	if(data.Buttons.BIT.RightArrow)
+	{
+
+	}
+
+	if(data.Buttons.BIT.LeftArrow)
+	{
+
+	}
+
 	if(data.Buttons.BIT.UpArrow)
 	{
-		Motor5_AccelerationIn(0.03, RobotCore);
-		Motor5_DutyIn(1.0, RobotCore);
-		ArmDown = false;
-		ArmUpForce = false;
+//		if(allowUp)
+//		{
+//			UpPressed = true;
+//		}
+//		else
+//		{
+			Motor5_AccelerationIn(0.03, RobotCore);
+			Motor5_DutyIn(1.0, RobotCore);
+			ArmDown = false;
+			ArmUpForce = false;
+//		}
 	}
 	else if(data.Buttons.BIT.DownArrow)
 	{
-		if(!ArmUpForce || waitingForStop)
+//		if(allowUp && !ArmUpForce)
+//		{
+//			DownPressed = true;
+//		}
+//		else
+			if(!ArmUpForce || waitingForStop)
 		{
 			if(!pumpHold && (pumpOnL || pumpOnR))
 			{
@@ -335,7 +461,25 @@ static void BluetoothCallback(DUALSHOCK3 data)
 	}
 	else
 	{
-		if(!ArmUpForce)
+//		if(allowUp && !ArmUpForce)
+//		{
+//			if(UpPressed)
+//			{
+//				UpPressed = false;
+//
+//				if(targetFloor < 6)
+//					targetFloor++;
+//			}
+//			else if(DownPressed)
+//			{
+//				DownPressed = false;
+//
+//				if(targetFloor > 1)
+//					targetFloor--;
+//			}
+//		}
+//		else
+			if(!ArmUpForce)
 		{
 			Motor5_DutyIn(0.0, RobotCore);
 			ArmDown = false;
@@ -343,6 +487,9 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		}
 		else if(!waitingForStop)
 		{
+//#ifdef BIGFORK
+//			ArmUpForce = false;
+//#endif
 			waitingForStop = true;
 		}
 	}
@@ -363,15 +510,24 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 #ifdef BIGFORK
 
-	stick_l_h *= 0.8;
-	stick_l_v *= 0.8;
-	stick_r_h *= 0.8;
+	if(bridgeMode)
+	{
+		stick_l_h *= 0.0;
+		stick_l_v *= 0.7;
+		stick_r_h *= 0.0;
+	}
+	else
+	{
+		stick_l_h *= 0.8;
+		stick_l_v *= 0.8;
+		stick_r_h *= 0.7;
+	}
 
 #endif
 
 #ifdef LITTLEFORK
 
-	stick_l_h *= 0.9;
+	stick_l_h *= 0.7;
 	stick_l_v *= 0.9;
 	stick_r_h *= 0.9;
 
@@ -392,10 +548,35 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		if(stick_r_h > 0) stick_r_h_2 = stick_r_h * stick_r_h / 64;
 		else stick_r_h_2 = stick_r_h * stick_r_h / -64;
 
-		Motor1_DutyIn(-(stick_l_v_2 - stick_l_h_2 - stick_r_h_2) / 64.0, RobotCore);
-		Motor2_DutyIn((stick_l_v_2 + stick_l_h_2 + stick_r_h_2) / 64.0, RobotCore);
-		Motor3_DutyIn((stick_l_v_2 - stick_l_h_2 + stick_r_h_2) / 64.0, RobotCore);
-		Motor4_DutyIn(-(stick_l_v_2 + stick_l_h_2 - stick_r_h_2) / 64.0, RobotCore);
+		float move1 = -(stick_l_v_2 - stick_l_h_2 - stick_r_h_2) / 64.0;
+		float move2 = (stick_l_v_2 + stick_l_h_2 + stick_r_h_2) / 64.0;
+		float move3 = (stick_l_v_2 - stick_l_h_2 + stick_r_h_2) / 64.0;
+		float move4 = -(stick_l_v_2 + stick_l_h_2 - stick_r_h_2) / 64.0;
+
+#ifdef LITTLEFORK
+#define MAX (0.8)
+#endif
+
+#ifdef BIGFORK
+#define MAX (1.0)
+#endif
+
+		if(move1 > MAX) move1 = MAX;
+		if(move1 < -MAX) move1 = -MAX;
+
+		if(move2 > MAX) move2 = MAX;
+		if(move2 < -MAX) move2 = -MAX;
+
+		if(move3 > MAX) move3 = MAX;
+		if(move3 < -MAX) move3 = -MAX;
+
+		if(move4 > MAX) move4 = MAX;
+		if(move4 < -MAX) move4 = -MAX;
+
+		Motor1_DutyIn(move1, RobotCore);
+		Motor2_DutyIn(move2, RobotCore);
+		Motor3_DutyIn(move3, RobotCore);
+		Motor4_DutyIn(move4, RobotCore);
 	}
 	else
 	{
@@ -410,11 +591,10 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 #ifdef BIGFORK
 
-		float distL, distR;
 		float moveL = 0.0, moveR = 0.0;
 #define TRG_DIST (1.9)
 #define KP (0.2)
-#define KI (0.01)
+#define KI (0.00)
 #define KD (0.00)
 
 		if(stick_l_v < -30 || stick_l_h != 0)
@@ -423,12 +603,12 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 			for(_SBYTE i = 0; i < 9; i++)
 			{
-				vL += buffer2[i];
+				vL += AIN2buffer2[i];
 			}
 
 			for(_SBYTE i = 0; i < 9; i++)
 			{
-				vR += buffer3[i];
+				vR += AIN3buffer3[i];
 			}
 
 			vL /= 10.0;
@@ -443,8 +623,8 @@ static void BluetoothCallback(DUALSHOCK3 data)
 			deltaL[0] = TRG_DIST - vL;
 			deltaR[0] = TRG_DIST - vR;
 
-			integralL = (deltaL[0] + deltaL[1]) / 2.0;
-			integralR = (deltaR[0] + deltaR[1]) / 2.0;
+			integralL += (deltaL[0] + deltaL[1]) / 2.0;
+			integralR += (deltaR[0] + deltaR[1]) / 2.0;
 
 			pL = KP * deltaL[0];
 			iL = KI * integralL;
@@ -465,15 +645,6 @@ static void BluetoothCallback(DUALSHOCK3 data)
 				moveR = 0.4;
 			else if(moveR < -0.4)
 				moveR = -0.4;
-//
-//			distL = TRG_DIST - vL;
-//			distR = TRG_DIST - vR;
-//
-//			distL *= 0.3;
-//			distR *= 0.3;
-//
-//			moveL = distL > 0.2 ? 0.2 : distL;
-//			moveR = distR > 0.2 ? 0.2 : distR;
 		}
 
 		if(stick_l_v > 30)
@@ -483,11 +654,12 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		}
 
 		float moveH = stick_l_h / 300.0;
+		float moveA = stick_r_h / 500.0;
 
-		Motor1_DutyIn(moveH + moveR, RobotCore);
-		Motor2_DutyIn(moveH - moveL, RobotCore);
-		Motor3_DutyIn(-moveH - moveL, RobotCore);
-		Motor4_DutyIn(-moveH + moveR, RobotCore);
+		Motor1_DutyIn(moveH + moveR + moveA, RobotCore);
+		Motor2_DutyIn(moveH - moveL + moveA, RobotCore);
+		Motor3_DutyIn(-moveH - moveL + moveA, RobotCore);
+		Motor4_DutyIn(-moveH + moveR + moveA, RobotCore);
 
 #endif
 
@@ -544,11 +716,21 @@ static void BluetoothCallback(DUALSHOCK3 data)
 
 	if(data.Buttons.BIT.L1 || data.Buttons.BIT.R1)
 	{
+		pumpOnL = true;
+		pumpOnR = true;
 		DIO1_On();
+		Multi1_DOUT1(H);
+		Multi1_DOUT2(L);
 	}
 	else if(data.Buttons.BIT.L2 || data.Buttons.BIT.R2)
 	{
+		pumpOnL = false;
+		pumpOnR = false;
+		pumpHold = false;
 		DIO1_Off();
+		Multi1_DOUT1(L);
+		Multi1_DOUT2(H);
+		Multi1_DOUT3(L);
 		if(isAimMode) EndAimMode();
 	}
 
@@ -608,6 +790,8 @@ void EndAimMode(void)
 	Motor2_AccelerationIn(0.05, RobotCore);
 	Motor3_AccelerationIn(0.05, RobotCore);
 	Motor4_AccelerationIn(0.05, RobotCore);
+
+//	allowUp = false;
 
 #endif
 

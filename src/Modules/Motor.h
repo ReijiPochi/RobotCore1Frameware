@@ -36,6 +36,7 @@ void Motor_LockSTBY(void);
 
 void _Motor_Loop(void);
 
+void Motor_SetErrorCallback(void (*callback)(void));
 
 void Motor1_DutyIn(float duty, SetBy setter);
 void Motor2_DutyIn(float duty, SetBy setter);
@@ -50,6 +51,9 @@ void Motor3_AccelerationIn(float a, SetBy setter);
 void Motor4_AccelerationIn(float a, SetBy setter);
 void Motor5_AccelerationIn(float a, SetBy setter);
 void Motor6_AccelerationIn(float a, SetBy setter);
+
+BOOL Motor5_GetDirection(void);
+float Motor5_GetDuty(void);
 
 void _Motor_Do(_UBYTE module, _UBYTE command, _UBYTE* value);
 

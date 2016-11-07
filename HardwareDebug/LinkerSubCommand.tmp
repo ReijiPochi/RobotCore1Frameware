@@ -25,6 +25,7 @@
 -input="./src/Modules/DigitalIO.obj"
 -input="./src/Modules/LED.obj"
 -input="./src/Modules/Motor.obj"
+-input="./src/Modules/Multi.obj"
 -input="./src/Modules/Servo.obj"
 -input="./src/Modules/Timer.obj"
 -input="./src/Modules/UART.obj"

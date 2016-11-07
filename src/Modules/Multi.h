@@ -17,13 +17,22 @@ typedef enum
 #define MODULES_MULTI_H_
 
 
-void Multi_Activate(MultiMode unit1, MultiMode unit2);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-void Multi_DOUT1(LogicLevel value, _SBYTE unit);
 
-void Multi_DOUT2(LogicLevel value,_SBYTE unit);
+void Multi1_Activate(MultiMode mode);
 
-void Multi_DOUT3(LogicLevel value,_SBYTE unit);
+void Multi1_DOUT1(LogicLevel value);
 
+void Multi1_DOUT2(LogicLevel value);
+
+void Multi1_DOUT3(LogicLevel value);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MODULES_MULTI_H_ */

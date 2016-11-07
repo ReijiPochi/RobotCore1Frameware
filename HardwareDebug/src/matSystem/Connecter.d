@@ -7,6 +7,8 @@ src/matSystem/Connecter.obj src/matSystem/Connecter.d: ../src/matSystem/..\Modul
 ../src/matSystem/..\Modules\UART.h:
 src/matSystem/Connecter.obj src/matSystem/Connecter.d: ../src/matSystem/..\DataConverter.h
 ../src/matSystem/..\DataConverter.h:
+src/matSystem/Connecter.obj src/matSystem/Connecter.d: ../src/matSystem/System.h
+../src/matSystem/System.h:
 src/matSystem/Connecter.obj src/matSystem/Connecter.d: ../src/matSystem/..\Modules\Motor.h
 ../src/matSystem/..\Modules\Motor.h:
 src/matSystem/Connecter.obj src/matSystem/Connecter.d: ../src/matSystem/..\Modules\Bluetooth.h

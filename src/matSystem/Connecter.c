@@ -9,13 +9,14 @@
 #include "Connecter.h"
 #include "..\Modules\UART.h"
 #include "..\DataConverter.h"
+#include "System.h"
 
 #include "..\Modules\Motor.h"
 #include "..\Modules\Bluetooth.h"
 #include "..\Modules\LED.h"
 #include "..\Modules\Buzzer.h"
 
-BOOL Connecter_isConnecting = False;
+BOOL _Connecter_isConnecting = False;
 
 
 _UBYTE trg[5];
@@ -232,45 +233,14 @@ void Connecter_SendInt(_UBYTE* head, _UBYTE headCount, _SDWORD value)
 
 void Execute(_UBYTE* trg, _UBYTE command, _UBYTE* value)
 {
-	_SDWORD data;
 
 	if(trg[0] == 'S')
 	{
-		switch(command)
-		{
-			case 1:
-				if(value[0] == '1')
-				{
-					Connecter_isConnecting = True;
-					_LED_R_On();
-				}
-				else
-				{
-					Connecter_isConnecting = False;
-					_LED_R_Off();
-				}
-				break;
-
-			case 2:
-				data = BitsToInt(value);
-				if(data < 0)
-				{
-					_System_ClockStop();
-				}
-				else
-				{
-					_System_SetTime(data);
-					_System_ClockStart();
-				}
-				break;
-
-			default:
-				break;
-		}
+		_System_Do(command, value);
 	}
 
 
-	if(!Connecter_isConnecting) return;
+	if(!_Connecter_isConnecting) return;
 
 
 	if(trg[0] == 'M')

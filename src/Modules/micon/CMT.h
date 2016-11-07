@@ -30,6 +30,12 @@ void CMT1_Start(void);
 
 void CMT1_Stop(void);
 
+void CMT2_Set(_UBYTE clockSource, _UWORD CMCOR, void (*callback)(void));
+
+void CMT2_Start(void);
+
+void CMT2_Stop(void);
+
 
 #ifdef __cplusplus
 }

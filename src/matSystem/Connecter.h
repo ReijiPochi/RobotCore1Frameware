@@ -16,7 +16,7 @@ typedef union
 	float Float;
 } DataValue;
 
-extern BOOL Connecter_isConnecting;
+extern BOOL _Connecter_isConnecting;
 
 
 #ifdef __cplusplus

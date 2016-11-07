@@ -68,6 +68,9 @@ float acceleration[6] = {0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
 float actualDuty[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 _UBYTE direction[6];
 
+BOOL callbackRegi = False;
+void (*errorCallback)(void);
+
 /**
  *  Motorモジュールを使用可能にします。
  */
@@ -88,10 +91,20 @@ void Motor_LockSTBY(void)
 	STBY(0);
 }
 
+void Motor_SetErrorCallback(void (*callback)(void))
+{
+	errorCallback = callback;
+}
+
 void _Motor_Loop(void)
 {
 	int i;
 	float d, a;
+
+	if(ALERT() == 0 && callbackRegi)
+	{
+		errorCallback();
+	}
 
 	for(i = 0; i < 6; i++)
 	{
@@ -164,6 +177,16 @@ void _Motor_Loop(void)
 		if(actualDuty[i] > THRESHOLD || actualDuty[i] < -THRESHOLD)
 			_LED_Info_On();
 	}
+}
+
+BOOL Motor5_GetDirection(void)
+{
+	return (BOOL)direction[4];
+}
+
+float Motor5_GetDuty(void)
+{
+	return actualDuty[4];
 }
 
 void Motor1_DutyIn(float duty, SetBy setter)

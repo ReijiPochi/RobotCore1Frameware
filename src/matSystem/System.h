@@ -25,6 +25,8 @@ void _System_SetTime(_UDWORD time);
 
 void _System_Loop(void);
 
+void _System_Do(_UBYTE command, _UBYTE* value);
+
 void System_Log(_UWORD errorLog);
 
 #ifdef __cplusplus

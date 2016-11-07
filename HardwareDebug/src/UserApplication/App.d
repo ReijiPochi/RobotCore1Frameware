@@ -27,6 +27,8 @@ src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..
 ../src/UserApplication/..\Modules\DigitalIO.h:
 src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\Timer.h
 ../src/UserApplication/..\Modules\Timer.h:
+src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\Modules\Multi.h
+../src/UserApplication/..\Modules\Multi.h:
 src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\matSystem\Connecter.h
 ../src/UserApplication/..\matSystem\Connecter.h:
 src/UserApplication/App.obj src/UserApplication/App.d: ../src/UserApplication/..\matSystem\System.h

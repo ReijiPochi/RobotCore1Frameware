@@ -13,6 +13,7 @@
 
 void (*callback1)(void);
 void (*callback2)(void);
+void (*callback3)(void);
 
 void CMT_init(void)
 {
@@ -95,4 +96,38 @@ void Excep_CMT1_CMI1(void)
 void CMT1_Stop(void)
 {
 	CMT.CMSTR0.BIT.STR1 = 0;
+}
+
+void CMT2_Set(_UBYTE clockSource, _UWORD CMCOR, void (*callback)(void))
+{
+	// コンペアマッチ値設定
+	CMT2.CMCOR = CMCOR;
+
+	// クロックの分周を設定
+	CMT2.CMCR.BIT.CKS = clockSource;
+
+	// コンペアマッチ割り込みを許可
+	CMT2.CMCR.BIT.CMIE = 1;
+
+	callback3 = callback;
+
+	IPR(CMT2,CMI2) = 0x8;
+	IEN(CMT2,CMI2) = 0x1;
+	IR(CMT2,CMI2) = 0x0;
+}
+
+void CMT2_Start(void)
+{
+	CMT.CMSTR1.BIT.STR2 = 1;
+}
+
+void Excep_CMT2_CMI2(void)
+{
+	callback3();
+	IR(CMT2,CMI2) = 0x0;
+}
+
+void CMT2_Stop(void)
+{
+	CMT.CMSTR1.BIT.STR2 = 0;
 }

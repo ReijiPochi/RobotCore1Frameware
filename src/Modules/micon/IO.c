@@ -129,8 +129,35 @@ void DIO_4_Out(_UBYTE value)
 
 LogicLevel DIO_3_In(void)
 {
+	if(PORT7.PDR.BIT.B0 == 1)
+		PORT7.PDR.BIT.B0 = 0;
+	if(PORT7.PMR.BIT.B0 == 1)
+		PORT7.PMR.BIT.B0 = 0;
+
 	if(PORT7.PIDR.BIT.B0 == 0)
 		return L;
 	else
 		return H;
+}
+
+void IO_Multi1_Init(IOMode multi1_1, IOMode multi1_2, IOMode multi1_3)
+{
+	PORT3.PDR.BIT.B4 = (_UBYTE)multi1_1;
+	PORT9.PDR.BIT.B6 = (_UBYTE)multi1_2;
+	PORTG.PDR.BIT.B6 = (_UBYTE)multi1_3;
+}
+
+void Multi1_1_Out(LogicLevel value)
+{
+	PORT3.PODR.BIT.B4 = (_UBYTE)value;
+}
+
+void Multi1_2_Out(LogicLevel value)
+{
+	PORT9.PODR.BIT.B6 = (_UBYTE)value;
+}
+
+void Multi1_3_Out(LogicLevel value)
+{
+	PORTG.PODR.BIT.B6 = (_UBYTE)value;
 }
