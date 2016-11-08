@@ -87,7 +87,7 @@ void Initialize()
 
 #ifdef BIGFORK
 	DIO_Activate(OUT, OUT, IN, IN);
-	DIO_SetInterrupt(DIO3Callback);
+//	DIO_SetInterrupt(DIO3Callback);
 #endif
 #ifdef LITTLEFORK
 	DIO_Activate(OUT, OUT, OUT, IN);

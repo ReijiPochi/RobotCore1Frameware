@@ -9,6 +9,7 @@ C_SRCS += \
 ..\src/Modules/micon/GPT012.c \
 ..\src/Modules/micon/GPT456.c \
 ..\src/Modules/micon/IO.c \
+..\src/Modules/micon/RIIC.c \
 ..\src/Modules/micon/S12ADB.c \
 ..\src/Modules/micon/SCIc.c \
 ..\src/Modules/micon/interrupt_handlers.c \
@@ -20,6 +21,7 @@ C_DEPS += \
 ./src/Modules/micon/GPT012.d \
 ./src/Modules/micon/GPT456.d \
 ./src/Modules/micon/IO.d \
+./src/Modules/micon/RIIC.d \
 ./src/Modules/micon/S12ADB.d \
 ./src/Modules/micon/SCIc.d \
 ./src/Modules/micon/interrupt_handlers.d \
@@ -31,6 +33,7 @@ OBJS += \
 ./src/Modules/micon/GPT012.obj \
 ./src/Modules/micon/GPT456.obj \
 ./src/Modules/micon/IO.obj \
+./src/Modules/micon/RIIC.obj \
 ./src/Modules/micon/S12ADB.obj \
 ./src/Modules/micon/SCIc.obj \
 ./src/Modules/micon/interrupt_handlers.obj \

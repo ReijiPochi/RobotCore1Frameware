@@ -9,7 +9,7 @@
 #include "Timer.h"
 #include "micon/CMT.h"
 
-#define PCLK_CLOCK	(100000000)
+#define PCLK_CLOCK	(50000000)
 
 void _Timer_Activate(void)
 {
