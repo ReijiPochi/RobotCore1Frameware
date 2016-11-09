@@ -73,9 +73,7 @@ void uart1_init(void)
 	SCI1.SMR.BIT.CKS = 0x0;			// PCLK/1クロック
 
 	// ビットレート設定
-//	SCI1.BRR = 124;					// 50kbps
-//	SCI1.BRR = 49;					// 125kbps
-	SCI1.BRR = 24;					// 250kbps
+	SCI1.BRR = 24;					// 125kbps
 
 	// エラーフラグをクリア
 	uart1_clear_errorFlag();
@@ -239,6 +237,8 @@ void uart0_init(void)
 
 	PORT2.PMR.BIT.B2 = 1;			// 周辺機能として使用
 	PORT2.PMR.BIT.B3 = 1;			// 周辺機能として使用
+
+	SCI0.SEMR.BIT.ABCS = 1;			// 基本クロック8サイクルの期間が1ビット期間の転送レート
 
 	// クロック設定
 	SCI0.SMR.BIT.CKS = 0x1;			// PCLK/4クロック

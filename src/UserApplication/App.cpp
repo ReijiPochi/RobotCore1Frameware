@@ -18,15 +18,16 @@
 #include "..\matSystem\System.h"
 
 #define FORKLIFT
-#define BIGFORK
-//#define LITTLEFORK
+//#define BIGFORK
+#define LITTLEFORK
+#define TW_LITTLEFORK
 //#define DOLLY
 //#define BRIDGE
 
 static void BluetoothCallback(DUALSHOCK3 data);
 static void Timer2Callback(void);
 static void DIO3Callback(void);
-static void MotorCallack(void);
+static void MotorErrorCallack(void);
 static void StartAimMode(void);
 static void EndAimMode(void);
 static void Sleep(void);
@@ -91,7 +92,7 @@ void Initialize()
 #endif
 #ifdef LITTLEFORK
 	DIO_Activate(OUT, OUT, OUT, IN);
-	Motor_SetErrorCallback(MotorCallack);
+	Motor_SetErrorCallback(MotorErrorCallack);
 #endif
 #ifdef DOLLY
 	DIO_Activate(OUT, IN, IN, IN);
@@ -227,7 +228,13 @@ void Timer2Callback(void)
 	}
 	abeCurrent /= 90.0;
 
-	if(pumpCurrent > abeCurrent + 0.015)	// max 0.2
+	float th = 0.015;
+
+#ifdef BIGFORK
+	th = 0.01;
+#endif
+
+	if(pumpCurrent > abeCurrent + th)	// max 0.2
 	{
 		ArmDown = false;
 		ArmUpForce = true;
@@ -239,7 +246,8 @@ void Timer2Callback(void)
 		Motor5_DutyIn(1.0, RobotCore);
 //#endif
 
-//#ifdef BIGFORK
+#ifdef BIGFORK
+		Motor5_AccelerationIn(0.03, RobotCore);
 //		rotationCount = 0;
 //		targetFloor = 1;
 //		if(!isAimMode)
@@ -250,7 +258,7 @@ void Timer2Callback(void)
 //		{
 //			Motor5_DutyIn(0.7, RobotCore);
 //		}
-//#endif
+#endif
 #endif
 
 #ifdef DOLLY
@@ -274,7 +282,7 @@ void DIO3Callback(void)
 //	}
 }
 
-void MotorCallack(void)
+void MotorErrorCallack(void)
 {
 
 }
@@ -548,10 +556,19 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		if(stick_r_h > 0) stick_r_h_2 = stick_r_h * stick_r_h / 64;
 		else stick_r_h_2 = stick_r_h * stick_r_h / -64;
 
-		float move1 = -(stick_l_v_2 - stick_l_h_2 - stick_r_h_2) / 64.0;
-		float move2 = (stick_l_v_2 + stick_l_h_2 + stick_r_h_2) / 64.0;
-		float move3 = (stick_l_v_2 - stick_l_h_2 + stick_r_h_2) / 64.0;
-		float move4 = -(stick_l_v_2 + stick_l_h_2 - stick_r_h_2) / 64.0;
+		float move1 = 0.0, move2 = 0.0, move3 = 0.0, move4 = 0.0;
+
+#ifdef TW_LITTLEFORK
+#define COS30 (0.866025)
+		move1 = (-stick_l_v_2 -    stick_l_h_2    + stick_r_h_2) / 64.0;
+		move2 = (-stick_l_v_2 -    stick_l_h_2    + stick_r_h_2) / 64.0;
+		move3 = (      0      + stick_l_h_2*COS30 + stick_r_h_2) / 64.0;
+#else
+		move1 = -(stick_l_v_2 - stick_l_h_2 - stick_r_h_2) / 64.0;
+		move2 = (stick_l_v_2 + stick_l_h_2 + stick_r_h_2) / 64.0;
+		move3 = (stick_l_v_2 - stick_l_h_2 + stick_r_h_2) / 64.0;
+		move4 = -(stick_l_v_2 + stick_l_h_2 - stick_r_h_2) / 64.0;
+#endif
 
 #ifdef LITTLEFORK
 #define MAX (0.8)
