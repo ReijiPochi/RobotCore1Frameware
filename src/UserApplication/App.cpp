@@ -18,9 +18,9 @@
 #include "..\matSystem\System.h"
 
 #define FORKLIFT
-//#define BIGFORK
-#define LITTLEFORK
-#define TW_LITTLEFORK
+#define BIGFORK
+//#define LITTLEFORK
+//#define TW_LITTLEFORK
 //#define DOLLY
 //#define BRIDGE
 
@@ -231,7 +231,7 @@ void Timer2Callback(void)
 	float th = 0.015;
 
 #ifdef BIGFORK
-	th = 0.01;
+	th = 0.015;
 #endif
 
 	if(pumpCurrent > abeCurrent + th)	// max 0.2
@@ -247,7 +247,7 @@ void Timer2Callback(void)
 //#endif
 
 #ifdef BIGFORK
-		Motor5_AccelerationIn(0.03, RobotCore);
+		Motor5_AccelerationIn(0.02, RobotCore);
 //		rotationCount = 0;
 //		targetFloor = 1;
 //		if(!isAimMode)
@@ -394,9 +394,9 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		if(pumpHold)
 		{
 			autoUpCount = 60;
-			if(isAimMode) EndAimMode();
 		}
 		pumpHold = false;
+		if(!pumpOnR && isAimMode) EndAimMode();
 	}
 
 	if(data.Buttons.BIT.R1)
@@ -413,9 +413,9 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		if(pumpHold)
 		{
 			autoUpCount = 60;
-			if(isAimMode) EndAimMode();
 		}
 		pumpHold = false;
+		if(!pumpOnL && isAimMode) EndAimMode();
 	}
 
 	if(data.Buttons.BIT.RightArrow)
@@ -454,12 +454,18 @@ static void BluetoothCallback(DUALSHOCK3 data)
 			if(!pumpHold && (pumpOnL || pumpOnR))
 			{
 				Motor5_AccelerationIn(0.4, RobotCore);
+#ifdef BIGFORK
 				Motor5_DutyIn(-0.3, RobotCore);
+#else
+				Motor5_DutyIn(-0.3, RobotCore);
+#endif
 			}
 			else
 			{
 				Motor5_AccelerationIn(0.03, RobotCore);
-				Motor5_DutyIn(-1.0, RobotCore);
+
+				if(pumpHold) Motor5_DutyIn(-0.6, RobotCore);
+				else Motor5_DutyIn(-1.0, RobotCore);
 			}
 
 			ArmDown = true;
@@ -559,10 +565,10 @@ static void BluetoothCallback(DUALSHOCK3 data)
 		float move1 = 0.0, move2 = 0.0, move3 = 0.0, move4 = 0.0;
 
 #ifdef TW_LITTLEFORK
-#define COS30 (0.866025)
-		move1 = (-stick_l_v_2 -    stick_l_h_2    + stick_r_h_2) / 64.0;
-		move2 = (-stick_l_v_2 -    stick_l_h_2    + stick_r_h_2) / 64.0;
-		move3 = (      0      + stick_l_h_2*COS30 + stick_r_h_2) / 64.0;
+#define COS30 (0.6)
+		move1 = (-stick_l_v_2 +    stick_l_h_2*COS30   + stick_r_h_2) / 64.0;
+		move2 = ( stick_l_v_2 +    stick_l_h_2*COS30    + stick_r_h_2) / 64.0;
+		move3 = (      0      - stick_l_h_2 + stick_r_h_2) / 64.0;
 #else
 		move1 = -(stick_l_v_2 - stick_l_h_2 - stick_r_h_2) / 64.0;
 		move2 = (stick_l_v_2 + stick_l_h_2 + stick_r_h_2) / 64.0;
