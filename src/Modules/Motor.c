@@ -94,6 +94,7 @@ void Motor_LockSTBY(void)
 void Motor_SetErrorCallback(void (*callback)(void))
 {
 	errorCallback = callback;
+	callbackRegi = True;
 }
 
 void _Motor_Loop(void)
